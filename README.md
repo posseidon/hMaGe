@@ -22,3 +22,8 @@ $ sudo apt-get install mongodb-org
 ```
 
 Reference to [MongoDB](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) installation guide.
+
+> Start Server: `sudo /etc/init.d/mongod start`
+> Stop Server:  `sudo /etc/init.d/mongod stop`
+> Restart Server: `sudo /etc/init.d/mongod restart`
+> Mongod log:   `/var/log/mongodb/mongod.log`
