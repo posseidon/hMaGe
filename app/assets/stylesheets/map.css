@@ -1,0 +1,7 @@
+/**
+ * Map Examples Specific
+ */
+.smallmap {
+    height: 512px;
+    border: 1px solid #ccc;
+}
