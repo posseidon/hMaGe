@@ -33,3 +33,8 @@ Reference to [MongoDB](http://docs.mongodb.org/manual/tutorial/install-mongodb-o
 
 
 > Mongod **log**:   `/var/log/mongodb/mongod.log`
+
+## Rails configuration
+Running `rails generate mongoid:config` will generate the following file
++ config/mongoid.yml
+Where the following parameters must be set:
