@@ -10,3 +10,15 @@ gem 'bootstrap-generators'
 gem 'kaminari'
 gem 'openlayers-rails'
 ```
+
+# Installation MongoDB
+
+Current operating system is Ubuntu 14.04 LTS. Follow the following steps to install MongoDB:
+```bash
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+$ echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+$ sudo apt-get update
+$ sudo apt-get install mongodb-org
+```
+
+Reference to [MongoDB](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) installation guide.
