@@ -1,10 +1,15 @@
-var map, vlayer, controls;
-var polygon, modifier;
+var map, vectorLayer;
+var drawControls;
+var polygon, box;
+var edit, nav, select;
 
 function init() {
-    vlayer = new OpenLayers.Layer.Vector( "Editable" );
-    polygon = new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Polygon);
-    modifier = new OpenLayers.Control.ModifyFeature(vlayer);
+    vectorLayer = new OpenLayers.Layer.Vector( "Editable Layer" );
+
+
+    modifier = new OpenLayers.Control.ModifyFeature(vectorLayer);
+
+
     map = new OpenLayers.Map('map', {
         projection: 'EPSG:3857',
         layers: [
@@ -31,11 +36,38 @@ function init() {
             .transform('EPSG:4326', 'EPSG:3857'),
         zoom: 5
     });
-    map.addControl(new OpenLayers.Control.LayerSwitcher());
-    map.addControl(polygon);
-    polygon.activate();
-    map.addControl(modifier);
-    modifier.activate();
 
-    map.addLayers([vlayer]);
+    drawControls = {
+        polygon: new OpenLayers.Control.DrawFeature(vectorLayer,
+            OpenLayers.Handler.Polygon),
+        box: new OpenLayers.Control.DrawFeature(vectorLayer,
+            OpenLayers.Handler.RegularPolygon, {
+                handlerOptions: {
+                    sides: 4,
+                    irregular: true
+                }
+            }
+        ),
+        edit: new OpenLayers.Control.ModifyFeature(vectorLayer),
+        nav:  new OpenLayers.Control.Navigation(),
+        select: new OpenLayers.Control.SelectFeature(vectorLayer, {clickout: true})
+    };
+    for(var key in drawControls) {
+        map.addControl(drawControls[key]);
+    }
+
+
+    map.addLayers([vectorLayer]);
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+}
+
+function toggleControl(element) {
+    for(key in drawControls) {
+        var control = drawControls[key];
+        if(element.value == key) {
+            control.activate();
+        } else {
+            control.deactivate();
+        }
+    }
 }

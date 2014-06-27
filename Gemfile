@@ -23,7 +23,7 @@ group :development, :test do
 
   # Code Coverage
   gem 'simplecov'
-  gem 'rack-mini-profiler'
+  #gem 'rack-mini-profiler'
 end
 
 # UI Related
