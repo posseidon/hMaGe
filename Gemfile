@@ -41,6 +41,8 @@ gem 'kaminari'
 # Map visualization
 gem 'openlayers-rails'
 
+# Thumbnail
+gem 'paperclip', '~> 4.1'
 
 # Use unicorn as the app server
 # gem 'unicorn'

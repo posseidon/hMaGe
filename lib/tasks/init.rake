@@ -6,17 +6,21 @@ namespace :init do
   end
 
   desc "Load Images from directory recursively into Map Model"
-  task :load, [:root_folder] do |t, args|
+  task :load, [:root_folder] => :environment do |t, args|
+    # Run with  rake init:load["/home/ntb/Downloads/source_images"]
     Dir["#{args[:root_folder]}/*"].map{|folder|
       Dir["#{folder}/*"].map{|file|
-        # Original Image
         if File.file?(file)
-          puts "#{file}"
-        else # Thumbnail folder
-          Dir.glob("#{file}/*.gif") do |thumbnail_file|
-            puts thumbnail_file
-          end
+          map = Map.new(:name => '', :path => file)
+          map.image = File.new(file)
+          map.image.reprocess!
+          map.save!
         end
+        #else # Thumbnail folder
+        #  Dir.glob("#{file}/*.gif") do |thumbnail_file|
+        #    puts thumbnail_file
+        #  end
+        #end
       }
     }
   end

@@ -10,6 +10,7 @@
 db/*.sqlite3
 /log/*
 tmp/*
+public/images/*
 
 # various artifacts
 **.war
