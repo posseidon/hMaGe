@@ -30,9 +30,6 @@ end
 gem 'jquery-rails'
 gem 'bootstrap-generators', '~> 3.1.1'
 
-# Database Engine
-gem 'mongoid'
-
 # Authentication and Authorization
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'scrypt'
