@@ -1,0 +1,10 @@
+# Enter your per-environment constants below
+
+development: &default
+  maps_per_page:  10
+
+production:
+  <<: *default
+
+test:
+  <<: *default

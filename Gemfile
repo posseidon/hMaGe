@@ -41,6 +41,9 @@ gem 'kaminari'
 # Map visualization
 gem 'openlayers-rails'
 
+# Application Constants
+gem 'app_constants'
+
 # Thumbnail
 gem 'paperclip', '~> 4.1'
 

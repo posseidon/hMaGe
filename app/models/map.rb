@@ -14,14 +14,14 @@ class Map < ActiveRecord::Base
   #
   # Get all Processed images
   #
-  def Map.processed
-    self.where(processed: true)
+  def Map.processed(page)
+    self.where(processed: true).page(page).per(AppConstants.maps_per_page)
   end
 
   #
   # Get all unprocessed images.
   #
-  def Map.unprocessed
-    self.where(processed: false)
+  def Map.unprocessed(page)
+    self.where(processed: false).page(page).per(AppConstants.maps_per_page)
   end
 end
