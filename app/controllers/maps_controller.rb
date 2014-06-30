@@ -1,6 +1,6 @@
 class MapsController < ApplicationController
   def index
-    @maps = Map.all
+    @maps = Map.unprocessed
   end
   def new
     @map = Map.find(1)

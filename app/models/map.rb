@@ -9,5 +9,19 @@ class Map < ActiveRecord::Base
     :default_url => "/missing.png",
     :url => "/system/:style/:filename.:extension"
 
-    validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+
+  #
+  # Get all Processed images
+  #
+  def Map.processed
+    self.where(processed: true)
+  end
+
+  #
+  # Get all unprocessed images.
+  #
+  def Map.unprocessed
+    self.where(processed: false)
+  end
 end
