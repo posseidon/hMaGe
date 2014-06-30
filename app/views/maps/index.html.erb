@@ -1,10 +1,20 @@
 <div class="row">
-  <div id="gallery">
-    <% @maps.each do |map| %>
-      <a href="<%= map.image.url(:large) %>" data-toggle="lightbox" data-title="<%= map.image.original_filename %>">
-        <%= image_tag map.image.url(:medium) %>
-      </a>
-    <% end %>
+  <div class="tabbable tabs-below">
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="gallery_list">
+        <%= render :partial => 'gallery', :locals => {:maps => @maps} %>
+      </div>
+      <div class="tab-pane" id="map_list">
+        <%= render :partial => 'maps', :locals => {:maps => @maps} %>
+      </div>
+    </div>
+    <center><%= paginate @maps %></center>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#gallery_list" role="tab" data-toggle="tab">Gallery</a></li>
+      <li><a href="#map_list" role="tab" data-toggle="tab">Map list</a></li>
+    </ul>
   </div>
-  <center><%= paginate @maps %></center>
+
 </div>

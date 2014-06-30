@@ -1,0 +1,24 @@
+<div id="maps_table">
+  <table class="table table-striped table-responsive">
+  <thead>
+    <th>#</th>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Filename</th>
+    <th>Processed</th>
+    <th>Created</th>
+  </thead>
+  <tbody>
+    <% maps.each do |map| %>
+    <tr>
+      <td><%= map.id %></td>
+      <td><%= map.name %></td>
+      <td><%= number_to_human_size(map.image.size) %></td>
+      <td><%= map.image.original_filename %></td>
+      <td><%= status_to_icon(map.processed) %></td>
+      <td><%= map.created_at.strftime("%Y-%B-%e") %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  </table>
+</div>

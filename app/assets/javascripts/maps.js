@@ -85,4 +85,6 @@ $(document).ready(function(){
         always_show_close: true
       });
     });
+
+    $('.carousel').carousel()
 });
