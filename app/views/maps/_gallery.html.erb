@@ -1,7 +1,7 @@
   <div id="gallery">
     <% maps.each do |map| %>
-      <a href="<%= map.image.url(:large) %>" data-toggle="lightbox" data-title="<%= map.image.original_filename %>">
+      <%= link_to map_path(map.id) do %>
         <%= image_tag map.image.url(:medium) %>
-      </a>
+      <% end %>
     <% end %>
   </div>

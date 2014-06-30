@@ -13,7 +13,11 @@ Hmage::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  resources :maps
+  resources :maps do
+    member do
+      get 'location'
+    end
+  end
   # Sample resource route with options:
   #   resources :products do
   #     member do

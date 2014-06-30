@@ -12,9 +12,15 @@
     <% maps.each do |map| %>
     <tr>
       <td><%= map.id %></td>
-      <td><%= map.name %></td>
+      <td>
+        <%= link_to map.name, map_path(map.id) %>
+      </td>
       <td><%= number_to_human_size(map.image.size) %></td>
-      <td><%= map.image.original_filename %></td>
+      <td>
+        <a href="<%= map.image.url(:large) %>" data-toggle="lightbox" data-title="<%= map.image.original_filename %>">
+          <%= map.image.original_filename %>
+        </a>
+      </td>
       <td><%= status_to_icon(map.processed) %></td>
       <td><%= map.created_at.strftime("%Y-%B-%e") %></td>
     </tr>

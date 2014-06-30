@@ -1,0 +1,69 @@
+<div class="row">
+  <h1>Edit Map</h1>
+  <hr>
+  <!-- left column -->
+  <div class="col-md-3">
+    <div class="text-center">
+      <a href="<%= @map.image.url(:large) %>" data-toggle="lightbox" data-title="<%= @map.image.original_filename %>">
+        <%= image_tag @map.image.url(:medium), :class => 'img-rounded img-responsive' %>
+      </a>
+    </div>
+    <div id="table">
+      <table class="table table-striped table-responsive">
+      <tbody>
+          <tr>
+            <td>Name:</td>
+            <td>
+            <%= link_to @map.name, map_path(@map.id) %>
+            </td>
+          </tr>
+          <tr>
+            <td>Size:</td>
+            <td><%= number_to_human_size(@map.image.size) %></td>
+          </tr>
+          <tr>
+            <td>Filename:</td>
+            <td>
+              <a href="<%= @map.image.url(:large) %>" data-toggle="lightbox" data-title="<%= @map.image.original_filename %>">
+                <%= @map.image.original_filename %>
+              </a>
+            </td>
+          </tr>
+          <tr><td>Status:</td><td><%= status_to_icon(@map.processed) %></td></tr>
+          <tr><td>Created:</td><td><%= @map.created_at.strftime("%Y-%B-%e") %></td></tr>
+          <tr>
+            <td colspan="2">
+              <%= link_to location_map_path(@map.id) do %>
+                <button type="button" class="btn btn-primary btn-block">Set location</button>
+              <% end %>
+            </td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- edit form column -->
+  <div class="col-md-9 personal-info">
+    <% if @map.errors.any? %>
+      <div class="alert alert-info alert-dismissable">
+        <a class="panel-close close" data-dismiss="alert">×</a>
+        <i class="fa fa-coffee"></i>
+        This is an <strong>.alert</strong>. Use this to show important messages to the user.
+      </div>
+    <% end %>
+    <%= form_for @map, :html => {:class => "form-horizontal", :role => "form"} do |form| %>
+      <div class="form-group">
+        <label for="inputSubject" class="col-lg-2 control-label">Name</label>
+        <div class="col-sm-7">
+          <%= form.text_field :name, :class => "form-control", :placeholder => "Name your map", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-7">
+          <%= form.submit "Save", :class => "btn btn-lg btn-primary btn-block" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
