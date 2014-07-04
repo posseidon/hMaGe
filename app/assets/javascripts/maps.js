@@ -1,7 +1,9 @@
 var map, vectorLayer;
 var drawControls;
 var polygon, box;
-var edit, nav, select;
+var edit, nav, remove;
+var select;
+var selectedFeatures = [];
 
 function init() {
     vectorLayer = new OpenLayers.Layer.Vector( "Editable Layer" );
@@ -51,12 +53,24 @@ function init() {
         ),
         edit: new OpenLayers.Control.ModifyFeature(vectorLayer),
         nav:  new OpenLayers.Control.Navigation(),
-        select: new OpenLayers.Control.SelectFeature(vectorLayer, {clickout: true})
+        select: new OpenLayers.Control.SelectFeature(vectorLayer, {
+            clickout: true,
+            onSelect: selectFeature,
+            multiple: true
+        })
     };
     for(var key in drawControls) {
         map.addControl(drawControls[key]);
     }
+}
 
+function selectFeature(feature){
+    selectedFeatures.push(feature);
+}
+
+function removeFeature(){
+    vectorLayer.removeFeatures(selectedFeatures);
+    selectedFeatures = [];
 }
 
 function toggleControl(element) {
