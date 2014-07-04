@@ -9,48 +9,68 @@
     <!-- EDITING TOOLS -->
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
-        <div class="collapse navbar-collapse">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Tools</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li>
-              <button type="button" class="btn btn-default btn-sm navbar-btn" value="polygon" onclick="toggleControl(this);">
+            <li id="polygon">
+              <a href="javascript:void(0)" onclick="toggleControl('polygon');">
                 <i class="glyphicon glyphicon-edit"></i>
-                Polygon
-              </button>
+                Draw Polygon
+              </a>
             </li>
-            <li>
-              <button type="button" class="btn btn-default btn-sm navbar-btn" value="box" onclick="toggleControl(this);">
+            <li id="box">
+              <a href="javascript:void(0)" onclick="toggleControl('box');">
                 <i class="glyphicon glyphicon-stop"></i>
-                Rectangle
-              </button>
+                Draw Rectangle
+              </a>
             </li>
-            <li>
-              <button type="button" class="btn btn-default btn-sm navbar-btn" value="edit" onclick="toggleControl(this);">
-                <i class="glyphicon glyphicon-wrench"></i>
-                Edit
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn btn-default btn-sm navbar-btn" value="select" onclick="toggleControl(this);">
-                <i class="glyphicon glyphicon-hand-up"></i>
-                Select
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn btn-default btn-sm navbar-btn" value="nav" onclick="toggleControl(this);">
-                <i class="glyphicon glyphicon-screenshot"></i>
-                Move
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn btn-default navbar-btn btn-sm" value="remove" onclick="removeFeature();">
-                <i class="glyphicon glyphicon-minus-sign"></i>
-                Delete
-              </button>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li id="nav">
+                  <a href="javascript:void(0)" onclick="toggleControl('nav');">
+                    <i class="glyphicon glyphicon-screenshot"></i>
+                    Move Map
+                  </a>
+                </li>
+
+                <li id="edit">
+                  <a href="javascript:void(0)" onclick="toggleControl('edit');">
+                    <i class="glyphicon glyphicon-wrench"></i>
+                    Edit Feature
+                  </a>
+                </li>
+                <li id="select">
+                  <a href="javascript:void(0)" onclick="toggleControl('select');">
+                    <i class="glyphicon glyphicon-hand-up"></i>
+                    Select Feature
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="javascript:void(0)" onclick="removeFeature();">
+                    <i class="glyphicon glyphicon-minus-sign"></i>
+                    Remove Features
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
-        </div>
-      </div>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
     </nav>
+
     <!-- END EDITING TOOLS -->
 
     <!-- MAP -->
@@ -60,18 +80,27 @@
     <!-- INPUT BAR -->
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
-          <div class="collapse navbar-collapse">
-            <form class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Label #1">
-              </div>
-              <button type="submit" class="btn btn-default btn-sm">
-                <i class="glyphicon glyphicon-ok-sign"></i>
-                Save
-              </button>
-            </form>
-          </div>
-      </div>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Set Grid name</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form id="gridNameForm" class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input id="gridNameTxt" type="text" class="form-control" placeholder="A1">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
     </nav>
     <!-- END INPUT BAR -->
   </div>

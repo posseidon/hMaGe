@@ -3,10 +3,34 @@ var drawControls;
 var polygon, box;
 var edit, nav, remove;
 var select;
-var selectedFeatures = [];
+var selectedFeature;
 
 function init() {
-    vectorLayer = new OpenLayers.Layer.Vector( "Editable Layer" );
+    // allow testing of specific renderers via "?renderer=Canvas", etc
+    var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
+    renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;
+
+    vectorLayer = new OpenLayers.Layer.Vector( "Editable Layer", {
+                styleMap: new OpenLayers.StyleMap({'default':{
+                    strokeColor: "#6999c5",
+                    strokeOpacity: 1,
+                    strokeWidth: 1,
+                    fillColor: "#6999c5",
+                    fillOpacity: 0.2,
+                    pointRadius: 6,
+                    pointerEvents: "visiblePainted",
+                    label : "Grid: ${grid}",
+                    fontColor: "${favColor}",
+                    fontSize: "18px",
+                    fontFamily: "Verdana",
+                    labelAlign: "${align}",
+                    labelXOffset: "${xOffset}",
+                    labelYOffset: "${yOffset}",
+                    labelOutlineColor: "white",
+                    labelOutlineWidth: 1
+                }}),
+                renderers: renderer
+            });
 
     map = new OpenLayers.Map('map', {
         projection: 'EPSG:3857',
@@ -55,8 +79,7 @@ function init() {
         nav:  new OpenLayers.Control.Navigation(),
         select: new OpenLayers.Control.SelectFeature(vectorLayer, {
             clickout: true,
-            onSelect: selectFeature,
-            multiple: true
+            onSelect: selectFeature
         })
     };
     for(var key in drawControls) {
@@ -65,21 +88,23 @@ function init() {
 }
 
 function selectFeature(feature){
-    selectedFeatures.push(feature);
+    selectedFeature = feature
 }
 
 function removeFeature(){
-    vectorLayer.removeFeatures(selectedFeatures);
-    selectedFeatures = [];
+    vectorLayer.removeFeatures(selectedFeature);
+    selectedFeature = null;
 }
 
-function toggleControl(element) {
+function toggleControl(action) {
     for(key in drawControls) {
         var control = drawControls[key];
-        if(element.value == key) {
+        if(action == key) {
             control.activate();
+            $("#"+action).attr("class","active");
         } else {
             control.deactivate();
+            $("#"+key).removeClass("active");
         }
     }
 }
@@ -96,7 +121,7 @@ function clickableGrid( rows, cols, callback ){
             var cell = tr.appendChild(document.createElement('td'));
             cell.width = img.width()/cols;
             cell.height = img.height()/rows;
-            cell.innerHTML = ++i;
+            cell.innerHTML = "A" + (++i);
             cell.addEventListener('click',(function(el,r,c,i){
                 return function(){
                     callback(el,r,c,i);
@@ -134,4 +159,13 @@ $(document).ready(function(){
     });
 
     $('#grid-source').append(grid);
+    $('form').submit(false);
+
+    $("#gridNameForm").submit(function(event){
+        console.log("alma");
+        var gridName = $("#gridNameTxt").val();
+        console.log(gridName);
+        selectedFeature.attributes = {grid: gridName};
+        vectorLayer.redraw();
+    });
 });
