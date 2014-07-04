@@ -6,12 +6,10 @@ var edit, nav, select;
 function init() {
     vectorLayer = new OpenLayers.Layer.Vector( "Editable Layer" );
 
-
-    modifier = new OpenLayers.Control.ModifyFeature(vectorLayer);
-
-
     map = new OpenLayers.Map('map', {
         projection: 'EPSG:3857',
+        displayProjection: new OpenLayers.Projection("EPSG:4326"),
+        units: "m",
         layers: [
             new OpenLayers.Layer.Google(
                 "Google Physical",
@@ -37,6 +35,9 @@ function init() {
         zoom: 5
     });
 
+    map.addLayers([vectorLayer]);
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+
     drawControls = {
         polygon: new OpenLayers.Control.DrawFeature(vectorLayer,
             OpenLayers.Handler.Polygon),
@@ -56,9 +57,6 @@ function init() {
         map.addControl(drawControls[key]);
     }
 
-
-    map.addLayers([vectorLayer]);
-    map.addControl(new OpenLayers.Control.LayerSwitcher());
 }
 
 function toggleControl(element) {
@@ -70,6 +68,29 @@ function toggleControl(element) {
             control.deactivate();
         }
     }
+}
+
+function clickableGrid( rows, cols, callback ){
+    var img = $('#image');
+    var i=0;
+    var grid = document.createElement('table');
+    grid.id = 'grid';
+    grid.className = 'table';
+    for (var r=0;r<rows;++r){
+        var tr = grid.appendChild(document.createElement('tr'));
+        for (var c=0;c<cols;++c){
+            var cell = tr.appendChild(document.createElement('td'));
+            cell.width = img.width()/cols;
+            cell.height = img.height()/rows;
+            cell.innerHTML = ++i;
+            cell.addEventListener('click',(function(el,r,c,i){
+                return function(){
+                    callback(el,r,c,i);
+                }
+            })(cell,r,c,i),false);
+        }
+    }
+    return grid;
 }
 
 
@@ -86,4 +107,17 @@ $(document).ready(function(){
       });
     });
 
+    var lastClicked;
+    var grid = clickableGrid(2,2,function(el,row,col,i){
+        console.log("You clicked on element:",el);
+        console.log("You clicked on row:",row);
+        console.log("You clicked on col:",col);
+        console.log("You clicked on item #:",i);
+
+        el.className='clicked';
+        if (lastClicked) lastClicked.className='';
+        lastClicked = el;
+    });
+
+    $('#grid-source').append(grid);
 });
