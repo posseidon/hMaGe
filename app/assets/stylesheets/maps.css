@@ -3,6 +3,10 @@
     height: 512px;
 }
 
+.minimap {
+  height: 256px;
+}
+
 .img-overlay{
     width: 100%;
     position: relative;

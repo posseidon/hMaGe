@@ -52,16 +52,44 @@
         This is an <strong>.alert</strong>. Use this to show important messages to the user.
       </div>
     <% end %>
-    <%= form_for @map, :html => {:class => "form-horizontal", :role => "form"} do |form| %>
+    <%= form_for @map, :html => {:class => "form-horizontal", :role => "form"} do |f| %>
       <div class="form-group">
         <label for="inputSubject" class="col-lg-2 control-label">Name</label>
         <div class="col-sm-7">
-          <%= form.text_field :name, :class => "form-control", :placeholder => "Name your map", :type => "text" %>
+          <%= f.text_field :name, :class => "form-control", :placeholder => "Name your map", :type => "text" %>
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-7">
-          <%= form.submit "Save", :class => "btn btn-lg btn-primary btn-block" %>
+        <label for="inputSubject" class="col-lg-2 control-label">Tipus</label>
+        <div class="col-sm-7">
+          <%= f.text_field :kind, :class => "form-control", :placeholder => "Kind of map", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputSubject" class="col-lg-2 control-label">Meretarany</label>
+        <div class="col-sm-7">
+          <%= f.text_field :size, :class => "form-control", :placeholder => "Size of your map", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputSubject" class="col-lg-2 control-label">Felbontas</label>
+        <div class="col-sm-7">
+          <%= f.text_field :resolutuon, :class => "form-control", :placeholder => "Resolution of your map", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputSubject" class="col-lg-2 control-label">Kiado</label>
+        <div class="col-sm-7">
+          <%= f.text_field :publisher, :class => "form-control", :placeholder => "Publisher of your map", :type => "text" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-3">
+          <%= link_to "Cancel", map_path, :class => "btn btn-lg btn-primary btn-block" %>
+        </div>
+        <div class="col-sm-4">
+          <%= f.submit "Save", :class => "btn btn-lg btn-primary btn-block" %>
         </div>
       </div>
     <% end %>

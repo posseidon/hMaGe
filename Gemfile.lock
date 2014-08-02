@@ -85,6 +85,11 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    pg (0.17.1)
+    pg_search (0.6.4)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     polyglot (0.3.5)
     rack (1.4.5)
     rack-cache (1.2)
@@ -146,7 +151,6 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.9)
     thor (0.19.1)
     tilt (1.4.1)
     treetop (1.4.15)
@@ -172,10 +176,11 @@ DEPENDENCIES
   kaminari
   openlayers-rails
   paperclip (~> 4.1)
+  pg
+  pg_search
   rails (= 3.2.18)
   rspec-rails
   sass-rails (~> 3.2.3)
   scrypt
   simplecov
-  sqlite3
   uglifier (>= 1.0.3)

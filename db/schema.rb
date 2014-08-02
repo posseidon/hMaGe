@@ -11,18 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140628154319) do
+ActiveRecord::Schema.define(:version => 20140802141958) do
 
   create_table "maps", :force => true do |t|
-    t.string   "name",                                  :null => false
-    t.string   "path",                                  :null => false
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.string   "name",               :default => "Unprocessed Map", :null => false
+    t.string   "path",                                              :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.boolean  "processed",          :default => false
+    t.string   "kind"
+    t.string   "size"
+    t.string   "resolutuon"
+    t.string   "publisher"
+  end
+
+  create_table "pg_search_documents", :force => true do |t|
+    t.text     "content"
+    t.integer  "searchable_id"
+    t.string   "searchable_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
 end

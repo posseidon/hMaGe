@@ -1,1 +1,87 @@
-<%= link_to 'Edit', edit_map_path(@map.id) %>
+<div class="row">
+
+  <!-- left column -->
+  <div class="col-md-3">
+    <h2>
+      <i class="glyphicon glyphicon-map-marker"></i>
+      Location
+    </h2>
+    <div id="map_container">
+      <div id="map" class="minimap"></div>
+    </div>
+
+    <h2>
+      <i class="glyphicon glyphicon-th-list"></i>
+      Attributes
+    </h2>
+    <div id="attributes">
+      <table class="table table-striped table-responsive">
+      <tbody>
+          <tr>
+            <td>Tipus:</td>
+            <td>
+            <%= @map.kind %>
+            </td>
+          </tr>
+          <tr>
+            <td>Meretarany</td>
+            <td><%= @map.size %></td>
+          </tr>
+          <tr>
+            <td>Felbontas</td>
+            <td>
+                <%= @map.resolutuon %>
+            </td>
+          </tr>
+          <tr>
+            <td>Kiado:</td>
+            <td><%= @map.publisher %></td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+
+    <h2>
+      <i class="glyphicon glyphicon-info-sign"></i>
+      Information
+    </h2>
+    <div id="table">
+      <table class="table table-striped table-responsive">
+      <tbody>
+          <tr>
+            <td>Name:</td>
+            <td>
+            <%= link_to @map.name, map_path(@map.id) %>
+            </td>
+          </tr>
+          <tr>
+            <td>Size:</td>
+            <td><%= number_to_human_size(@map.image.size) %></td>
+          </tr>
+          <tr>
+            <td>Filename:</td>
+            <td>
+              <a href="<%= @map.image.url(:large) %>" data-toggle="lightbox" data-title="<%= @map.image.original_filename %>">
+                <%= @map.image.original_filename %>
+              </a>
+            </td>
+          </tr>
+          <tr><td>Status:</td><td><%= status_to_icon(@map.processed) %></td></tr>
+          <tr><td>Created:</td><td><%= @map.created_at.strftime("%Y-%B-%e") %></td></tr>
+          <tr>
+            <td colspan="2">
+              <%= link_to edit_map_path(@map.id) do %>
+                <button type="button" class="btn btn-primary btn-block">Edit map</button>
+              <% end %>
+            </td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- edit form column -->
+  <div class="col-md-9 personal-info">
+    <%= image_tag @map.image.url(:large), :class => 'img-rounded img-responsive' %>
+  </div>
+</div>

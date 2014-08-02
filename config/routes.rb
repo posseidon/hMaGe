@@ -13,9 +13,12 @@ Hmage::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  resources :maps do
+  resources :maps, only: [:index, :show, :edit, :update] do
     member do
       get 'location'
+    end
+    collection do
+      post 'search'
     end
   end
   # Sample resource route with options:
@@ -53,7 +56,7 @@ Hmage::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'maps#index'
 
   # See how all your routes lay out with "rake routes"
 

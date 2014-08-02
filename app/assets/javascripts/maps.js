@@ -134,9 +134,9 @@ function clickableGrid( rows, cols, callback ){
 
 
 $(document).ready(function(){
-    $("#gallery").justifiedGallery({
-      rowHeight: 240
-    });
+    //$("#gallery").justifiedGallery({
+    //  rowHeight: 240
+    //});
 
     // delegate calls to data-toggle="lightbox"
     $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {

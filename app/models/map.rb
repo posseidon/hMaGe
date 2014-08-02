@@ -1,5 +1,15 @@
 class Map < ActiveRecord::Base
-  attr_accessible :name, :path, :image
+  attr_accessible :name, :path, :image, :kind, :size, :resolutuon, :publisher
+
+  # PostgreSQL full-text search
+  include PgSearch
+  pg_search_scope :search_by_attributes,
+                  :against => [:name, :kind, :size, :resolutuon, :publisher],
+                  :using => {
+                    :tsearch => {:prefix => true}
+                  }
+
+  # Paperclip configuration
   has_attached_file :image,
     :styles => {
       :thumb  => '100x100>',
