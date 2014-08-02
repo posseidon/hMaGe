@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140802141958) do
+ActiveRecord::Schema.define(:version => 20140802163049) do
+
+  create_table "grids", :force => true do |t|
+    t.integer "map_id"
+    t.string  "grid_id"
+    t.spatial "bbox",    :limit => {:srid=>4326, :type=>"polygon"}
+  end
 
   create_table "maps", :force => true do |t|
     t.string   "name",               :default => "Unprocessed Map", :null => false
