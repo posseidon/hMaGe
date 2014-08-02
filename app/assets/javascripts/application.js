@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require openlayers-rails
-//= require ekko-lightbox.min
 //= require maps
 
 

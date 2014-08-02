@@ -4,6 +4,7 @@ gem 'rails', '3.2.18'
 
 gem 'pg'
 gem 'pg_search'
+gem 'activerecord-postgis-adapter'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

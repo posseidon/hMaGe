@@ -1,3 +1,41 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+      //$("#gallery").justifiedGallery({
+      //  rowHeight: 240
+      //});
+
+      // delegate calls to data-toggle="lightbox"
+      $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+        event.preventDefault();
+        return $(this).ekkoLightbox({
+          always_show_close: true
+        });
+      });
+
+      var lastClicked;
+      var grid = clickableGrid(2,2,function(el,row,col,i){
+          console.log("You clicked on element:",el);
+          console.log("You clicked on row:",row);
+          console.log("You clicked on col:",col);
+          console.log("You clicked on item #:",i);
+
+          el.className='clicked';
+          if (lastClicked) lastClicked.className='';
+          lastClicked = el;
+      });
+
+      $('#grid-source').append(grid);
+      $('form').submit(false);
+
+      $("#gridNameForm").submit(function(event){
+          console.log("alma");
+          var gridName = $("#gridNameTxt").val();
+          console.log(gridName);
+          selectedFeature.attributes = {grid: gridName};
+          vectorLayer.redraw();
+      });
+  });
+</script>
 <div class="row">
   <div class="col-md-6">
     <div class="img-overlay">
