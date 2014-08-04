@@ -54,16 +54,18 @@ function init() {
                 {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
             ),
         ],
-        center: new OpenLayers.LonLat(10.2, 48.9)
-            // Google.v3 uses web mercator as projection, so we have to
-            // transform our coordinates
-            .transform('EPSG:4326', 'EPSG:3857'),
+        center: new OpenLayers.LonLat(19.0531965145, 47.5011151657).transform('EPSG:4326', 'EPSG:3857'),
         zoom: 5
     });
 
     map.addLayers([vectorLayer]);
     map.addControl(new OpenLayers.Control.LayerSwitcher());
 
+    addDrawControls(map, vectorLayer);
+
+}
+
+function addDrawControls(map, vectorLayer){
     drawControls = {
         polygon: new OpenLayers.Control.DrawFeature(vectorLayer,
             OpenLayers.Handler.Polygon),
@@ -85,10 +87,14 @@ function init() {
     for(var key in drawControls) {
         map.addControl(drawControls[key]);
     }
+    updateFormats();
 }
 
+
 function selectFeature(feature){
-    selectedFeature = feature
+    selectedFeature = feature;
+    var str = formats['out']['wkt'].write(selectedFeature, false);
+    console.log(selectedFeature.label);
 }
 
 function removeFeature(){
@@ -132,4 +138,22 @@ function clickableGrid( rows, cols, callback ){
     return grid;
 }
 
+function updateFormats() {
+    var in_options = {
+        'internalProjection': map.baseLayer.projection,
+        'externalProjection': new OpenLayers.Projection("EPSG:4326")
+    };
+    var out_options = {
+        'internalProjection': map.baseLayer.projection,
+        'externalProjection': new OpenLayers.Projection("EPSG:4326")
+    };
 
+    formats = {
+      'in': {
+        wkt: new OpenLayers.Format.WKT(in_options),
+      },
+      'out': {
+        wkt: new OpenLayers.Format.WKT(out_options),
+      }
+    };
+}

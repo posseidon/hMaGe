@@ -1,0 +1,40 @@
+<div id="maps_table">
+  <table class="table table-striped table-responsive">
+  <thead>
+    <th>#</th>
+    <th>Kind</th>
+    <th>Name</th>
+    <th>Meretarany</th>
+    <th>Resolution</th>
+    <th>Publisher</th>
+    <th>Size</th>
+    <th>Imported</th>
+    <th>Processed</th>
+  </thead>
+  <tbody>
+    <% grids.each do |grid| %>
+    <tr>
+      <td>
+        <a href="<%= grid.map.image.url(:small) %>" data-toggle="lightbox" data-title="<%= grid.map.image.original_filename %>">
+          <%= grid.map.id %>
+        </a>
+      </td>
+      <td><%= grid.map.kind %></td>
+      <td>
+        <%= link_to grid.map.name, map_path(grid.map.id) %>
+      </td>
+      <td>
+        <%= grid.map.size %>
+      </td>
+      <td><%= grid.map.resolutuon %></td>
+      <td>
+        <%= grid.map.publisher %>
+      </td>
+      <td><%= number_to_human_size(grid.map.image.size) %></td>
+      <td><%= grid.map.created_at.strftime("%Y-%B-%e") %></td>
+      <td><%= status_to_icon(grid.map.processed) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  </table>
+</div>

@@ -1,46 +1,82 @@
 <script type="text/javascript">
+  var polygons = JSON.parse('<%= raw @polygons %>');
+  var wkt = new OpenLayers.Format.WKT();
+
   $(document).ready(function(){
-      //$("#gallery").justifiedGallery({
-      //  rowHeight: 240
-      //});
-
-      // delegate calls to data-toggle="lightbox"
-      $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-        event.preventDefault();
-        return $(this).ekkoLightbox({
-          always_show_close: true
-        });
-      });
-
       var lastClicked;
+      var clickedGrid;
       var grid = clickableGrid(2,2,function(el,row,col,i){
-          console.log("You clicked on element:",el);
-          console.log("You clicked on row:",row);
-          console.log("You clicked on col:",col);
-          console.log("You clicked on item #:",i);
-
           el.className='clicked';
           if (lastClicked) lastClicked.className='';
           lastClicked = el;
+          clickedGrid = el.innerHTML;
       });
 
       $('#grid-source').append(grid);
-      $('form').submit(false);
 
+      $("#gridNameForm").submit(false);
       $("#gridNameForm").submit(function(event){
-          console.log("alma");
           var gridName = $("#gridNameTxt").val();
-          console.log(gridName);
-          selectedFeature.attributes = {grid: gridName};
-          vectorLayer.redraw();
+          if(gridName != clickedGrid){
+            alert("Invalid Grid Name");
+          }else{
+            selectedFeature.attributes = {grid: gridName};
+            var str = formats['out']['wkt'].write(selectedFeature, false);
+            $("#grids_"+gridName).val(str);
+            vectorLayer.redraw();
+          }
       });
+
+      init();
+
+      for(idx in polygons){
+        polygon = polygons[idx];
+        var feature = wkt.read(polygon.bbox);
+        feature.attributes = {
+          grid: polygon.name
+        };
+        feature.geometry.transform(map.displayProjection, map.getProjectionObject());
+        vectorLayer.addFeatures([feature]);
+      }
+
+      if(polygons.length > 0){
+        console.log("aaaaaaa")
+        map.zoomToExtent(vectorLayer.getDataExtent());
+      }
+      console.log("END");
+
   });
+
+function setData(){
+  var features = vectorLayer.features;
+  for(idx in features){
+    var feature = features[idx];
+    var wkt = formats['out']['wkt'].write(feature, false);
+    $("#grids_" + feature.attributes.grid).val(wkt);
+  }
+}
+
 </script>
 <div class="row">
   <div class="col-md-6">
     <div class="img-overlay">
       <%= image_tag @map.image.url(:large), :class => 'img-responsive img-rounded' %>
       <div id="grid-source" class="grid-overlay"></div>
+    </div>
+    <br>
+    <div id="grid_loc">
+      <div class="col-sm-6">
+        <%= link_to "Cancel", map_path, :class => "btn btn-lg btn-primary btn-block" %>
+      </div>
+      <div class="col-sm-6">
+        <%= form_tag set_grids_map_path, :class => "form-horizontal", :role => "form" do %>
+          <%= hidden_field_tag 'grids[A1]', '' %>
+          <%= hidden_field_tag 'grids[A2]', '' %>
+          <%= hidden_field_tag 'grids[A3]' %>
+          <%= hidden_field_tag 'grids[A4]' %>
+          <%= submit_tag "Save", :onclick => "return setData();", :class => 'btn btn-lg btn-primary btn-block' %>
+        <% end %>
+      </div>
     </div>
   </div>
   <div class="col-md-6">
@@ -135,7 +171,7 @@
             <div class="form-group">
               <input id="gridNameTxt" type="text" class="form-control" placeholder="A1">
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button id="setGridName" type="submit" class="btn btn-default">Set</button>
           </form>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

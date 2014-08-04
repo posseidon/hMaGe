@@ -16,9 +16,11 @@ Hmage::Application.routes.draw do
   resources :maps, only: [:index, :show, :edit, :update] do
     member do
       get 'location'
+      post 'set_grids'
     end
     collection do
       post 'search'
+      post 'related'
     end
   end
   # Sample resource route with options:

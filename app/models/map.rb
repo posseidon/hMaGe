@@ -1,6 +1,8 @@
 class Map < ActiveRecord::Base
   attr_accessible :name, :path, :image, :kind, :size, :resolutuon, :publisher
 
+  has_many :grids
+
   # PostgreSQL full-text search
   include PgSearch
   pg_search_scope :search_by_attributes,
@@ -33,5 +35,13 @@ class Map < ActiveRecord::Base
   #
   def Map.unprocessed(page)
     self.where(processed: false).page(page).per(AppConstants.maps_per_page)
+  end
+
+  def wkt_polygons
+    polygons = []
+    self.grids.each do |grid|
+      polygons << {name: grid.grid_id, bbox: grid.bbox.as_text}
+    end
+    return polygons
   end
 end

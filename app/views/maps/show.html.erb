@@ -1,5 +1,28 @@
-<div class="row">
+<script type="text/javascript">
+  var polygons = JSON.parse('<%= raw @polygons %>');
+  var wkt = new OpenLayers.Format.WKT();
 
+  $(document).ready(function(){
+    init();
+
+    for(idx in polygons){
+      polygon = polygons[idx];
+      var feature = wkt.read(polygon.bbox);
+      feature.attributes = {
+        grid: polygon.name
+      };
+      feature.geometry.transform(map.displayProjection, map.getProjectionObject());
+      vectorLayer.addFeatures([feature]);
+    }
+
+    if(polygons.length > 0){
+      map.zoomToExtent(vectorLayer.getDataExtent());
+    }
+    console.log("END");
+  });
+
+</script>
+<div class="row">
   <!-- left column -->
   <div class="col-md-3">
     <h2>
@@ -8,6 +31,10 @@
     </h2>
     <div id="map_container">
       <div id="map" class="minimap"></div>
+      <br>
+      <%= link_to location_map_path(@map.id) do %>
+        <button type="button" class="btn btn-primary btn-block">Set location</button>
+      <% end %>
     </div>
 
     <h2>
@@ -36,6 +63,13 @@
           <tr>
             <td>Kiado:</td>
             <td><%= @map.publisher %></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <%= link_to edit_map_path(@map.id) do %>
+                <button type="button" class="btn btn-primary btn-block">Edit attributes</button>
+              <% end %>
+            </td>
           </tr>
       </tbody>
       </table>
@@ -68,13 +102,6 @@
           </tr>
           <tr><td>Status:</td><td><%= status_to_icon(@map.processed) %></td></tr>
           <tr><td>Created:</td><td><%= @map.created_at.strftime("%Y-%B-%e") %></td></tr>
-          <tr>
-            <td colspan="2">
-              <%= link_to edit_map_path(@map.id) do %>
-                <button type="button" class="btn btn-primary btn-block">Edit map</button>
-              <% end %>
-            </td>
-          </tr>
       </tbody>
       </table>
     </div>
