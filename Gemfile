@@ -47,6 +47,9 @@ gem 'app_constants'
 # Thumbnail
 gem 'paperclip', '~> 4.1'
 
+# Authentication
+gem 'devise'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

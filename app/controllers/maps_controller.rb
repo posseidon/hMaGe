@@ -1,4 +1,6 @@
 class MapsController < ApplicationController
+  before_filter :authenticate_user!, except: [:index, :related, :search]
+
   def show
     @map = Map.find(params[:id])
     @polygons = @map.wkt_polygons.to_json
