@@ -26,11 +26,13 @@ Hmage::Application.routes.draw do
     end
   end
 
-  resources :admins, only: [:index] do
-    collection do
-      get  'users'
-      post 'search'
-      put 'update'
+  namespace :admin do
+    resources :users, only: [:index] do
+      collection do
+        get  'list'
+        post 'search'
+        put 'update'
+      end
     end
   end
 

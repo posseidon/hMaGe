@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-2">&nbsp;</div>
   <div class="col-md-8">
-    <%= form_tag(admins_path, method: :put, :role => 'form') do %>
+    <%= form_tag(admin_users_path, method: :put, :role => 'form') do %>
     <table class="table table-condensed table-responsive">
       <thead>
         <th>Email Address</th>
@@ -10,7 +10,7 @@
       </thead>
       <tbody>
         <% for user in @users %>
-        <tr class="<%= role_to_context(user.role) %>">
+        <tr class="active">
           <%= fields_for "users[]", user do |f| %>
             <td><%= h user.email %></td>
             <td><%=h user.created_at.strftime("%Y-%B-%e") %></td>

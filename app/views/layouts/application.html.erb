@@ -39,7 +39,7 @@
               <ul class="dropdown-menu" role="menu">
                 <% if can? :manager, User %>
                   <li>
-                    <%= link_to users_admins_path do %>
+                    <%= link_to list_admin_users_path do %>
                       <i class="glyphicon glyphicon-check"></i> &nbsp; Manager Users
                     <% end %>
                   </li>
