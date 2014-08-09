@@ -9,5 +9,5 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :role
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :role
 end
