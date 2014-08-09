@@ -21,7 +21,11 @@
       </td>
       <td><%= map.kind %></td>
       <td>
+      <% if can? :read, Map %>
         <%= link_to map.name, map_path(map.id) %>
+      <% else %>
+        <%= map.name %>
+      <% end %>
       </td>
       <td>
         <%= map.size %>

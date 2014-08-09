@@ -26,6 +26,14 @@ Hmage::Application.routes.draw do
     end
   end
 
+  resources :admins, only: [:index] do
+    collection do
+      get  'users'
+      post 'search'
+      put 'update'
+    end
+  end
+
   match '/about', :to => redirect('/about.html')
 
   # You can have the root of your site routed with "root"

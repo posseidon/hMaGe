@@ -50,6 +50,9 @@ gem 'paperclip', '~> 4.1'
 # Authentication
 gem 'devise'
 
+# Authorization
+gem 'cancan'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
