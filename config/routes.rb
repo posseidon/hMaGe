@@ -31,7 +31,7 @@ Hmage::Application.routes.draw do
       collection do
         get  'list'
         post 'search'
-        put 'update'
+        post 'update'
       end
     end
   end

@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-md-2">&nbsp;</div>
   <div class="col-md-8">
-    <div class="jumbotron">
+
       <h2>Users List</h2>
       <hr>
 
-      <%= form_tag(admin_users_path, method: :put, :role => 'form') do %>
+      <%= form_tag(admin_users_path, :role => 'form') do %>
       <table class="table table-condensed table-bordered table-responsive">
         <thead>
           <th>User Name</th>
@@ -36,7 +36,7 @@
         </tfoot>
       </table>
       <% end %>
-    </div>
+
     <center><%= paginate @users %></center>
   </div>
   <div class="col-md-2">&nbsp;</div>
