@@ -1,44 +1,43 @@
-<div id="maps_table">
-  <table class="table table-striped table-responsive">
-  <thead>
-    <th>#</th>
-    <th>Kind</th>
-    <th>Name</th>
-    <th>Meretarany</th>
-    <th>Resolution</th>
-    <th>Publisher</th>
-    <th>Size</th>
-    <th>Imported</th>
-    <th>Processed</th>
-  </thead>
-  <tbody>
-    <% grids.each do |grid| %>
-    <tr>
-      <td>
-        <a href="<%= grid.map.image.url(:small) %>" data-toggle="lightbox" data-title="<%= grid.map.image.original_filename %>">
-          <%= grid.map.id %>
-        </a>
-      </td>
-      <td><%= grid.map.kind %></td>
-      <td>
-      <% if can? :read, Map %>
-        <%= link_to grid.map.name, map_path(grid.map.id) %>
-      <% else %>
-        <%= grid.map.name %>
-      <% end %>
-      </td>
-      <td>
-        <%= grid.map.size %>
-      </td>
-      <td><%= grid.map.resolutuon %></td>
-      <td>
-        <%= grid.map.publisher %>
-      </td>
-      <td><%= number_to_human_size(grid.map.image.size) %></td>
-      <td><%= grid.map.created_at.strftime("%Y-%B-%e") %></td>
-      <td><%= status_to_icon(grid.map.processed) %></td>
-    </tr>
-    <% end %>
-  </tbody>
-  </table>
-</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $(".grid.map.image").elevateZoom({
+        scrollZoom : true,
+        responsive:  true,
+        loadingIcon: true
+      });
+  });
+</script>
+<% grids.each do |grid| %>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
+        <div class="panel panel-default">
+            <div class="row padall">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <span></span>
+                      <img id="<%= grid.map.id %>" src="<%= grid.map.image.url(:thumb) %>" data-zoom-image="<%= grid.map.image.url(:medium) %>" class="img-responsive img-rounded grid.map.image" />
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <span class="fa fa-paperclip icon"> <%= number_to_human_size(grid.map.image.size) %></span>
+                        </div>
+                        <div class="pull-right">
+                           <%= grid.map.kind %> | <%= grid.map.size %> | <%= grid.map.resolutuon %>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>
+                          <% if can? :read, Map%>
+                            <%= link_to grid.map.name, map_path(grid.map.id) %>
+                          <% else %>
+                            <%= grid.map.name %>
+                          <% end %>
+                        </h4>
+                        <span class="fa fa-bank icon"></span>  <%= grid.map.publisher %>
+                        <span class="<%= status_to_icon(grid.map.processed) %>"><%= status_to_text(grid.map.processed) %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>

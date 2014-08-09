@@ -1,9 +1,17 @@
 module MapsHelper
   def status_to_icon(status)
     if status
-      "<i class='glyphicon glyphicon-ok-sign'> processed</i>".html_safe
+      "fa fa-check-square-o icon pull-right".html_safe
     else
-      "<i class='glyphicon glyphicon-question-sign'> unprocessed</i>".html_safe
+      "fa fa-square-o icon pull-right".html_safe
+    end
+  end
+
+  def status_to_text(status)
+    if status
+      " processed".html_safe
+    else
+      " unprocessed".html_safe
     end
   end
 end

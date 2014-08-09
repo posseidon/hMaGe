@@ -1,44 +1,43 @@
-<div id="maps_table">
-  <table class="table table-striped table-responsive">
-  <thead>
-    <th>#</th>
-    <th>Kind</th>
-    <th>Name</th>
-    <th>Meretarany</th>
-    <th>Resolution</th>
-    <th>Publisher</th>
-    <th>Size</th>
-    <th>Imported</th>
-    <th>Processed</th>
-  </thead>
-  <tbody>
-    <% maps.each do |map| %>
-    <tr>
-      <td>
-        <a href="<%= map.image.url(:small) %>" data-toggle="lightbox" data-title="<%= map.image.original_filename %>">
-          <%= map.id %>
-        </a>
-      </td>
-      <td><%= map.kind %></td>
-      <td>
-      <% if can? :read, Map %>
-        <%= link_to map.name, map_path(map.id) %>
-      <% else %>
-        <%= map.name %>
-      <% end %>
-      </td>
-      <td>
-        <%= map.size %>
-      </td>
-      <td><%= map.resolutuon %></td>
-      <td>
-        <%= map.publisher %>
-      </td>
-      <td><%= number_to_human_size(map.image.size) %></td>
-      <td><%= map.created_at.strftime("%Y-%B-%e") %></td>
-      <td><%= status_to_icon(map.processed) %></td>
-    </tr>
-    <% end %>
-  </tbody>
-  </table>
-</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $(".map-image").elevateZoom({
+        scrollZoom : true,
+        responsive:  true,
+        loadingIcon: true
+      });
+  });
+</script>
+<% maps.each do |map| %>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
+        <div class="panel panel-default">
+            <div class="row padall">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <span></span>
+                      <img id="<%= map.id %>" src="<%= map.image.url(:thumb) %>" data-zoom-image="<%= map.image.url(:medium) %>" class="img-responsive img-rounded map-image" />
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <span class="fa fa-paperclip icon"> <%= number_to_human_size(map.image.size) %></span>
+                        </div>
+                        <div class="pull-right">
+                           <%= map.kind %> | <%= map.size %> | <%= map.resolutuon %>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>
+                          <% if can? :read, Map %>
+                            <%= link_to map.name, map_path(map.id) %>
+                          <% else %>
+                            <%= map.name %>
+                          <% end %>
+                        </h4>
+                        <span class="fa fa-bank icon"></span>  <%= map.publisher %>
+                        <span class="<%= status_to_icon(map.processed) %>"><%= status_to_text(map.processed) %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>

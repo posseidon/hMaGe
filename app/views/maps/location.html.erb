@@ -43,6 +43,13 @@
         console.log("aaaaaaa")
         map.zoomToExtent(vectorLayer.getDataExtent());
       }
+
+      $("#<%= @map.id %>").elevateZoom({
+        scrollZoom : true,
+        responsive:  true,
+        loadingIcon: true
+      });
+
       console.log("END");
 
   });
@@ -61,7 +68,7 @@ function setData(){
 <div class="row">
   <div class="col-md-6">
     <div class="img-overlay">
-      <%= image_tag @map.image.url(:large), :class => 'img-responsive img-rounded' %>
+      <img id="<%= @map.id %>" src="<%= @map.image.url(:medium) %>" data-zoom-image="<%= @map.image.url(:large) %>" class="img-responsive img-rounded" />
       <div id="grid-source" class="grid-overlay"></div>
     </div>
     <br>

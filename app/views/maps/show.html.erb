@@ -24,96 +24,131 @@
 </script>
 <script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
 <div class="row">
-  <!-- left column -->
-  <div class="col-md-3">
-    <h2>
-      <i class="glyphicon glyphicon-map-marker"></i>
-      Location
-    </h2>
-    <div id="map_container">
-      <div id="map" class="minimap"></div>
-      <br>
-      <% if can? :manage, Map %>
-        <%= link_to location_map_path(@map.id) do %>
-          <button type="button" class="btn btn-primary btn-block">Set location</button>
+  <!-- Location Heading -->
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>Geographical Location</h3>
+        <hr>
+        <div id="map" class="minimap"></div>
+        <% if can? :manage, Map %>
+          <div class="media">
+            <br>
+            <%= link_to location_map_path(@map.id), :class => "pull-left" do %>
+                <i class="glyphicon glyphicon-map-marker media-object" style="font-size:64px;"></i>
+            <% end %>
+            <div class="media-body">
+              <h4 class="media-heading">Set Location</h4>
+              Geolocating projectionless maps that can be implemented without distorting or transforming the original material.
+            </div>
+          </div>
         <% end %>
-      <% end %>
-    </div>
-
-    <h2>
-      <i class="glyphicon glyphicon-th-list"></i>
-      Attributes
-    </h2>
-    <div id="attributes">
-      <table class="table table-striped table-responsive">
-      <tbody>
-          <tr>
-            <td>Tipus:</td>
-            <td>
-            <%= @map.kind %>
-            </td>
-          </tr>
-          <tr>
-            <td>Meretarany</td>
-            <td><%= @map.size %></td>
-          </tr>
-          <tr>
-            <td>Felbontas</td>
-            <td>
-                <%= @map.resolutuon %>
-            </td>
-          </tr>
-          <tr>
-            <td>Kiado:</td>
-            <td><%= @map.publisher %></td>
-          </tr>
-          <% if can? :manage, Map %>
-          <tr>
-            <td colspan="2">
-              <%= link_to edit_map_path(@map.id) do %>
-                <button type="button" class="btn btn-primary btn-block">Edit attributes</button>
-              <% end %>
-            </td>
-          </tr>
-          <% end %>
-      </tbody>
-      </table>
-    </div>
-
-    <h2>
-      <i class="glyphicon glyphicon-info-sign"></i>
-      Information
-    </h2>
-    <div id="table">
-      <table class="table table-striped table-responsive">
-      <tbody>
-          <tr>
-            <td>Name:</td>
-            <td>
-            <%= link_to @map.name, map_path(@map.id) %>
-            </td>
-          </tr>
-          <tr>
-            <td>Size:</td>
-            <td><%= number_to_human_size(@map.image.size) %></td>
-          </tr>
-          <tr>
-            <td>Filename:</td>
-            <td>
-              <a href="<%= @map.image.url(:large) %>" data-toggle="lightbox" data-title="<%= @map.image.original_filename %>">
-                <%= @map.image.original_filename %>
-              </a>
-            </td>
-          </tr>
-          <tr><td>Status:</td><td><%= status_to_icon(@map.processed) %></td></tr>
-          <tr><td>Created:</td><td><%= @map.created_at.strftime("%Y-%B-%e") %></td></tr>
-      </tbody>
-      </table>
+      </div>
     </div>
   </div>
 
-  <!-- edit form column -->
-  <div class="col-md-9 personal-info">
-    <%= image_tag @map.image.url(:large), :class => 'img-rounded img-responsive' %>
+  <!-- Attributes Heading -->
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>Extended Attributes</h3>
+        <hr>
+        <p>
+          <table class="table table-striped table-responsive">
+          <tbody>
+              <tr>
+                <td>Tipus:</td>
+                <td>
+                <%= @map.kind %>
+                </td>
+              </tr>
+              <tr>
+                <td>Meretarany</td>
+                <td><%= @map.size %></td>
+              </tr>
+              <tr>
+                <td>Felbontas</td>
+                <td>
+                    <%= @map.resolutuon %>
+                </td>
+              </tr>
+              <tr>
+                <td>Kiado:</td>
+                <td><%= @map.publisher %></td>
+              </tr>
+          </tbody>
+          </table>
+        </p>
+        <% if can? :manage, Map %>
+          <div class="media">
+            <%= link_to edit_map_path(@map.id), :class => "pull-left" do %>
+              <i class="glyphicon glyphicon-th-list media-object" style="font-size:64px;"></i>
+            <% end %>
+
+            <div class="media-body">
+              <h4 class="media-heading">Set Extended Attributes</h4>
+              Updating attributes, set processed status and set if current map can be downloaded or not.
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Information Heading -->
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>File Information</h3>
+        <hr>
+        <p>
+          <table class="table table-striped table-responsive">
+          <tbody>
+              <tr>
+                <td>Name:</td>
+                <td>
+                <%= link_to @map.name, map_path(@map.id) %>
+                </td>
+              </tr>
+              <tr>
+                <td>Size:</td>
+                <td><%= number_to_human_size(@map.image.size) %></td>
+              </tr>
+              <tr>
+                <td>Filename:</td>
+                <td>
+                  <%= @map.image.original_filename %>
+                </td>
+              </tr>
+              <tr><td>Status:</td><td><%= status_to_text(@map.processed) %></td></tr>
+              <tr><td>Created:</td><td><%= @map.created_at.strftime("%Y-%B-%e") %></td></tr>
+          </tbody>
+          </table>
+        </p>
+        <% if @map.downloadable %>
+          <div class="media">
+            <%= link_to @map.image.url(:original), :class => "pull-left" do %>
+              <i class="glyphicon glyphicon-cloud-download media-object" style="font-size:64px;"></i>
+            <% end %>
+            <div class="media-body">
+              <h4 class="media-heading">Download Original Map</h4>
+              Map can be downloaded directly, or <b>Right-click</b>, then select <i>Save Link as ...</i>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= @map.name %></h3>
+      </div>
+        <img id="<%= @map.id %>" src="<%= @map.image.url(:large) %>" class="img-responsive" />
+      <div class="panel-footer">Meretarany <%= @map.size %></div>
+    </div>
   </div>
 </div>

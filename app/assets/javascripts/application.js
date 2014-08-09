@@ -15,5 +15,5 @@
 //= require bootstrap
 //= require openlayers-rails
 //= require maps
-
+//= require jquery.elevateZoom-3.0.8.min
 

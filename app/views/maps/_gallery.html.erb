@@ -1,7 +1,0 @@
-  <div id="gallery">
-    <% maps.each do |map| %>
-      <%= link_to map_path(map.id) do %>
-        <%= image_tag map.image.url(:medium) %>
-      <% end %>
-    <% end %>
-  </div>

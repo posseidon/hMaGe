@@ -1,5 +1,5 @@
 class Map < ActiveRecord::Base
-  attr_accessible :name, :path, :image, :kind, :size, :resolutuon, :publisher
+  attr_accessible :name, :path, :image, :kind, :size, :resolutuon, :publisher, :downloadable, :processed
 
   has_many :grids
 
