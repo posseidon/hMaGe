@@ -1,4 +1,39 @@
 hu:
+  application:
+    home: "Főoldal"
+    manage_users: "Felhasználók kezelése"
+    change_password: "Jelszó módosítás"
+    signout: "Kijelentkezés"
+    signin: "Bejelentkezés"
+    signup: "Regisztráció"
+    forgot_password: "Jelszó emlékeztető?"
+    user_edit: "Adatmódoítás"
+    about: "Információ"
+    search: "Keresés"
+    search_placeholder: "Keresesi parameterek"
+    cancel_user: "Felhasználó törlése"
+    cancel: "Mégsem"
+    save: "Mentés"
+    magnifier: "NAGYÍTÓ"
+    magnifier_on: "BEKAPCSOLVA"
+    magnifier_off: "KIKAPCSOLVA"
+  map:
+    geographical_location: "Földrajzi Elhelyezkedés"
+    extended_attributes: "Leíró Adatok"
+    file_information: "Fájl információ"
+    set_location: "Elhelyezkedés meghatározása"
+    set_attributes: "Leíró adatok megadása"
+    download: "Eredeti térkép letöltése"
+    tools: "Térkép eszközök"
+    draw_polygon: "Poligon"
+    draw_rectangle: "Téglalap"
+    controls: "Műveletek"
+    move_map: "Térkép mozgatás"
+    edit_feature: "Objektum kijelölés szerkesztésre"
+    select_feature: "Objektum kijelölés"
+    remove_feature: "Objektum törlés"
+    set_grid_name: "Kijelölt objektumhoz tartozó grid"
+    set_grid_btn: "Mentés"
   views:
     pagination:
       first: "&laquo; Első"
@@ -15,3 +50,158 @@ hu:
           other: "Megtekint <b>összes %{count}</b> %{entry_name}"
       more_pages:
         display_entries: "Megtekint %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> összesen"
+  activerecord:
+    models:
+      user:
+        one: "Felhasználó"
+        other: "Felhasználók"
+      map:
+        one: "Térkép"
+        other: "Térképek"
+      grid:
+        one: "Grid"
+        other: "Grids"
+    attributes:
+      user:
+        name: "Teljes név"
+        email: "Email cím"
+        password: "Jelszó"
+        password_msg: "Hagyd üresen, ha nem szeretnéd megváltoztatni a jelszavadat"
+        password_confirmation: "Jelszó megerősítése"
+        current_password: "Jelenlegi jelszó"
+        current_password_msg: "Jelenlegi jelszó szükséges az adatmódosításhoz"
+        remember_me: "Felhasználó megjegyzése"
+        role: "Szerepkör"
+      map:
+        name: "Neve"
+        kind: "Típusa"
+        size: "Méretaránya"
+        resolution: "Felbontása"
+        publisher: "Kiadó"
+        processed: " Feldolgozott"
+        unprocessed: " Feldolgozatlan"
+        downloadable: "Letölthető"
+        status: "Állapot"
+        created: "Importálva"
+        original_filename: "Fájlnév"
+        original_file_size: "Méret"
+  devise:
+    confirmations:
+      confirmed: "Your account was successfully confirmed. You are now signed in."
+      send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+      send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes."
+    failure:
+      already_authenticated: "Bejelentkezve"
+      inactive: "Nem aktív felhasználó."
+      invalid: "Érvénytelen email cím vagy jelszó."
+      invalid_token: "Érvénytelen token."
+      locked: "Zárolt felhasználó."
+      not_found_in_database: "Érvénytelen email vagy jelszó."
+      timeout: "Lejárt session. Jelentkezz be újra."
+      unauthenticated: "Bejelentkezés szükséges."
+      unconfirmed: "You have to confirm your account before continuing."
+    mailer:
+      confirmation_instructions:
+        subject: "Confirmation instructions"
+      reset_password_instructions:
+        subject: "Reset password instructions"
+      unlock_instructions:
+        subject: "Unlock Instructions"
+    omniauth_callbacks:
+      failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
+      success: "Successfully authenticated from %{kind} account."
+    passwords:
+      no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
+      send_instructions: "You will receive an email with instructions about how to reset your password in a few minutes."
+      send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
+      updated: "Sikeres jelszó változtatás. Bejelentkezve."
+      updated_not_active: "Sikeres jelszó változtatás."
+    registrations:
+      destroyed: "Viszlát! Felhasználó sikeres törlése."
+      signed_up: "Üdvözlet! Sikeresen regisztráltál."
+      signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."
+      signed_up_but_locked: "You have signed up successfully. However, we could not sign you in because your account is locked."
+      signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
+      update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address."
+      updated: "Sikeres felhasználói adatok beállítása."
+    sessions:
+      signed_in: "Sikeres bejelentkezés."
+      signed_out: "Sikeres kijelentkezés."
+    unlocks:
+      send_instructions: "You will receive an email with instructions about how to unlock your account in a few minutes."
+      send_paranoid_instructions: "If your account exists, you will receive an email with instructions about how to unlock it in a few minutes."
+      unlocked: "Your account has been unlocked successfully. Please sign in to continue."
+  errors:
+    messages:
+      already_confirmed: "was already confirmed, please try signing in"
+      confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
+      expired: "has expired, please request a new one"
+      not_found: "Nem talált"
+      not_locked: "was not locked"
+      not_saved:
+        one: "Hiba lépett fel %{resource}, sikertelen mentés:"
+        other: "%{count} hibák léptek fel %{resource}, sikertelen mentés:"
+  jan: "Január"
+  feb: "Február"
+  mar: "Március"
+  apr: "Április"
+  may: "Május"
+  jun: "Június"
+  jul: "Július"
+  aug: "Augusztus"
+  sep: "September"
+  oct: "Október"
+  nov: "November"
+  dec: "December"
+
+
+
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+
+    # Used in number_to_human_size() and number_to_human()
+    human:
+      format:
+        delimiter: ""
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+
+      # Used in number_to_human_size()
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+
+      # Used in number_to_human()
+      decimal_units:
+        format: "%n %u"
+        units:
+          # femto: Quadrillionth
+          # pico: Trillionth
+          # nano: Billionth
+          # micro: Millionth
+          # mili: Thousandth
+          # centi: Hundredth
+          # deci: Tenth
+          unit: ""
+          # ten:
+          # one: Ten
+          # other: Tens
+          # hundred: Hundred
+          thousand: Ezer
+          million: Millió
+          billion: Billió
+          trillion: Trillió
+          quadrillion: Quadrillió

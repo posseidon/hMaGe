@@ -32,7 +32,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Tools</a>
+          <a class="navbar-brand" href="javascript:void(0);"><%= t(:tools, :scope => [:map]) %></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,42 +41,45 @@
             <li id="polygon">
               <a href="javascript:void(0)" onclick="toggleControl('polygon');">
                 <i class="glyphicon glyphicon-edit"></i>
-                Draw Polygon
+                <%= t(:draw_polygon, :scope => [:map]) %>
               </a>
             </li>
             <li id="box">
               <a href="javascript:void(0)" onclick="toggleControl('box');">
                 <i class="glyphicon glyphicon-stop"></i>
-                Draw Rectangle
+                <%= t(:draw_rectangle, :scope => [:map]) %>
               </a>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <%= t(:controls, :scope => [:map]) %>
+                <span class="caret"></span>
+              </a>
               <ul class="dropdown-menu" role="menu">
                 <li id="nav">
                   <a href="javascript:void(0)" onclick="toggleControl('nav');">
                     <i class="glyphicon glyphicon-screenshot"></i>
-                    Move Map
+                    <%= t(:move_map, :scope => [:map]) %>
                   </a>
                 </li>
 
                 <li id="edit">
                   <a href="javascript:void(0)" onclick="toggleControl('edit');">
                     <i class="glyphicon glyphicon-wrench"></i>
-                    Edit Feature
+                    <%= t(:edit_feature, :scope => [:map]) %>
                   </a>
                 </li>
                 <li id="select">
                   <a href="javascript:void(0)" onclick="toggleControl('select');">
                     <i class="glyphicon glyphicon-hand-up"></i>
-                    Select Feature
+                    <%= t(:select_feature, :scope => [:map]) %>
                   </a>
                 </li>
                 <li class="divider"></li>
                 <li>
                   <a href="javascript:void(0)" onclick="removeFeature();">
                     <i class="glyphicon glyphicon-minus-sign"></i>
-                    Remove Features
+                    <%= t(:remove_feature, :scope => [:map]) %>
                   </a>
                 </li>
               </ul>
@@ -87,7 +90,8 @@
               <%= hidden_field_tag 'geometry' %>
               <div class="input-group-btn">
                 <%= button_tag(type: "submit", :onclick => "return setData();", class: "btn btn-default") do %>
-                  <i class="glyphicon glyphicon-map-marker"></i> Search
+                  <i class="glyphicon glyphicon-map-marker"></i> &nbsp;
+                  <%= t(:search, :scope => [:application]) %>
                 <% end %>
               </div>
             <% end %>

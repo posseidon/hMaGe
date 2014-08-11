@@ -4,6 +4,6 @@ class Grid < ActiveRecord::Base
   belongs_to :map
 
   def Grid.st_relate(geometry)
-    Grid.where("ST_Intersects(ST_GeomFromText('SRID=4326;#{geometry}'), bbox)")
+    Grid.select("map_id").where("ST_Intersects(ST_GeomFromText('SRID=4326;#{geometry}'), bbox)").group("map_id")
   end
 end

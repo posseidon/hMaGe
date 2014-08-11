@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-2">&nbsp;</div>
   <div class="col-md-5">
-    <h2>Edit <%= resource_name.to_s.humanize %></h2>
+    <h2><%= User.model_name.human %> <%=  t(:user_edit, :scope => [:application]) %></h2>
     <hr>
 
     <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => "form" }) do |f| %>
@@ -18,7 +18,7 @@
       <% end %>
 
       <div class="form-group">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
+        <%= f.label :password %> <i><%= User.human_attribute_name("password_msg") %></i>
         <%= f.password_field :password, :autocomplete => "off", :class => "form-control", :required => true %>
       </div>
 
@@ -28,7 +28,7 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
+        <%= f.label :current_password %> <i> <%= User.human_attribute_name("current_password_msg") %></i>
         <%= f.password_field :current_password, :class => "form-control", :required => true %>
       </div>
 
@@ -39,11 +39,11 @@
 
   </div>
   <div class="col-md-5">
-    <h2>Cancel my account</h2>
+    <h2><%= t(:cancel_user, :scope => [:application]) %></h2>
     <hr>
 
     <center>
-      <i class="glyphicon glyphicon-question-sign" style="font-size:128px;"></i>
+      <i class="fa fa-frown-o icon" style="font-size:128px;"></i>
       <br>
       <abbr class="initialism">
         <h2>
@@ -52,7 +52,7 @@
       </abbr>
     </center>
     <br><br>
-    <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => "btn btn-danger btn-block" %>
+    <%= button_to  t(:cancel_user, :scope => [:application]), registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => "btn btn-danger btn-block" %>
 
 <!-- <%= link_to "Back", :back %> -->
   </div>

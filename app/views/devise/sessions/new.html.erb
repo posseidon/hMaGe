@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-md-4">&nbsp;</div>
   <div class="col-md-4">
-    <h2>Sign in</h2>
+    <h2><%= t(:signin, :scope => [:application]) %></h2>
     <hr>
 
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :role => 'form') do |f| %>
       <div class="form-group">
         <%= f.label :email %>
-        <%= f.email_field :email, :autofocus => true, :class => 'form-control' %>
+        <%= f.email_field :email, :autofocus => true, :class => 'form-control', required: true%>
       </div>
       <div class="form-group">
         <%= f.label :password %>
-        <%= f.password_field :password, :class => 'form-control' %>
+        <%= f.password_field :password, :class => 'form-control', required: true%>
       </div>
       <% if devise_mapping.rememberable? -%>
         <div class="form-group">
@@ -19,7 +19,7 @@
         </div>
       <% end -%>
 
-      <div><%= f.submit "Sign in", :class => 'btn btn-primary btn-block' %></div>
+      <div><%= f.submit t(:signin, :scope => [:application]), :class => 'btn btn-primary btn-block' %></div>
     <% end %>
   </div>
   <div class="col-md-4">&nbsp;</div>

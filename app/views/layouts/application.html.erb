@@ -28,7 +28,7 @@
           <% if user_signed_in? %>
             <li>
               <%= link_to root_path do %>
-                <i class="glyphicon glyphicon-home"></i> &nbsp;Home
+                <i class="glyphicon glyphicon-home"></i> &nbsp; <%= t(:home, :scope => [:application]) %>
               <% end %>
             </li>
             <li class="dropdown">
@@ -41,20 +41,20 @@
                 <% if can? :manager, User %>
                   <li>
                     <%= link_to list_admin_users_path do %>
-                      <i class="glyphicon glyphicon-check"></i> &nbsp; Manager Users
+                      <i class="glyphicon glyphicon-check"></i> &nbsp; <%= t(:manage_users, :scope => [:application]) %>
                     <% end %>
                   </li>
                   <li class="divider"></li>
                 <% end %>
                 <li>
                   <%= link_to edit_user_registration_path do %>
-                    <i class="glyphicon glyphicon-edit"></i> &nbsp; Change Password
+                    <i class="glyphicon glyphicon-edit"></i> &nbsp; <%= t(:change_password, :scope => [:application]) %>
                   <% end %>
                 </li>
                 <li class="divider"></li>
                 <li>
                   <%= link_to destroy_user_session_path, :method => 'delete' do %>
-                    <i class="glyphicon glyphicon-log-out"></i> &nbsp; Signout
+                    <i class="glyphicon glyphicon-log-out"></i> &nbsp; <%= t(:signout, :scope => [:application]) %>
                   <% end %>
                 </li>
               </ul>
@@ -62,23 +62,23 @@
           <% else %>
             <li>
               <%= link_to new_user_session_path do %>
-                <i class="glyphicon glyphicon-log-in"></i> &nbsp; Signin
+                <i class="glyphicon glyphicon-log-in"></i> &nbsp; <%= t(:signin, :scope => [:application]) %>
               <% end %>
             </li>
           <% end %>
           <li>
             <a href="/about.html">
-              <i class="glyphicon glyphicon-info-sign"></i> &nbsp;About
+              <i class="glyphicon glyphicon-info-sign"></i> &nbsp; <%= t(:about, :scope => [:application]) %>
             </a>
           </li>
         </ul>
         <div class="col-sm-6 col-md-6 pull-right">
           <%= form_tag search_maps_path, :class => "navbar-form", :role => "search"  do %>
           <div class="input-group">
-            <%= text_field_tag :q, nil, :class => "form-control", :placeholder => "Keresesi parameter", :type => "text" %>
+            <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t(:search_placeholder, :scope => [:application]), :type => "text" %>
             <div class="input-group-btn">
               <%= button_tag(type: "submit", class: "btn btn-default") do %>
-                <i class="glyphicon glyphicon-search"></i> Search
+                <i class="glyphicon glyphicon-search"></i> <%= t(:search, :scope => [:application]) %>
               <% end %>
             </div>
           </div>

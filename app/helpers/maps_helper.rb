@@ -9,9 +9,9 @@ module MapsHelper
 
   def status_to_text(status)
     if status
-      " processed".html_safe
+      Map.human_attribute_name("processed").html_safe
     else
-      " unprocessed".html_safe
+      Map.human_attribute_name("unprocessed").html_safe
     end
   end
 end

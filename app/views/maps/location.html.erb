@@ -6,10 +6,10 @@
       var lastClicked;
       var clickedGrid;
       var grid = clickableGrid(2,2,function(el,row,col,i){
-          el.className='clicked';
-          if (lastClicked) lastClicked.className='';
-          lastClicked = el;
-          clickedGrid = el.innerHTML;
+        el.className='clicked';
+        if (lastClicked) lastClicked.className='';
+        lastClicked = el;
+        clickedGrid = el.innerHTML;
       });
 
       $('#grid-source').append(grid);
@@ -40,15 +40,40 @@
       }
 
       if(polygons.length > 0){
-        console.log("aaaaaaa")
         map.zoomToExtent(vectorLayer.getDataExtent());
       }
 
+      /**
       $("#<%= @map.id %>").elevateZoom({
         scrollZoom : true,
         responsive:  true,
         loadingIcon: true
       });
+      */
+
+var image = $("#<%= @map.id %>");
+var magnifier = $("#magnifier");
+var magnifier_status = $("#magnifier_status");
+var magnifier_label = $("#magnifier_label");
+var zoomConfig = {
+        scrollZoom : true,
+        responsive:  true,
+        loadingIcon: true
+      };
+var zoomActive = false;
+magnifier.on('click', function(){
+    zoomActive = !zoomActive;
+    if(zoomActive){
+         image.elevateZoom(zoomConfig);//initialise zoom
+         magnifier_status.attr("class", "fa fa-check-square-o icon pull-right");
+         magnifier_label.html("<%= t(:magnifier_on, :scope => [:application]) %>");
+    }else{
+        $.removeData(image, 'elevateZoom');//remove zoom instance from image
+        $('.zoomContainer').remove();// remove zoom container from DOM
+        magnifier_status.attr("class", "fa fa-square-o icon pull-right");
+        magnifier_label.html("<%= t(:magnifier_off, :scope => [:application]) %>");
+    }
+});
 
       console.log("END");
 
@@ -67,14 +92,28 @@ function setData(){
 <script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
 <div class="row">
   <div class="col-md-6">
-    <div class="img-overlay">
-      <img id="<%= @map.id %>" src="<%= @map.image.url(:medium) %>" data-zoom-image="<%= @map.image.url(:large) %>" class="img-responsive img-rounded" />
-      <div id="grid-source" class="grid-overlay"></div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= @map.name %> | <%= @map.size %> | <%= @map.resolutuon %> | <i class="<%= status_to_icon(@map.processed) %>"></i> <%= status_to_text(@map.processed) %></h3>
+      </div>
+      <div class="img-overlay">
+        <img id="<%= @map.id %>" src="<%= @map.image.url(:medium) %>" data-zoom-image="<%= @map.image.url(:large) %>" class="img-responsive img-rounded" />
+        <div id="grid-source" class="grid-overlay"></div>
+      </div>
+      <div class="panel-footer">
+        <i id="magnifier" class="glyphicon glyphicon-zoom-in" style="font-size:20px;"></i> &nbsp;
+        <span class="text-primary">
+          <b><%= t(:magnifier, :scope => [:application]) %></b>
+          <abbr id="magnifier_label"><%= t(:magnifier_off, :scope => [:application]) %></abbr>
+        </span>
+        &nbsp; <i id="magnifier_status" class="fa fa-square-o icon pull-right" style="font-size:20px"></i>
+      </div>
     </div>
+
     <br>
     <div id="grid_loc">
       <div class="col-sm-6">
-        <%= link_to "Cancel", map_path, :class => "btn btn-lg btn-primary btn-block" %>
+        <%= link_to t(:cancel, :scope => [:application]), map_path, :class => "btn btn-primary btn-block" %>
       </div>
       <div class="col-sm-6">
         <%= form_tag set_grids_map_path, :class => "form-horizontal", :role => "form" do %>
@@ -82,7 +121,7 @@ function setData(){
           <%= hidden_field_tag 'grids[A2]', '' %>
           <%= hidden_field_tag 'grids[A3]' %>
           <%= hidden_field_tag 'grids[A4]' %>
-          <%= submit_tag "Save", :onclick => "return setData();", :class => 'btn btn-lg btn-primary btn-block' %>
+          <%= submit_tag t(:save, :scope => [:application]), :onclick => "return setData();", :class => "btn btn-primary btn-block" %>
         <% end %>
       </div>
     </div>
@@ -99,7 +138,7 @@ function setData(){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Tools</a>
+          <a class="navbar-brand" href="javascript:void(0);"><%= t(:tools, :scope => [:map]) %></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -108,42 +147,45 @@ function setData(){
             <li id="polygon">
               <a href="javascript:void(0)" onclick="toggleControl('polygon');">
                 <i class="glyphicon glyphicon-edit"></i>
-                Draw Polygon
+                <%= t(:draw_polygon, :scope => [:map]) %>
               </a>
             </li>
             <li id="box">
               <a href="javascript:void(0)" onclick="toggleControl('box');">
                 <i class="glyphicon glyphicon-stop"></i>
-                Draw Rectangle
+                <%= t(:draw_rectangle, :scope => [:map]) %>
               </a>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <%= t(:controls, :scope => [:map]) %>
+                <span class="caret"></span>
+              </a>
               <ul class="dropdown-menu" role="menu">
                 <li id="nav">
                   <a href="javascript:void(0)" onclick="toggleControl('nav');">
                     <i class="glyphicon glyphicon-screenshot"></i>
-                    Move Map
+                    <%= t(:move_map, :scope => [:map]) %>
                   </a>
                 </li>
 
                 <li id="edit">
                   <a href="javascript:void(0)" onclick="toggleControl('edit');">
                     <i class="glyphicon glyphicon-wrench"></i>
-                    Edit Feature
+                    <%= t(:edit_feature, :scope => [:map]) %>
                   </a>
                 </li>
                 <li id="select">
                   <a href="javascript:void(0)" onclick="toggleControl('select');">
                     <i class="glyphicon glyphicon-hand-up"></i>
-                    Select Feature
+                    <%= t(:select_feature, :scope => [:map]) %>
                   </a>
                 </li>
                 <li class="divider"></li>
                 <li>
                   <a href="javascript:void(0)" onclick="removeFeature();">
                     <i class="glyphicon glyphicon-minus-sign"></i>
-                    Remove Features
+                    <%= t(:remove_feature, :scope => [:map]) %>
                   </a>
                 </li>
               </ul>
@@ -170,7 +212,7 @@ function setData(){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Set Grid name</a>
+          <a class="navbar-brand" href="javascript:void(0)"><%= t(:set_grid_name, :scope => [:map]) %></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -179,7 +221,9 @@ function setData(){
             <div class="form-group">
               <input id="gridNameTxt" type="text" class="form-control" placeholder="A1">
             </div>
-            <button id="setGridName" type="submit" class="btn btn-default">Set</button>
+            <button id="setGridName" type="submit" class="btn btn-default">
+              <%= t(:set_grid_btn, :scope => [:map]) %>
+            </button>
           </form>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
