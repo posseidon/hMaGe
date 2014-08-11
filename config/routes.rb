@@ -37,6 +37,7 @@ Hmage::Application.routes.draw do
   end
 
   match '/about', :to => redirect('/about.html')
+  match '*unmatched_route', :to => 'application#raise_not_found!'
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

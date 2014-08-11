@@ -8,11 +8,15 @@ class MapsController < ApplicationController
 
   def edit
     @map = Map.find(params[:id])
+
+    authorize! :edit, @map
   end
 
   def location
     @map = Map.find(params[:id])
     @polygons = @map.wkt_polygons.to_json
+
+    authorize! :location, @map
   end
 
   def set_grids
@@ -26,12 +30,19 @@ class MapsController < ApplicationController
         @map.grids.create(:grid_id => grid, :bbox => polygon)
       end
     end
+
+    authorize! :set_grids, @map
     redirect_to map_path
+  rescue Exception => e
+    flash[:notice] = "There was a problem Settings Grids on map: #{e.message}."
+    render :action => :location
   end
 
   def update
     @map = Map.find(params[:id])
     @map.update_attributes!(params[:map])
+
+    authorize! :update, @map
     redirect_to map_path
   rescue Exception => e
     flash[:notice] = "There was a problem updating map: #{e.message}."

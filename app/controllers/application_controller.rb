@@ -1,8 +1,24 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  rescue_from ActiveRecord::RecordNotFound,   :with => :rescue_not_found
+
+
   rescue_from CanCan::AccessDenied do |exception|
-    render :file => "#{Rails.root}/public/404.html", :status => 403, :layout => false
+    render :file => "#{Rails.root}/public/401.html", :status => 401, :layout => false
+  end
+
+  #
+  # Added routing in 'routes.rb'
+  #
+  def raise_not_found!
+    render :file => "#{Rails.root}/public/405.html", :status => 405, :layout => false
+  end
+
+  protected
+
+  def rescue_not_found
+    render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
   end
 
   private
