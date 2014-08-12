@@ -6,6 +6,7 @@ class Ability
 
     can :manage, User if user.role == 'admin'
     can :manage, Map  if user.role == 'editor'
+    can :manage, Name if user.role == "editor"
     can :read,   Map  if user.role == 'viewer'
   end
 end

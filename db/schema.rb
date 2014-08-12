@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140809183424) do
+ActiveRecord::Schema.define(:version => 20140811181717) do
 
   create_table "grids", :force => true do |t|
     t.integer "map_id"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(:version => 20140809183424) do
     t.string   "resolutuon"
     t.string   "publisher"
     t.boolean  "downloadable",       :default => true
+  end
+
+  create_table "names", :force => true do |t|
+    t.string  "original"
+    t.string  "current"
+    t.text    "description"
+    t.spatial "latlon",      :limit => {:srid=>4326, :type=>"point"}
   end
 
   create_table "pg_search_documents", :force => true do |t|

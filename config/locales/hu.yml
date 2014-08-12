@@ -17,6 +17,10 @@ hu:
     magnifier: "NAGYÍTÓ"
     magnifier_on: "BEKAPCSOLVA"
     magnifier_off: "KIKAPCSOLVA"
+    menu_towns: "Települések"
+    search_by_towns: "Keresés település alapján"
+    manage_towns: "Települések kezelése"
+    import_towns: "Települések importálása"
   map:
     geographical_location: "Földrajzi Elhelyezkedés"
     extended_attributes: "Leíró Adatok"
@@ -61,6 +65,9 @@ hu:
       grid:
         one: "Grid"
         other: "Grids"
+      name:
+        one: "Helység"
+        other: "Helységek"
     attributes:
       user:
         name: "Teljes név"
@@ -85,6 +92,10 @@ hu:
         created: "Importálva"
         original_filename: "Fájlnév"
         original_file_size: "Méret"
+      name:
+        original: "Eredeti név"
+        current: "Aktuális név"
+        description: "Rövid leírás"
   devise:
     confirmations:
       confirmed: "Your account was successfully confirmed. You are now signed in."

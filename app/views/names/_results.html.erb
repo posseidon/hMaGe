@@ -1,0 +1,18 @@
+<table class="table table-striped table-condensed" id="names_table">
+  <thead>
+    <th><%= Name.human_attribute_name("id") %></th>
+    <th><%= Name.human_attribute_name("original") %></th>
+    <th><%= Name.human_attribute_name("current") %></th>
+    <th><%= Name.human_attribute_name("description") %></th>
+  </thead>
+  <tbody>
+    <% names.each do |name| %>
+    <tr>
+      <td><%= name.id %></td>
+      <td><%= name.original %></td>
+      <td><%= name.current %></td>
+      <td><%= name.description %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

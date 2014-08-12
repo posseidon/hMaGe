@@ -36,6 +36,15 @@ Hmage::Application.routes.draw do
     end
   end
 
+  resources :names do
+    collection do
+      get  'list'
+      post 'search'
+      get  'importer'
+      post 'import'
+    end
+  end
+
   match '/about', :to => redirect('/about.html')
   match '*unmatched_route', :to => 'application#raise_not_found!'
 

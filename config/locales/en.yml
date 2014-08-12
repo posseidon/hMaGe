@@ -17,6 +17,10 @@ en:
     magnifier: "MAGNIFIER IS"
     magnifier_on: "ON"
     magnifier_off: "OFF"
+    menu_towns: "Towns"
+    search_by_towns: "Search by towns"
+    manage_towns: "Manage towns"
+    import_towns: "Import towns"
   map:
     geographical_location: "Geographical Location"
     extended_attributes: "Extended Attributes"
@@ -61,6 +65,9 @@ en:
       grid:
         one: "Grid"
         other: "Grids"
+      name:
+        one: "Name"
+        other: "Names"
     attributes:
       user:
         name: "Full name"
@@ -85,6 +92,10 @@ en:
         created: "Created at"
         original_filename: "Filename"
         original_file_size: "Size"
+      name:
+        original: "Original Name"
+        current: "Current Name"
+        description: "Short Description"
   devise:
     confirmations:
       confirmed: "Your account was successfully confirmed. You are now signed in."
