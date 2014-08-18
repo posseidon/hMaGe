@@ -1,6 +1,8 @@
 <script type="text/javascript">
   $(document).ready(function(){
       $("#<%= @map.id %>").elevateZoom({
+        zoomType: "lens",
+        lensShape: "round",
         scrollZoom : true,
         responsive:  true,
         loadingIcon: true

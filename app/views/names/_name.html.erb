@@ -1,0 +1,21 @@
+<table class="table table-condensed">
+  <tbody>
+    <tr>
+      <th><%= Name.human_attribute_name("current") %></th>
+      <td><%= name.current %></td>
+    </tr>
+    <tr>
+      <th><%= Name.human_attribute_name("original") %></th>
+      <td><%= name.original %></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <% unless name.description.nil? %>
+          <%= name.description.html_safe %>
+        <% else %>
+          <div class="well" style="height:300px;"></div>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>

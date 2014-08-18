@@ -12,8 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.draggable
+//= require jquery.ui.droppable
 //= require bootstrap
+//= require typeahead.bundle.min
 //= require openlayers-rails
 //= require maps
 //= require jquery.elevateZoom-3.0.8.min
-
+//= require names

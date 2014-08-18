@@ -1,5 +1,5 @@
 class MapsController < ApplicationController
-  before_filter :authenticate_user!, except: [:index, :related, :search]
+  before_filter :authenticate_user!, except: [:index, :related, :overlap, :search]
 
   def show
     @map = Map.find(params[:id])
@@ -55,5 +55,14 @@ class MapsController < ApplicationController
 
   def related
     @grids = Grid.st_relate(params[:geometry])
+  end
+
+  def overlap
+    if params[:points_geometry]
+      @geometry = params[:points_geometry]
+    else
+      @geometry = params[:point_geometry]
+    end
+    @grids = Grid.st_overlap(@geometry)
   end
 end

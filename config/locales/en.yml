@@ -18,9 +18,12 @@ en:
     magnifier_on: "ON"
     magnifier_off: "OFF"
     menu_towns: "Towns"
-    search_by_towns: "Search by towns"
+    search_by_towns: "Locate"
+    search_by_map:   "Spatial Search"
     manage_towns: "Manage towns"
     import_towns: "Import towns"
+    add_town: "Add town"
+    names_not_found: "No record found that matches conditions"
   map:
     geographical_location: "Geographical Location"
     extended_attributes: "Extended Attributes"
@@ -38,6 +41,16 @@ en:
     remove_feature: "Remove feature"
     set_grid_name: "Selected Feature's GRID identifier"
     set_grid_btn: "Set"
+  name:
+    placeholder_search: "Current or original name of settlement"
+    placeholder_current: "Current name of settlement"
+    placeholder_original: "Original name of settlement"
+    placeholder_description: "Short description of settlement"
+    placeholder_name: "Budapest, Hungary"
+    caption_header: "Town information"
+    set_attributes: "Set Town attributes"
+    search_town_title: "Search by Town"
+    search_result: "Search Result"
   views:
     pagination:
       first: "&laquo; First"
@@ -96,6 +109,24 @@ en:
         original: "Original Name"
         current: "Current Name"
         description: "Short Description"
+        latlon: "Position"
+    errors:
+      template:
+        header:
+          one:   "1 error prohibited this  from being saved"
+          other: "%{count} errors prohibited this #{model} from being saved"
+        body:    "There were problems with the following fields:"
+      models:
+        name:
+          attributes:
+            latlon:
+              blank: "nem lehet üres"
+            current:
+            original:
+              taken: "már létezik"
+      messages:
+        record_invalid: "Invalid record"
+        blank: "can't be blank"
   devise:
     confirmations:
       confirmed: "Your account was successfully confirmed. You are now signed in."

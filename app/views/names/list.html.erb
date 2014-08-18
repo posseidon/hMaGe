@@ -12,6 +12,11 @@
     <% end %>
   </div>
 </div>
-<div class="row">
+
+<div class="row" id="mapContainer">
+  <div id='map'></div>
+</div>
+<br>
+<div class="row" id="townsContainer">
   <%= render :partial => 'names', :locals => {:names => @names} %>
 </div>

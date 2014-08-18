@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+      init();
+
+      markersLayer = new OpenLayers.Layer.Markers("Markers");
+      map.addLayers([markersLayer]);
+
+      var lat = '<%= raw @name.latlon.x %>';
+      var lon = '<%= raw @name.latlon.y %>';
+      if(lat != 0 && lon != 0){
+        setLocation(lat, lon);
+      }
+    });
+</script>
+<div class="row">
+  <br>
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><%= t(:caption_header, :scope => [:name]) %></h3>
+
+        <p>
+          <%= render :partial => 'name', :locals => {:name => @name} %>
+        </p>
+        <% if can? :manage, Name %>
+          <div class="media">
+            <%= link_to edit_name_path(@name), :class => "pull-left" do %>
+              <i class="glyphicon glyphicon-th-list media-object" style="font-size:64px;"></i>
+            <% end %>
+
+            <div class="media-body">
+              <h4 class="media-heading"><%= t(:set_attributes, :scope => [:name]) %></h4>
+              Updating current or original name, set location for current Town.
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div id="map" class="smallmap"></div>
+  </div>
+</div>

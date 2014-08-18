@@ -1,0 +1,11 @@
+<% if target.errors.any? %>
+  <div class="alert alert-info" role="alert">
+    <h5><%= t("activerecord.errors.template.header.one") %> <span class="badge"><%= target.errors.count %></span></h5>
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <ul>
+      <% target.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

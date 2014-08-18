@@ -1,0 +1,37 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+      init();
+
+      markersLayer = new OpenLayers.Layer.Markers("Markers");
+      map.addLayers([markersLayer]);
+
+      var lat = '<%= raw @name.latlon.x %>';
+      var lon = '<%= raw @name.latlon.y %>';
+      if(lat != 0 && lon != 0){
+        setLocation(lat, lon);
+      }
+
+      $('#geocode_btn').click(function(){
+        var address = document.getElementById('address').value;
+        getLatLng(address);
+      });
+    });
+</script>
+<div class="row">
+  <br>
+  <div class="col-md-6">
+    <%= render :partial => 'form', :locals => {:name => @name} %>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">Address</div>
+        <input type="address" class="form-control" id="address" placeholder="Budapest, Hungary">
+        <div class="input-group-btn">
+          <button id="geocode_btn" class="btn btn-primary">Geocode</button>
+        </div>
+      </div>
+    </div>
+    <div id="map" class="smallmap"></div>
+  </div>
+</div>

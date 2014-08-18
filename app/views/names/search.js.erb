@@ -1,1 +1,30 @@
-$('#names_table').html("<%= escape_javascript render(:partial => 'results', :locals => {:names => @names}) %>");
+// Insert results table
+$('#townsContainer').html("<%= escape_javascript render(:partial => 'results', :locals => {:names => @names}) %>");
+
+if(map == null){
+  // Initialize Openlayers Maps
+  $("#map").attr("class", "smallmap");
+  init();
+  markersLayer = new OpenLayers.Layer.Markers("Markers");
+  map.addLayers([markersLayer]);
+  console.log("Openlayers Maps loaded");
+}else{
+  // Remove All the Markers
+  markersLayer.clearMarkers();
+  console.log("Clear all markers");
+}
+
+<% @names.each do |name| %>
+  if('<%= raw name.latlon %>' != 'POINT (0.0 0.0)'){
+    var feature = wkt.read('<%= raw name.latlon %>');
+    var point = new OpenLayers.Geometry.Point(feature.geometry.y, feature.geometry.x).transform(map.displayProjection, map.getProjectionObject());
+    var marker = new OpenLayers.Marker(new OpenLayers.LonLat(point.x, point.y), icon.clone());
+    markersLayer.addMarker(marker);;
+  }
+  map.zoomToExtent(markersLayer.getDataExtent());
+<% end %>
+console.log("Points loaded");
+
+
+$('.draggable').draggable({helper: "clone"});
+

@@ -1,0 +1,79 @@
+<script type="text/javascript">
+  var points = [];
+  $(function() {
+    $('.droppable').droppable({
+      drop: function( event, ui ) {
+        points.push(ui.draggable.attr("data-point"));
+        $('#towns_table tbody').append("<tr><td>" + ui.draggable.attr("data-value") + "</td></tr>");
+      }
+    });
+
+    // Initialize Openlayers Maps
+    $("#map").attr("class", "smallmap");
+    init();
+    markersLayer = new OpenLayers.Layer.Markers("Markers");
+    map.addLayers([markersLayer]);
+    console.log("Openlayers Maps loaded");
+
+  });
+</script>
+<div class="row">
+  <hr>
+  <!-- Search by Towns -->
+  <div class="col-md-7">
+    <!-- Search Towns Form -->
+    <%= form_tag search_names_path, :class => "form", :role => "search", :remote => true  do %>
+    <div class="input-group">
+      <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t(:placeholder_search, :scope => [:name]), :type => "text" %>
+      <div class="input-group-btn">
+        <%= button_tag(type: "submit", class: "btn btn-default") do %>
+          <i class="glyphicon glyphicon-search"></i> <%= t(:search, :scope => [:application]) %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+    <br>
+    <div id="mapContainer">
+      <div id='map'></div>
+    </div>
+    <br>
+  </div>
+
+  <!-- Selected Towns list -->
+  <div class="col-md-5">
+    <div class="caption">
+      <h4><%= t(:search_result, :scope => [:name]) %></h4>
+      <div id="townsContainer">
+        <div class="jumbotron">
+          <div class="hero-unit center">
+            <h1></h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="caption droppable">
+      <h4><%= t(:search_town_title, :scope => [:name]) %></h4>
+      <p>
+        <table id="towns_table" class="table table-bordered table-striped overflow: auto">
+          <thead>
+            <th>Location Name</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </p>
+    </div>
+
+    <%= form_tag overlap_maps_path, :class => "navbar-form", :role => "search"  do %>
+        <%= hidden_field_tag 'points_geometry' %>
+        <%= button_tag(type: "submit", :onclick => "return setPointsData();", class: "btn btn-primary btn-block") do %>
+          <i class="glyphicon glyphicon-map-marker"></i> &nbsp;
+          <%= t(:search, :scope => [:application]) %>
+        <% end %>
+    <% end %>
+
+
+  </div>
+</div>

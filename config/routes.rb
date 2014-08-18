@@ -23,6 +23,7 @@ Hmage::Application.routes.draw do
     collection do
       post 'search'
       post 'related'
+      post 'overlap'
     end
   end
 
@@ -40,6 +41,7 @@ Hmage::Application.routes.draw do
     collection do
       get  'list'
       post 'search'
+      get  'find'
       get  'importer'
       post 'import'
     end

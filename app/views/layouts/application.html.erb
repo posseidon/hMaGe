@@ -14,8 +14,13 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
+  <style type="text/css">
+    padding: 5px 10px;
+    text-align: center;
+  </style>
 </head>
 <body>
   <div class="navbar navbar-inverse navbar-fixed-top">
@@ -79,6 +84,11 @@
                       <% end %>
                     </li>
                     <li>
+                      <%= link_to new_name_path do %>
+                        <i class="fa fa-plus-square"></i> &nbsp; <%= t(:add_town, :scope => [:application]) %>
+                      <% end %>
+                    </li>
+                    <li>
                       <%= link_to importer_names_path do %>
                         <i class="glyphicon glyphicon-cloud-upload"></i> &nbsp; <%= t(:import_towns, :scope => [:application]) %>
                       <% end %>
@@ -89,7 +99,12 @@
           <% else %>
             <li>
               <%= link_to new_user_session_path do %>
-                <i class="glyphicon glyphicon-log-in"></i> &nbsp; <%= t(:signin, :scope => [:application]) %>
+                <i class="fa fa-sign-in icon"></i> &nbsp; <%= t(:signin, :scope => [:application]) %>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to names_path do %>
+                <i class="fa fa-location-arrow icon"></i> &nbsp; <%= t(:search_by_towns, :scope => [:application]) %>
               <% end %>
             </li>
           <% end %>
@@ -99,13 +114,16 @@
             </a>
           </li>
         </ul>
+        <!-- Search by Town Names Form -->
         <div class="col-sm-6 col-md-5 pull-right">
-          <%= form_tag search_maps_path, :class => "navbar-form", :role => "search"  do %>
+          <%= form_tag overlap_maps_path, :class => "navbar-form", :role => "search"  do %>
           <div class="input-group">
-            <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t(:search_placeholder, :scope => [:application]), :type => "text" %>
+            <%= hidden_field_tag 'point_geometry' %>
+            <input class="typeahead form-control" id="q" name="q" placeholder="<%= t(:placeholder_name, :scope => [:name]) %>" type="text" data-provide="typeahead"/>
+
             <div class="input-group-btn">
-              <%= button_tag(type: "submit", class: "btn btn-default") do %>
-                <i class="glyphicon glyphicon-search"></i> <%= t(:search, :scope => [:application]) %>
+              <%= button_tag(type: "submit", class: "btn btn-success") do %>
+                <%= t(:search, :scope => [:application]) %>
               <% end %>
             </div>
           </div>
@@ -115,6 +133,7 @@
     </div>
   </div>
   <div class="container">
+    <br>
     <% flash.each do |name, msg| %>
       <%= content_tag :div, :class => "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable" do %>
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -124,5 +143,48 @@
 
     <%= yield %>
   </div>
+  <script type="text/javascript">
+  $(document).ready(function(){
+
+    var towns = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: {
+        url: '../names/find?q=%QUERY',
+        filter: function (towns) {
+            console.log(towns);
+            return $.map(towns, function (town) {
+                console.log(town.latlon);
+                var points = town.latlon.replace("POINT ","").replace("(","").replace(")","").split(" ");
+                console.log(points);
+                return {
+                    value: town.original + " - ( " + town.current + " )",
+                    coordinates: "(" + points[1] + " " + points[0] + ")"
+                };
+            });
+        }
+      }
+    });
+
+    towns.initialize();
+
+    $('#q.typeahead').typeahead(null, {
+      name: 'towns_names',
+      displayKey: 'value',
+      source: towns.ttAdapter(),
+      templates: {
+        empty: [
+          '<div class="alert alert-success" role="alert">',
+          '<%= t(:names_not_found, :scope => [:application]) %>',
+          '</div>'
+        ].join('\n')
+      }
+    }).bind("typeahead:selected", function(datum, obj, name) {
+      var wkt = "MULTIPOINT(" + obj.coordinates + ")";
+      $('#point_geometry').val(wkt);
+      console.log(wkt)
+    });
+  });
+  </script>
 </body>
 </html>

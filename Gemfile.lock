@@ -41,6 +41,9 @@ GEM
       railties (>= 3.1.0)
     builder (3.0.4)
     cancan (1.6.10)
+    ckeditor (4.0.8)
+      mime-types
+      orm_adapter
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.4)
@@ -77,6 +80,9 @@ GEM
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.0.2)
+      jquery-rails
+      railties (>= 3.1.0)
     json (1.8.1)
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
@@ -187,11 +193,13 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   bootstrap-generators (~> 3.1.1)
   cancan
+  ckeditor
   coffee-rails (~> 3.2.1)
   database_cleaner
   devise
   factory_girl_rails
   jquery-rails
+  jquery-ui-rails
   kaminari
   openlayers-rails
   paperclip (~> 4.1)

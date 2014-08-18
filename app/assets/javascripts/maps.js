@@ -10,26 +10,47 @@ function init() {
     var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
     renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;
 
+
+    OpenLayers.Feature.Vector.style['virtual'] = {
+        fillColor: "#ee9900",
+        fillOpacity: 0.4,
+        strokeColor: "#ee9900",
+        strokeOpacity: 1,
+        strokeWidth: 1,
+        pointRadius: 3
+    }
+
+    OpenLayers.Feature.Vector.style['default'] = {
+        strokeColor: "#6999c5",
+        strokeOpacity: 1,
+        strokeWidth: 1,
+        fillColor: "#6999c5",
+        fillOpacity: 0.2,
+        pointRadius: 6,
+        pointerEvents: "visiblePainted",
+        label : "Grid: ${grid}",
+        fontColor: "${favColor}",
+        fontSize: "18px",
+        fontFamily: "Verdana",
+        labelAlign: "${align}",
+        labelXOffset: "${xOffset}",
+        labelYOffset: "${yOffset}",
+        labelOutlineColor: "white",
+        labelOutlineWidth: 1
+    }
+
+    var styleMap = new OpenLayers.StyleMap({
+       "default":OpenLayers.Feature.Vector.style['default'],
+       "virtual": OpenLayers.Feature.Vector.style['virtual']
+    }, {extendDefault: false});
+
+
     vectorLayer = new OpenLayers.Layer.Vector( "Editable Layer", {
-                styleMap: new OpenLayers.StyleMap({'default':{
-                    strokeColor: "#6999c5",
-                    strokeOpacity: 1,
-                    strokeWidth: 1,
-                    fillColor: "#6999c5",
-                    fillOpacity: 0.2,
-                    pointRadius: 6,
-                    pointerEvents: "visiblePainted",
-                    label : "Grid: ${grid}",
-                    fontColor: "${favColor}",
-                    fontSize: "18px",
-                    fontFamily: "Verdana",
-                    labelAlign: "${align}",
-                    labelXOffset: "${xOffset}",
-                    labelYOffset: "${yOffset}",
-                    labelOutlineColor: "white",
-                    labelOutlineWidth: 1
-                }}),
-                renderers: renderer
+                styleMap: styleMap,
+                renderers: renderer,
+                eventListeners: {
+                    'featureadded': removeFirstFeature
+                }
             });
 
     map = new OpenLayers.Map('map', {
@@ -77,7 +98,7 @@ function addDrawControls(map, vectorLayer){
                 }
             }
         ),
-        edit: new OpenLayers.Control.ModifyFeature(vectorLayer),
+        edit: new OpenLayers.Control.ModifyFeature(vectorLayer, {vertexRenderIntent: "virtual"}),
         nav:  new OpenLayers.Control.Navigation(),
         select: new OpenLayers.Control.SelectFeature(vectorLayer, {
             clickout: true,
@@ -156,4 +177,36 @@ function updateFormats() {
         wkt: new OpenLayers.Format.WKT(out_options),
       }
     };
+}
+
+function removeFirstFeature(){
+    if(vectorLayer.features.length > 1 && viewMode === false){
+        vectorLayer.removeFeatures(vectorLayer.features[0]);
+    }
+}
+
+function setMapData(){
+    var feature = vectorLayer.features[0];
+    var wkt = formats['out']['wkt'].write(feature, false);
+    $("#geometry").val(wkt);
+}
+
+
+function setMapDataXXXX(){
+    var features = vectorLayer.features;
+    var objects = [];
+    for(idx in features){
+      var feature = features[idx];
+      feature.geometry.transform(new OpenLayers.Projection("EPSG:3857"), new OpenLayers.Projection("EPSG:4326"));
+      var polygon = [];
+      var points = feature.geometry.getVertices();
+      for(var i in points){
+        polygon.push(points[i].x.toFixed(8) + " " + points[i].y.toFixed(8));
+      }
+      objects.push("(" + polygon.join() + ")");
+    }
+
+    var wkt = "POLYGON(" + objects.join() + ")";
+    console.log(wkt.toString());
+    $("#geometry").val(wkt.toString());
 }

@@ -29,6 +29,8 @@ end
 # UI Related
 gem 'jquery-rails'
 gem 'bootstrap-generators', '~> 3.1.1'
+gem 'jquery-ui-rails'
+
 
 # Authentication and Authorization
 gem 'bcrypt-ruby', '~> 3.0.0'
@@ -52,6 +54,9 @@ gem 'devise'
 
 # Authorization
 gem 'cancan'
+
+# WYSIWYG editor
+gem 'ckeditor'
 
 # Use unicorn as the app server
 # gem 'unicorn'
