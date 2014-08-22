@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.18'
 
+gem 'thin'
+
 gem 'pg'
 gem 'pg_search'
 gem 'activerecord-postgis-adapter'
@@ -57,6 +59,10 @@ gem 'cancan'
 
 # WYSIWYG editor
 gem 'ckeditor'
+
+# Deployment with capistrano
+gem 'capistrano',  '~> 3.1'
+gem 'capistrano-rails', '~> 1.1'
 
 # Use unicorn as the app server
 # gem 'unicorn'
