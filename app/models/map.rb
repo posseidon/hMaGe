@@ -1,7 +1,7 @@
 class Map < ActiveRecord::Base
   attr_accessible :name, :path, :image, :kind, :size, :resolutuon, :publisher, :downloadable, :processed
 
-  has_many :grids
+  has_many :grids, dependent: :destroy
 
   # PostgreSQL full-text search
   include PgSearch
@@ -19,6 +19,7 @@ class Map < ActiveRecord::Base
       :large   => '1000x1000>',
     },
     :default_url => "/missing.png",
+    :path => "/var/data/hmage/system/:style/:filename.:extension",
     :url => "/system/:style/:filename.:extension"
 
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/

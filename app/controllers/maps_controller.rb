@@ -50,7 +50,11 @@ class MapsController < ApplicationController
   end
 
   def search
-    @maps = Map.search_by_attributes(params[:q])
+    if params[:q].eql?("all")
+      @maps = Map.all
+    else
+      @maps = Map.search_by_attributes(params[:q])
+    end
   end
 
   def related

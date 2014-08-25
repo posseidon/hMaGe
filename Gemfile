@@ -34,7 +34,6 @@ gem 'scrypt'
 gem 'authlogic'
 
 # UI Related
-gem "twitter-bootstrap-rails"
 gem 'jquery-rails'
 gem 'bootstrap-generators', '~> 3.1.1'
 gem 'jquery-ui-rails'

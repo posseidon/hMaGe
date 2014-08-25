@@ -35,7 +35,7 @@
                             <% end %>
                           </h4>
                           <span class="fa fa-bank icon"></span>  <%= map.publisher %>
-                          <span class="<%= status_to_icon(map.processed) %>"><%= status_to_text(map.processed) %></span>
+                          <span class="<%= status_to_icon(map.processed) %>"><%= link_to status_to_text(map.processed), map_path(map.id) %></span>
                       </div>
                   </div>
               </div>
