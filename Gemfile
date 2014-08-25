@@ -12,11 +12,6 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 
-  # UI Related
-  gem "twitter-bootstrap-rails"
-  gem 'jquery-rails'
-  gem 'bootstrap-generators', '~> 3.1.1'
-  gem 'jquery-ui-rails'
 end
 
 group :development, :test do
@@ -37,6 +32,13 @@ end
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'scrypt'
 gem 'authlogic'
+
+# UI Related
+gem "twitter-bootstrap-rails"
+gem 'jquery-rails'
+gem 'bootstrap-generators', '~> 3.1.1'
+gem 'jquery-ui-rails'
+
 
 # Pagination
 gem 'kaminari'
