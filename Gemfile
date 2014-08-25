@@ -11,6 +11,11 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   gem 'uglifier', '>= 1.0.3'
+
+  # UI Related
+  gem 'jquery-rails'
+  gem 'bootstrap-generators', '~> 3.1.1'
+  gem 'jquery-ui-rails'
 end
 
 group :development, :test do
@@ -25,11 +30,6 @@ group :development, :test do
   gem 'simplecov'
   #gem 'rack-mini-profiler'
 end
-
-# UI Related
-gem 'jquery-rails'
-gem 'bootstrap-generators', '~> 3.1.1'
-gem 'jquery-ui-rails'
 
 
 # Authentication and Authorization

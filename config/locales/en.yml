@@ -94,7 +94,7 @@ en:
         role: "User role"
       map:
         name: "Name of"
-        kind: "Kind"
+        kind: "Type"
         size: "Size"
         resolution: "Resolution"
         publisher: "Publisher"
