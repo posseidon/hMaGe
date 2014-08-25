@@ -2,8 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.18'
 
-gem 'thin'
-
 gem 'pg'
 gem 'pg_search'
 gem 'activerecord-postgis-adapter'
