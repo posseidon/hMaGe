@@ -13,6 +13,7 @@
         clickedGrid = el.innerHTML;
       });
 
+
       $('#grid-source').append(grid);
 
       $("#gridNameForm").submit(false);
@@ -44,32 +45,56 @@
         map.zoomToExtent(vectorLayer.getDataExtent());
       }
 
-var image = $("#<%= @map.id %>");
-var magnifier = $("#magnifier");
-var magnifier_status = $("#magnifier_status");
-var magnifier_label = $("#magnifier_label");
-var zoomConfig = {
-        zoomType: "lens",
-        lensShape: "round",
-        lensSize: 400,
-        scrollZoom : true,
-        responsive:  true,
-        loadingIcon: true
-      };
-var zoomActive = false;
-magnifier.on('click', function(){
-    zoomActive = !zoomActive;
-    if(zoomActive){
-         image.elevateZoom(zoomConfig);//initialise zoom
-         magnifier_status.attr("class", "fa fa-check-square-o icon pull-right");
-         magnifier_label.html("<%= t(:magnifier_on, :scope => [:application]) %>");
-    }else{
-        $.removeData(image, 'elevateZoom');//remove zoom instance from image
-        $('.zoomContainer').remove();// remove zoom container from DOM
-        magnifier_status.attr("class", "fa fa-square-o icon pull-right");
-        magnifier_label.html("<%= t(:magnifier_off, :scope => [:application]) %>");
-    }
-});
+      var image = $("#<%= @map.id %>");
+      var magnifier = $("#magnifier");
+      var magnifier_status = $("#magnifier_status");
+      var magnifier_label = $("#magnifier_label");
+      var zoomConfig = {
+              zoomType: "lens",
+              lensShape: "round",
+              lensSize: 400,
+              scrollZoom : true,
+              responsive:  true,
+              loadingIcon: true
+            };
+      var zoomActive = false;
+      magnifier.on('click', function(){
+          zoomActive = !zoomActive;
+          if(zoomActive){
+               image.elevateZoom(zoomConfig);//initialise zoom
+               magnifier_status.attr("class", "fa fa-check-square-o icon pull-right");
+               magnifier_label.html("<%= t(:magnifier_on, :scope => [:application]) %>");
+          }else{
+              $.removeData(image, 'elevateZoom');//remove zoom instance from image
+              $('.zoomContainer').remove();// remove zoom container from DOM
+              magnifier_status.attr("class", "fa fa-square-o icon pull-right");
+              magnifier_label.html("<%= t(:magnifier_off, :scope => [:application]) %>");
+          }
+      });
+
+      $('#slider').slider({
+          formater: function(value) {
+            return 'Current value: '+ value;
+          },
+          handle: 'square',
+          min: 1,
+          max: 8,
+          step: 1
+      });
+
+      var gridSliderValue = $('#slider').slider().on('slide', function(ev){
+        $("#grid").remove();
+
+        var gridSize = $(this).val();
+        console.log(gridSize);
+        var newGrid = clickableGrid(gridSize,gridSize,function(el,row,col,i){
+          el.className='clicked';
+          if (lastClicked) lastClicked.className='';
+          lastClicked = el;
+          clickedGrid = el.innerHTML;
+        });
+        $("#grid-source").append(newGrid);
+      });
 
       console.log("END");
 
@@ -84,13 +109,18 @@ function setData(){
   }
 }
 
+
 </script>
 
 <div class="row">
+  <br>
   <div class="col-md-6">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= @map.name %> | <%= @map.size %> | <%= @map.resolutuon %> | <i class="<%= status_to_icon(@map.processed) %>"></i> <%= status_to_text(@map.processed) %></h3>
+        <h3 class="panel-title">
+          <%= truncate(@map.name, length: 40) %> |
+          1 &nbsp;&nbsp;<input id="slider" type="text" value="" data-slider-value="2" data-slider-orientation="horizontal">&nbsp;&nbsp; 8
+        </h3>
       </div>
       <div class="img-overlay">
         <img id="<%= @map.id %>" src="<%= @map.image.url(:medium) %>" data-zoom-image="<%= @map.image.url(:large) %>" class="img-responsive img-rounded" />
@@ -196,6 +226,7 @@ function setData(){
     <!-- MAP -->
     <div id="map" class="smallmap"></div>
     <!-- END MAP -->
+
 
     <!-- INPUT BAR -->
     <nav class="navbar navbar-default" role="navigation">

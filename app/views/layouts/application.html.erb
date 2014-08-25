@@ -114,15 +114,12 @@
             </a>
           </li>
         </ul>
-        <!-- Search by Town Names Form -->
         <div class="col-sm-6 col-md-5 pull-right">
-          <%= form_tag overlap_maps_path, :class => "navbar-form", :role => "search"  do %>
+          <%= form_tag search_maps_path, :class => "navbar-form", :role => "search"  do %>
           <div class="input-group">
-            <%= hidden_field_tag 'point_geometry' %>
-            <input class="typeahead form-control" id="q" name="q" placeholder="<%= t(:placeholder_name, :scope => [:name]) %>" type="text" data-provide="typeahead"/>
-
+            <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t(:search_placeholder, :scope => [:application]), :type => "text" %>
             <div class="input-group-btn">
-              <%= button_tag(type: "submit", class: "btn btn-success") do %>
+              <%= button_tag(type: "submit", class: "btn btn-default") do %>
                 <%= t(:search, :scope => [:application]) %>
               <% end %>
             </div>

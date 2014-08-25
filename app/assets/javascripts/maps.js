@@ -159,6 +159,7 @@ function clickableGrid( rows, cols, callback ){
     return grid;
 }
 
+
 function updateFormats() {
     var in_options = {
         'internalProjection': map.baseLayer.projection,

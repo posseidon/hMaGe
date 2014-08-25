@@ -31,8 +31,8 @@ namespace :init do
 
   desc "Load Data from CSV and YML configuration mapping file"
   task :maps, [:csv_file_path, :yml_file_path, :images_folder_path] => :environment do |t, args|
-    # Run with  rake init:prepare["/home/hmage/terkeptar_export.csv","/home/hmage/mapping.yml","/var/data/images_folder"]
-    # rake init:prepare["/home/ntb/Downloads/hMaGe/hmage.csv","/home/ntb/Downloads/hMaGe/hmage.yml","/home/ntb/Downloads/hMaGe/images"]
+    # Run with  rake init:maps["/home/hmage/terkeptar_export.csv","/home/hmage/mapping.yml","/var/data/images_folder"]
+    # rake init:maps["/home/ntb/Downloads/hMaGe/hmage.csv","/home/ntb/Downloads/hMaGe/hmage.yml","/home/ntb/Downloads/hMaGe/images"]
     require 'csv'
     require 'yaml'
 
@@ -53,7 +53,6 @@ namespace :init do
         map.save!
       end
     end
-    #puts args[:images_folder_path]
   end
 
 end

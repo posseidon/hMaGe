@@ -1,12 +1,16 @@
 class Map < ActiveRecord::Base
-  attr_accessible :name, :path, :image, :kind, :size, :resolutuon, :publisher, :downloadable, :processed
+  attr_accessible :name, :path, :image, :kind, :size, :resolution, :publisher,
+                  :downloadable, :processed, :year, :section, :theme, :projection, :description,
+                  :creator, :participante, :language, :remarks, :source, :gridding, :physical_size
 
   has_many :grids, dependent: :destroy
 
   # PostgreSQL full-text search
   include PgSearch
   pg_search_scope :search_by_attributes,
-                  :against => [:name, :kind, :size, :resolutuon, :publisher],
+                  :against => [:name, :kind, :size, :resolution, :publisher,
+                               :year, :section, :theme, :projection, :description,
+                               :creator, :participante, :language, :remarks, :source],
                   :using => {
                     :tsearch => {:prefix => true}
                   }

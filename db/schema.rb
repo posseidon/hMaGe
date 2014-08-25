@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140825175115) do
+ActiveRecord::Schema.define(:version => 20140825214831) do
 
   create_table "grids", :force => true do |t|
     t.integer "map_id"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20140825175115) do
     t.boolean  "processed",          :default => false
     t.string   "kind"
     t.string   "size"
-    t.string   "resolutuon"
+    t.string   "resolution"
     t.string   "publisher"
     t.boolean  "downloadable",       :default => true
     t.integer  "year",               :default => 1900

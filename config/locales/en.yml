@@ -18,6 +18,7 @@ en:
     magnifier_on: "ON"
     magnifier_off: "OFF"
     menu_towns: "Towns"
+    town_name_label: "Name of Town"
     search_by_towns: "Locate"
     search_by_map:   "Spatial Search"
     manage_towns: "Manage towns"
@@ -30,6 +31,7 @@ en:
     file_information: "File Information"
     set_location: "Set Location"
     set_attributes: "Set Extended Attributes"
+    additional_attributes: "Additional Attributes"
     download: "Download Original Map"
     tools: "Tools"
     draw_polygon: "Draw Polygon"
@@ -105,6 +107,18 @@ en:
         created: "Created at"
         original_filename: "Filename"
         original_file_size: "Size"
+        year: 'Year'
+        section: 'Section'
+        theme: 'Theme'
+        projection: 'Projection system'
+        gridding: 'Grid'
+        description: 'Description'
+        creator: 'Creator'
+        participante: 'Participante'
+        language: 'Language'
+        remarks: 'Remarks'
+        physical_size: 'Physical size'
+        source: 'Source'
       name:
         original: "Original Name"
         current: "Current Name"

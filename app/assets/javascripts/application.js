@@ -18,5 +18,6 @@
 //= require typeahead.bundle.min
 //= require bootstrap
 //= require openlayers-rails
+//= require bootstrap-slider
 //= require maps
 //= require names

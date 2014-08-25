@@ -104,10 +104,12 @@ body {
     padding: 40px;
 }
 
+
 /** Added from this point */
 .twitter-typeahead{
      width: 100%;
 }
+
 .tt-dropdown-menu{
     width: 102%;
 }

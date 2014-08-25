@@ -8,6 +8,34 @@
 
 <div class="row">
     <br>
+    <nav class="navbar navbar-default" role="navigation">
+
+        <!-- Search by Town Names Form -->
+          <%= form_tag overlap_maps_path, :class => "navbar-form", :role => "search"  do %>
+          <div class="input-group">
+            <%= hidden_field_tag 'point_geometry' %>
+            <span class="input-group-addon">
+              <%= label_tag t(:town_name_label, :scope => [:application]), nil %>
+            </span>
+
+            <input class="typeahead form-control" id="q" name="q" placeholder="<%= t(:placeholder_name, :scope => [:name]) %>" type="text" data-provide="typeahead"/>
+
+            <div class="input-group-btn">
+              <%= button_tag(type: "submit", class: "btn btn-success") do %>
+                <%= t(:search, :scope => [:application]) %>
+              <% end %>
+            </div>
+          </div>
+          <% end %>
+    </nav>
+
+
+    <!-- END EDITING TOOLS -->
+
+    <!-- MAP -->
+    <div id="map" class="smallmap border-radius"></div>
+    <!-- END MAP -->
+
     <!-- EDITING TOOLS -->
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
@@ -37,40 +65,30 @@
                 <%= t(:draw_rectangle, :scope => [:map]) %>
               </a>
             </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-cogs icon"></i> &nbsp;
-                <%= t(:controls, :scope => [:map]) %>
-                <span class="caret"></span>
+            <li id="nav">
+              <a href="javascript:void(0)" onclick="toggleControl('nav');">
+                <i class="fa fa-arrows-alt icon"></i>
+                <%= t(:move_map, :scope => [:map]) %>
               </a>
-              <ul class="dropdown-menu" role="menu">
-                <li id="nav">
-                  <a href="javascript:void(0)" onclick="toggleControl('nav');">
-                    <i class="glyphicon glyphicon-screenshot"></i>
-                    <%= t(:move_map, :scope => [:map]) %>
-                  </a>
-                </li>
+            </li>
 
-                <li id="edit">
-                  <a href="javascript:void(0)" onclick="toggleControl('edit');">
-                    <i class="glyphicon glyphicon-wrench"></i>
-                    <%= t(:edit_feature, :scope => [:map]) %>
-                  </a>
-                </li>
-                <li id="select">
-                  <a href="javascript:void(0)" onclick="toggleControl('select');">
-                    <i class="glyphicon glyphicon-hand-up"></i>
-                    <%= t(:select_feature, :scope => [:map]) %>
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <a href="javascript:void(0)" onclick="removeFeature();">
-                    <i class="glyphicon glyphicon-minus-sign"></i>
-                    <%= t(:remove_feature, :scope => [:map]) %>
-                  </a>
-                </li>
-              </ul>
+            <li id="edit">
+              <a href="javascript:void(0)" onclick="toggleControl('edit');">
+                <i class="fa fa-wrench icon"></i>
+                <%= t(:edit_feature, :scope => [:map]) %>
+              </a>
+            </li>
+            <li id="select">
+              <a href="javascript:void(0)" onclick="toggleControl('select');">
+                <i class="fa fa-hand-o-up icon"></i>
+                <%= t(:select_feature, :scope => [:map]) %>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" onclick="removeFeature();">
+                <i class="fa fa-cut icon"></i>
+                <%= t(:remove_feature, :scope => [:map]) %>
+              </a>
             </li>
             <li>
               <%= form_tag related_maps_path, :class => "navbar-form"  do %>
@@ -81,25 +99,9 @@
               <% end %>
             </li>
           </ul>
-          <div class="pull-right">
-            <%= form_tag search_maps_path, :class => "navbar-form", :role => "search"  do %>
-            <div class="input-group-lg">
-              <%= text_field_tag :q, nil, :class => "form-control input-large", :placeholder => t(:search_placeholder, :scope => [:application]), :type => "text" %>
-                <%= button_tag(type: "submit", class: "btn btn-default btn-lg") do %>
-                  <%= t(:search, :scope => [:application]) %>
-                <% end %>
-            </div>
-            <% end %>
-          </div>
-
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
 
-    <!-- END EDITING TOOLS -->
-
-    <!-- MAP -->
-    <div id="map" class="smallmap border-radius"></div>
-    <!-- END MAP -->
 
 </div>

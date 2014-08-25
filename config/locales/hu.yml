@@ -18,6 +18,7 @@ hu:
     magnifier_on: "BEKAPCSOLVA"
     magnifier_off: "KIKAPCSOLVA"
     menu_towns: "Települések"
+    town_name_label: "Település neve"
     search_by_towns: "Keresés települések alapján"
     search_by_map:   "Térbeli szűrés"
     manage_towns: "Települések kezelése"
@@ -30,6 +31,7 @@ hu:
     file_information: "Fájl információ"
     set_location: "Elhelyezkedés meghatározása"
     set_attributes: "Leíró adatok megadása"
+    additional_attributes: "Kiegészítő attribútumok"
     download: "Eredeti térkép letöltése"
     tools: "Eszközök"
     draw_polygon: "Poligon"
@@ -105,6 +107,18 @@ hu:
         created: "Importálva"
         original_filename: "Fájlnév"
         original_file_size: "Méret"
+        year: 'Év'
+        section: 'Szelvényszám'
+        theme: 'Téma'
+        projection: 'Vetületirendszer'
+        gridding: 'Fokháló'
+        description: 'Tartalmi leírás'
+        creator: 'Létrehozó'
+        participante: 'Közreműködő'
+        language: 'Nyelv'
+        remarks: 'Megjegyzés'
+        physical_size: 'Fizikai méret'
+        source: 'Forrás'
       name:
         original: "Eredeti Név"
         current: "Aktuális Név"

@@ -86,7 +86,7 @@
       <div class="form-group">
         <%= f.label :resolution, :class => "col-lg-2 control-label" %>
         <div class="col-sm-7">
-          <%= f.text_field :resolutuon, :class => "form-control", :placeholder => "Resolution of your map", :type => "text" %>
+          <%= f.text_field :resolution, :class => "form-control", :placeholder => "Resolution of your map", :type => "text" %>
         </div>
       </div>
       <div class="form-group">
@@ -95,6 +95,79 @@
           <%= f.text_field :publisher, :class => "form-control", :placeholder => "Publisher of your map", :type => "text" %>
         </div>
       </div>
+      <div class="form-group">
+        <%= f.label :year, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :year, :class => "form-control", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :section, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :section, :class => "form-control", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :theme, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :theme, :class => "form-control", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :gridding, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :gridding, :class => "form-control", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :projection, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :projection, :class => "form-control", :placeholder => "EPGS:23700", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :creator, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :creator, :class => "form-control", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :participante, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :participante, :class => "form-control", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :language, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :language, :class => "form-control", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :physical_size, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :physical_size, :class => "form-control", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :source, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= f.text_field :source, :class => "form-control", :type => "text" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :description, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= cktext_area :map, :description, :cols => 40, :ckeditor => {:toolbar => 'mini'} %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :remarks, :class => "col-lg-2 control-label" %>
+        <div class="col-sm-7">
+          <%= cktext_area :map, :remarks, :cols => 40, :ckeditor => {:toolbar => 'mini'} %>
+        </div>
+      </div>
+
       <div class="form-group">
         <div class="col-lg-2">&nbsp;</div>
         <div class="col-sm-7">
