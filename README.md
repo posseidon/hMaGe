@@ -10,6 +10,12 @@ gem 'bootstrap-generators'
 gem 'kaminari'
 gem 'openlayers-rails'
 ```
+
+# Configuration
+Run the following command to make symlink with data directory to public directory
+```ln -s /var/data/hmage/system/ /home/ntb/repos/ELTE/hmage/public/```
+
+
 # Database mapping
 ```yaml
 ---

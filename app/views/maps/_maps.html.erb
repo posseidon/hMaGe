@@ -29,7 +29,7 @@
                       <div>
                           <h4>
                             <% if can? :read, Map %>
-                              <%= link_to map.name, map_path(map.id) %>
+                              <%= link_to truncate(map.name, length: 45), map_path(map.id) %>
                             <% else %>
                               <%= map.name %>
                             <% end %>
