@@ -7,7 +7,13 @@ class Admin::UsersController < ApplicationController
   end
 
   def search
-
+    if params[:role]
+      @users = User.where("role like '%#{params[:role]}%'")
+    elsif params[:name]
+      @users = User.where("name like '%#{params[:name]}%'")
+    else
+      @users = User.where("email like '%#{params[:email]}%'")
+    end
   end
 
   def update

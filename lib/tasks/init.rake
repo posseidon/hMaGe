@@ -47,6 +47,7 @@ namespace :init do
         config.each do |key, value|
           map[key.to_sym] = row[value]
         end
+        map.downloadable = false
         map.path = image_path
         map.image = File.new(image_path)
         map.image.reprocess!

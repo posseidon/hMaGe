@@ -114,7 +114,7 @@ en:
         gridding: 'Grid'
         description: 'Description'
         creator: 'Creator'
-        participante: 'Participante'
+        participante: 'Contributor'
         language: 'Language'
         remarks: 'Remarks'
         physical_size: 'Physical size'
