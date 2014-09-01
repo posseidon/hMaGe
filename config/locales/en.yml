@@ -120,8 +120,8 @@ en:
         physical_size: 'Physical size'
         source: 'Source'
       name:
-        original: "Original Name"
-        current: "Current Name"
+        original: "Name Variations"
+        current: "Official Name"
         description: "Short Description"
         latlon: "Position"
     errors:
