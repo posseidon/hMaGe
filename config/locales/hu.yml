@@ -38,9 +38,9 @@ hu:
     draw_rectangle: "Téglalap"
     controls: "Műveletek"
     move_map: "Térkép mozgatás"
-    edit_feature: "Objektum kijelölés szerkesztésre"
+    edit_feature: "Kijelölés szerkesztésre"
     select_feature: "Objektum kijelölés"
-    remove_feature: "Objektum törlés"
+    remove_feature: "Kijelölés törlésre"
     set_grid_name: "Kijelölt objektumhoz tartozó grid"
     set_grid_btn: "Mentés"
   name:
@@ -120,8 +120,8 @@ hu:
         physical_size: 'Fizikai méret'
         source: 'Forrás'
       name:
-        original: "Eredeti Név"
-        current: "Aktuális Név"
+        original: "Névváltozatok"
+        current: "Hivatalos Név"
         description: "Rövid leírás"
         latlon: "Pozíció"
     errors:
