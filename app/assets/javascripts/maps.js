@@ -182,17 +182,19 @@ function updateFormats() {
 }
 
 function removeFirstFeature(){
-    if(vectorLayer.features.length > 1 && viewMode === false){
-        vectorLayer.removeFeatures(vectorLayer.features[0]);
-        vectorLayer.features[0].attributes = {
-            grid: "Selected Area"
-        };
-        vectorLayer.redraw();
-    }else{
-        vectorLayer.features[0].attributes = {
-            grid: "Selected Area"
-        };
-        vectorLayer.redraw();
+    if(viewMode == false){
+        if(vectorLayer.features.length > 1){
+            vectorLayer.removeFeatures(vectorLayer.features[0]);
+            vectorLayer.features[0].attributes = {
+                grid: "Selected Area"
+            };
+            vectorLayer.redraw();
+        }else{
+            vectorLayer.features[0].attributes = {
+                grid: "Selected Area"
+            };
+            vectorLayer.redraw();
+        }
     }
 }
 
