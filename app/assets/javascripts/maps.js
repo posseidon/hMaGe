@@ -4,6 +4,7 @@ var polygon, box;
 var edit, nav, remove;
 var select;
 var selectedFeature;
+var viewMode = false;
 
 function init() {
     // allow testing of specific renderers via "?renderer=Canvas", etc
@@ -17,7 +18,7 @@ function init() {
         strokeColor: "#ee9900",
         strokeOpacity: 1,
         strokeWidth: 1,
-        pointRadius: 3
+        pointRadius: 5
     }
 
     OpenLayers.Feature.Vector.style['default'] = {
@@ -35,7 +36,7 @@ function init() {
         labelAlign: "${align}",
         labelXOffset: "${xOffset}",
         labelYOffset: "${yOffset}",
-        labelOutlineColor: "white",
+        labelOutlineColor: "green",
         labelOutlineWidth: 1
     }
 
@@ -183,6 +184,15 @@ function updateFormats() {
 function removeFirstFeature(){
     if(vectorLayer.features.length > 1 && viewMode === false){
         vectorLayer.removeFeatures(vectorLayer.features[0]);
+        vectorLayer.features[0].attributes = {
+            grid: "Selected Area"
+        };
+        vectorLayer.redraw();
+    }else{
+        vectorLayer.features[0].attributes = {
+            grid: "Selected Area"
+        };
+        vectorLayer.redraw();
     }
 }
 

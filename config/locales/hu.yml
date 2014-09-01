@@ -40,7 +40,7 @@ hu:
     move_map: "Térkép mozgatás"
     edit_feature: "Kijelölés szerkesztésre"
     select_feature: "Objektum kijelölés"
-    remove_feature: "Kijelölés törlésre"
+    remove_feature: "Törlés"
     set_grid_name: "Kijelölt objektumhoz tartozó grid"
     set_grid_btn: "Mentés"
   name:
