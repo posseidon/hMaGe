@@ -41,7 +41,7 @@ function init() {
     }
 
     var styleMap = new OpenLayers.StyleMap({
-       "default":OpenLayers.Feature.Vector.style['default'],
+       "default": OpenLayers.Feature.Vector.style['default'],
        "virtual": OpenLayers.Feature.Vector.style['virtual']
     }, {extendDefault: false});
 

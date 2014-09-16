@@ -7,35 +7,35 @@
       });
   });
 </script>
-<% unless grids.blank? %>
-  <% grids.each do |grid| %>
+<% unless maps.blank? %>
+  <% maps.each do |map| %>
       <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
           <div class="panel panel-default">
               <div class="row padall">
                   <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                       <span></span>
-                        <img id="<%= grid.map.id %>" src="<%= grid.map.image.url(:thumb) %>" data-zoom-image="<%= grid.map.image.url(:medium) %>" class="img-responsive img-rounded map-image" />
+                        <img id="<%= map.id %>" src="<%= map.image.url(:thumb) %>" data-zoom-image="<%= map.image.url(:medium) %>" class="img-responsive img-rounded map-image" />
 
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                       <div class="clearfix">
                           <div class="pull-left">
-                              <span class="fa fa-paperclip icon"> <%= number_to_human_size(grid.map.image.size) %></span>
+                              <span class="fa fa-paperclip icon"> <%= number_to_human_size(map.image.size) %></span>
                           </div>
                           <div class="pull-right">
-                             <%= grid.map.theme %> | <%= grid.map.language %> | <%= grid.map.resolution %>
+                             <%= map.theme %> | <%= map.language %> | <%= map.resolution %>
                           </div>
                       </div>
                       <div>
                           <h4>
                             <% if can? :read, Map%>
-                              <%= link_to grid.map.name, map_path(grid.map.id) %>
+                              <%= link_to map.name, :controller => :maps, :action => :show, :id => map.id, :grids => grids[map.id] %>
                             <% else %>
-                              <%= grid.map.name %>
+                              <%= map.name %>
                             <% end %>
                           </h4>
-                          <span class="fa fa-bank icon"></span>  <%= grid.map.publisher %>
-                          <span class="<%= status_to_icon(grid.map.processed) %>"><%= status_to_text(grid.map.processed) %></span>
+                          <span class="fa fa-bank icon"></span>  <%= map.publisher %>
+                          <span class="<%= status_to_icon(map.processed) %>"><%= status_to_text(map.processed) %></span>
                       </div>
                   </div>
               </div>

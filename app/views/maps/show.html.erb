@@ -1,5 +1,6 @@
 <script type="text/javascript">
   var polygons = JSON.parse('<%= raw @polygons %>');
+  var grids = JSON.parse('<%= raw @grids %>');
   var wkt = new OpenLayers.Format.WKT();
   var viewMode = true;
 
@@ -8,10 +9,29 @@
 
     for(idx in polygons){
       polygon = polygons[idx];
+
       var feature = wkt.read(polygon.bbox);
+
+      if(grids.indexOf(polygon.name) > -1){
+        var feature_style = {
+            strokeWidth: 1,
+            fillColor: '#FFA500',
+            fillOpacity: 0.2,
+            label : ("Grid: " + polygon.name),
+            fontSize: "18px",
+            fontFamily: "Verdana",
+            labelAlign: "${align}",
+            labelXOffset: "${xOffset}",
+            labelYOffset: "${yOffset}"
+        };
+        feature.style = feature_style;
+      }
+
       feature.attributes = {
         grid: polygon.name
       };
+
+
       feature.geometry.transform(map.displayProjection, map.getProjectionObject());
       vectorLayer.addFeatures([feature]);
     }

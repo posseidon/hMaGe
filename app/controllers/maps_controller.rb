@@ -3,6 +3,7 @@ class MapsController < ApplicationController
 
   def show
     @map = Map.find(params[:id])
+    @grids = (params[:grids].nil?) ? [].to_json : params[:grids]
     @polygons = @map.wkt_polygons.to_json
   end
 
@@ -59,6 +60,10 @@ class MapsController < ApplicationController
 
   def related
     @grids = Grid.st_relate(params[:geometry])
+    @maps = []
+    @grids.each_key do |key|
+      @maps << Map.find(key)
+    end
   end
 
   def overlap
