@@ -73,5 +73,9 @@ class MapsController < ApplicationController
       @geometry = params[:point_geometry]
     end
     @grids = Grid.st_overlap(@geometry)
+    @maps = []
+    @grids.each_key do |key|
+      @maps << Map.find(key)
+    end
   end
 end
