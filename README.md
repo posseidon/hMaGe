@@ -42,7 +42,7 @@ source: 'forras'
 # SAMBA configuration
 
 User 'grid' have been added.
-```bash
+```sh
 adduser grid
 
 smbpasswd -a grid
