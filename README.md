@@ -49,16 +49,20 @@ smbpasswd -a grid
 ```
 
 Set shared folder for user 
-**grid**  is 
-> /var/data/maps/
-by editing
-> /etc/samba/smb.conf
+**grid**  is  */var/data/maps/*
+by editing */etc/samba/smb.conf*
+
 ```sh
-[accounts]
+[grid]
 comment = Maps data directory
 path = /var/data/maps
-valid users = joe
+valid users = grid
 public = no
 writable = yes
 ```
 
+Set **[global]** configuration to allow access from department network only. (mapw, mapwd, grid)
+```sh
+[global]
+hosts allow .....
+```
