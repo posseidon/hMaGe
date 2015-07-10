@@ -48,3 +48,17 @@ adduser grid
 smbpasswd -a grid
 ```
 
+Set shared folder for user 
+**grid**  is 
+> /var/data/maps/
+by editing
+> /etc/samba/smb.conf
+```sh
+[accounts]
+comment = Maps data directory
+path = /var/data/maps
+valid users = joe
+public = no
+writable = yes
+```
+
