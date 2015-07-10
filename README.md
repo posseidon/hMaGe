@@ -39,3 +39,12 @@ physical_size: 'fizikai_meret'
 source: 'forras'
 ```
 
+# SAMBA configuration
+
+User 'grid' have been added.
+```bash
+adduser grid
+
+smbpasswd -a grid
+```
+
