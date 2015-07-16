@@ -3,6 +3,7 @@ class Map < ActiveRecord::Base
                   :downloadable, :processed, :year, :section, :theme, :projection, :description,
                   :creator, :participante, :language, :remarks, :source, :gridding, :physical_size
 
+  belongs_to :map_groups
   has_many :grids, dependent: :destroy
 
   # PostgreSQL full-text search

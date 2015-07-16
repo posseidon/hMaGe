@@ -1,3 +1,15 @@
 # Create Admin User
 User.create(:name => 'Administrator', :email => 'historicalmapgeolocator@gmail.com', :password => 'usnJ]}5r', :password_confirmation => 'usnJ]}5r', :role => 'admin')
 
+MapGroup.create(:identifier => 1, :name => 'Atlaszok')
+MapGroup.create(:identifier => 2, :name => 'Budapest régi kataszteri térképei')
+MapGroup.create(:identifier => 3, :name => 'Egyéb (Tanszéki és más)')
+MapGroup.create(:identifier => 4, :name => 'EOTR 10 000 georeferálva')
+MapGroup.create(:identifier => 5, :name => 'EOTR nem georeferálva')
+MapGroup.create(:identifier => 8, :name => 'Gauss-Krüger szelvények, 1950 után')
+MapGroup.create(:identifier => 10, :name => 'Hazai szelvényezésű térképek')
+MapGroup.create(:identifier => 11, :name => 'III. katonai felmérés')
+MapGroup.create(:identifier => 12, :name => 'A III. katonai felmérés átdolgozása')
+MapGroup.create(:identifier => 14, :name => 'Az OSZK térképei')
+MapGroup.create(:identifier => 15, :name => 'A Tanszék térképei (vegyes)')
+MapGroup.create(:identifier => 16, :name => 'Világtérkép-sorozat')

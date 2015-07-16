@@ -11,12 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140825214831) do
+ActiveRecord::Schema.define(:version => 20150716120937) do
 
   create_table "grids", :force => true do |t|
     t.integer "map_id"
     t.string  "grid_id"
     t.spatial "bbox",    :limit => {:srid=>4326, :type=>"polygon"}
+  end
+
+  create_table "map_groups", :force => true do |t|
+    t.integer  "identifier", :null => false
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "maps", :force => true do |t|
@@ -46,7 +53,10 @@ ActiveRecord::Schema.define(:version => 20140825214831) do
     t.text     "remarks"
     t.integer  "physical_size",      :default => 0
     t.string   "source",             :default => "ELTE TeGeTa"
+    t.integer  "group_id"
   end
+
+  add_index "maps", ["group_id"], :name => "index_maps_on_group_id"
 
   create_table "names", :force => true do |t|
     t.string  "original"
