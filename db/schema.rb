@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150716120937) do
+ActiveRecord::Schema.define(:version => 20150727140632) do
 
   create_table "grids", :force => true do |t|
     t.integer "map_id"
@@ -27,36 +27,38 @@ ActiveRecord::Schema.define(:version => 20150716120937) do
   end
 
   create_table "maps", :force => true do |t|
-    t.string   "name",               :default => "Unprocessed Map", :null => false
-    t.string   "path",                                              :null => false
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.string   "name",                :default => "Unprocessed Map", :null => false
+    t.string   "path",                                               :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.boolean  "processed",          :default => false
+    t.boolean  "processed",           :default => false
     t.string   "kind"
     t.string   "size"
     t.string   "resolution"
     t.string   "publisher"
-    t.boolean  "downloadable",       :default => true
-    t.integer  "year",               :default => 1900
-    t.string   "section",            :default => "0"
+    t.boolean  "downloadable",        :default => true
+    t.integer  "year",                :default => 1900
+    t.string   "section",             :default => "0"
     t.string   "theme"
-    t.string   "projection",         :default => "EOV"
-    t.boolean  "gridding",           :default => false
+    t.string   "projection",          :default => "EOV"
+    t.boolean  "gridding",            :default => false
     t.text     "description"
     t.string   "creator"
     t.string   "participante"
-    t.string   "language",           :default => "HU"
+    t.string   "language",            :default => "HU"
     t.text     "remarks"
-    t.integer  "physical_size",      :default => 0
-    t.string   "source",             :default => "ELTE TeGeTa"
-    t.integer  "group_id"
+    t.integer  "physical_size",       :default => 0
+    t.string   "source",              :default => "ELTE TeGeTa"
+    t.integer  "map_group_id"
+    t.string   "gformat"
+    t.string   "registartion_number"
   end
 
-  add_index "maps", ["group_id"], :name => "index_maps_on_group_id"
+  add_index "maps", ["map_group_id"], :name => "index_maps_on_map_group_id"
 
   create_table "names", :force => true do |t|
     t.string  "original"
