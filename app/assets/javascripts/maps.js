@@ -223,3 +223,4 @@ function setMapDataXXXX(){
     console.log(wkt.toString());
     $("#geometry").val(wkt.toString());
 }
+

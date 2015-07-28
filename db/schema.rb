@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150727140632) do
+ActiveRecord::Schema.define(:version => 20150728140334) do
 
   create_table "grids", :force => true do |t|
     t.integer "map_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20150727140632) do
   end
 
   create_table "maps", :force => true do |t|
-    t.string   "name",                :default => "Unprocessed Map", :null => false
+    t.text     "name",                :default => "Unprocessed Map", :null => false
     t.string   "path",                                               :null => false
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(:version => 20150727140632) do
     t.string   "projection",          :default => "EOV"
     t.boolean  "gridding",            :default => false
     t.text     "description"
-    t.string   "creator"
-    t.string   "participante"
+    t.text     "creator"
+    t.text     "participante"
     t.string   "language",            :default => "HU"
     t.text     "remarks"
     t.integer  "physical_size",       :default => 0

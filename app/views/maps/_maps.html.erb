@@ -5,43 +5,38 @@
         responsive:  true,
         loadingIcon: true
       });
+      $('#list').click(function(event){event.preventDefault();$('#maps .item').addClass('list-group-item');});
+      $('#grid').click(function(event){event.preventDefault();$('#maps .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
   });
 </script>
 <% if maps.size > 0 %>
-  <% maps.each do |map| %>
-      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
-          <div class="panel panel-default">
-              <div class="row padall">
-                  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                      <span></span>
-                        <img id="<%= map.id %>" src="<%= map.image.url(:thumb) %>" data-zoom-image="<%= map.image.url(:medium) %>" class="img-responsive img-rounded map-image" />
-
-                  </div>
-                  <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                      <div class="clearfix">
-                          <div class="pull-left">
-                              <span class="fa fa-paperclip icon"> <%= number_to_human_size(map.image.size) %></span>
-                          </div>
-                          <div class="pull-right">
-                             <%= map.theme %> | <%= map.language %> | <%= map.resolution %>
-                          </div>
-                      </div>
-                      <div>
-                          <h4>
-                            <% if can? :read, Map %>
-                              <%= link_to truncate(map.name, length: 45), map_path(map.id) %>
-                            <% else %>
-                              <%= map.name %>
-                            <% end %>
-                          </h4>
-                          <span class="fa fa-bank icon"></span>  <%= map.publisher %>
-                          <span class="<%= status_to_icon(map.processed) %>"><%= link_to status_to_text(map.processed), map_path(map.id) %></span>
-                      </div>
-                  </div>
-              </div>
-          </div>
+  <div class="row">
+      <div class="col-lg-12">
+          <h1 class="page-header">Search results:
+          </h1>
       </div>
+  </div>
+  <div id="maps" class="row list-group">
+  <% maps.each do |map| %>
+        <div class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading"><%= map.name %></h4>
+                    <p class="group inner list-group-item-text"><%= truncate(map.description, length: 100) %></p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                $21.000</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
   <% end %>
+  </div>
 <% else %>
     <div class="jumbotron">
       <div class="hero-unit center">

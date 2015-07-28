@@ -25,7 +25,7 @@ class Map < ActiveRecord::Base
     },
     :default_url => "/missing.png",
     :path => "/var/data/hmage/system/:style/:filename.:extension",
-    :url => "/system/:style/:filename.:extension"
+    :url  => "/system/:style/:filename.:extension"
 
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
