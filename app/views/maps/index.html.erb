@@ -1,7 +1,7 @@
 <script type="text/javascript">
   $(document).ready(function(){
     init();
-
+    $('[data-toggle="popover"]').popover()
     console.log("ENDO");
   });
 </script>
@@ -28,80 +28,51 @@
           </div>
           <% end %>
     </nav>
+</div>
 
-
-    <!-- END EDITING TOOLS -->
-
-    <!-- MAP -->
-    <div id="map" class="smallmap border-radius"></div>
-    <!-- END MAP -->
-
-    <!-- EDITING TOOLS -->
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+<div class="row">
+    <div class="col-md-1">
+          <br/>
+          &nbsp;&nbsp;&nbsp;
+          <button id="polygon" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:draw_polygon, :scope => [:map]) %>" onclick="toggleControl('polygon');">
+            <i class="fa fa-pencil icon"></i>
           </button>
-          <a class="navbar-brand" href="javascript:void(0);"><%= t(:tools, :scope => [:map]) %></a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li id="polygon">
-              <a href="javascript:void(0)" onclick="toggleControl('polygon');">
-                <i class="fa fa-pencil icon"></i> &nbsp;
-                <%= t(:draw_polygon, :scope => [:map]) %>
-              </a>
-            </li>
-            <li id="box">
-              <a href="javascript:void(0)" onclick="toggleControl('box');">
-                <i class="fa fa-square-o icon"></i> &nbsp;
-                <%= t(:draw_rectangle, :scope => [:map]) %>
-              </a>
-            </li>
-            <li id="nav">
-              <a href="javascript:void(0)" onclick="toggleControl('nav');">
-                <i class="fa fa-arrows-alt icon"></i>
-                <%= t(:move_map, :scope => [:map]) %>
-              </a>
-            </li>
-
-            <li id="edit">
-              <a href="javascript:void(0)" onclick="toggleControl('edit');">
-                <i class="fa fa-wrench icon"></i>
-                <%= t(:edit_feature, :scope => [:map]) %>
-              </a>
-            </li>
-            <li id="select">
-              <a href="javascript:void(0)" onclick="toggleControl('select');">
-                <i class="fa fa-hand-o-up icon"></i>
-                <%= t(:select_feature, :scope => [:map]) %>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)" onclick="removeFeature();">
-                <i class="fa fa-cut icon"></i>
-                <%= t(:remove_feature, :scope => [:map]) %>
-              </a>
-            </li>
-            <li>
-              <%= form_tag related_maps_path, :class => "navbar-form"  do %>
-                <%= hidden_field_tag 'geometry' %>
-                  <%= button_tag(type: "submit", :onclick => "return setMapData();", class: "btn btn-info btn-lg") do %>
-                    <%= t(:search_by_map, :scope => [:application]) %>
-                  <% end %>
+          <br/><br/>
+          &nbsp;&nbsp;&nbsp;
+          <button id="box" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:draw_rectangle, :scope => [:map]) %>" onclick="toggleControl('box');">
+            <i class="fa fa-square-o icon"></i>
+          </button>
+          <br/><br/>
+          &nbsp;&nbsp;&nbsp;
+          <button id="nav" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:move_map, :scope => [:map]) %>" onclick="toggleControl('nav');">
+            <i class="fa fa-arrows-alt icon"></i>
+          </button>
+          <br/><br/>
+          &nbsp;&nbsp;&nbsp;
+          <button id="edit" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:edit_feature, :scope => [:map]) %>" onclick="toggleControl('edit');">
+            <i class="fa fa-wrench icon"></i>
+          </button>
+          <br/><br/>
+          &nbsp;&nbsp;&nbsp;
+          <button id="select" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:select_feature, :scope => [:map]) %>" onclick="toggleControl('select');">
+            <i class="fa fa-hand-o-up icon"></i>
+          </button>
+          <br/><br/>
+          &nbsp;&nbsp;&nbsp;
+          <button id="remove" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:remove_feature, :scope => [:map]) %>" onclick="removeFeature();">
+            <i class="fa fa-cut icon"></i>
+          </button>
+          <br/><br/>
+          <%= form_tag related_maps_path, :class => "navbar-form"  do %>
+            <%= hidden_field_tag 'geometry' %>
+              <%= button_tag(type: "submit", :onclick => "return setMapData();", class: "btn btn-info btn-circle btn-lg") do %>
+                  <i class="fa fa-search"></i>
               <% end %>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-
-
+          <% end %>
+    </div>
+    <div class="col-md-11">
+      <!-- MAP -->
+      <div id="map" class="smallmap border-radius"></div>
+      <!-- END MAP -->      
+    </div>
 </div>

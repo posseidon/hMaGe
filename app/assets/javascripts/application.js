@@ -21,3 +21,6 @@
 //= require bootstrap-slider
 //= require maps
 //= require names
+//= require jquery.mousewheel-3.0.6.pack
+//= require jquery.fancybox.pack
+//= require jquery.fancybox-thumbs

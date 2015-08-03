@@ -129,10 +129,8 @@ function toggleControl(action) {
         var control = drawControls[key];
         if(action == key) {
             control.activate();
-            $("#"+action).attr("class","active");
         } else {
             control.deactivate();
-            $("#"+key).removeClass("active");
         }
     }
 }

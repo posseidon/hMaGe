@@ -54,6 +54,7 @@ class MapsController < ApplicationController
     if params[:q].eql?("all")
       @maps = Map.all
     else
+      session[:query] = params[:q]
       @maps = Map.search_by_attributes(params[:q])
     end
   end
