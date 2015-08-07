@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  ROLES = %w[admin editor viewer]
+  has_many :tickets, dependent: :destroy
+  ROLES = %w[admin editor viewer librarian]
   paginates_per 10
 
   # Include default devise modules. Others available are:

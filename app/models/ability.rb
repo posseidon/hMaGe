@@ -13,5 +13,9 @@ class Ability
     can :read,   Name if user.role == 'viewer' or user.role == 'guest'
     can :find,   Name if user.role != 'admin'
     can :search, Name if user.role != 'admin'
+
+    can :manage, Ticket if user.role == 'librarian'
+    can :create, Ticket if user.role == 'viewer' or user.role == 'editor'
+    can :read,   Ticket if user.role == 'viewer' or user.role == 'editor'
   end
 end

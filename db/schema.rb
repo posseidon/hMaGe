@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150728140334) do
+ActiveRecord::Schema.define(:version => 20150806141536) do
 
   create_table "grids", :force => true do |t|
     t.integer "map_id"
@@ -74,6 +74,17 @@ ActiveRecord::Schema.define(:version => 20150728140334) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  create_table "tickets", :force => true do |t|
+    t.text     "uid"
+    t.integer  "user_id"
+    t.integer  "map_id"
+    t.string   "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "tickets", ["uid"], :name => "index_tickets_on_uid"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",       :null => false
