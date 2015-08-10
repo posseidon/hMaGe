@@ -1,0 +1,67 @@
+<script>
+  $(function() {
+      $('#ticket_message').editable({inlineMode: false, height: '300'})
+  });
+</script>
+
+<div class="page-header">
+  <h1><%= t(:download_request_page_header, :scope => [:ticket]) %> <small class="text-primary"><%= ticket.map.name %></small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6">   
+        <h3><%= t(:extended_attributes, :scope => [:map]) %></h3>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <table class="table table-striped table-responsive">
+            <tbody>
+                <tr>
+                  <td><%= Map.human_attribute_name("kind") %></td>
+                  <td>
+                  <%= ticket.map.kind %>
+                  </td>
+                </tr>
+                <tr>
+                  <td><%= Map.human_attribute_name("size") %></td>
+                  <td><%= ticket.map.size %></td>
+                </tr>
+                <tr>
+                  <td><%= Map.human_attribute_name("resolution") %></td>
+                  <td>
+                      <%= ticket.map.resolution %>
+                  </td>
+                </tr>
+                <tr>
+                  <td><%= Map.human_attribute_name("year") %></td>
+                  <td><%= ticket.map.year %></td>
+                </tr>
+                <tr>
+                  <td><%= Map.human_attribute_name("theme") %></td>
+                  <td><%= ticket.map.theme %></td>
+                </tr>
+                <tr>
+                  <td><%= Map.human_attribute_name("creator") %></td>
+                  <td><%= ticket.map.creator %></td>
+                </tr>
+                <tr>
+                  <td><%= Map.human_attribute_name("participante") %></td>
+                  <td><%= ticket.map.participante %></td>
+                </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+  </div>
+  <div class="col-md-6">
+      <div class="form-group">
+        <label for="status"><%= t(:status, :scope => [:ticket]) %></label>
+        <input class="form-control" id="ticket[status]" type="text" placeholder="<%= ticket.status %>" disabled>
+      </div>
+
+      <div class="form-group">
+        <label for="status"><%= Ticket.human_attribute_name("message") %></label>
+          <textarea id="ticket_message" name="ticket[message]"><%= ticket.message %></textarea>
+      </div>
+  </div>
+</div>
+

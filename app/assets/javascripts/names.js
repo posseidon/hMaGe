@@ -1,4 +1,3 @@
-//= require ckeditor/init
 
 var markersLayer;
 var latitude = 0;

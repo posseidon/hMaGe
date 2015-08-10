@@ -11,4 +11,6 @@
  *= require_self
  *= require_tree .
  *= require jquery.ui.all
+ *= require froala_editor.min.css
+ *= require froala_style.min.css
  */

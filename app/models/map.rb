@@ -6,6 +6,7 @@ class Map < ActiveRecord::Base
   belongs_to :map_groups
   has_many :grids, dependent: :destroy
   has_many :tickets
+  paginates_per 10
 
   # PostgreSQL full-text search
   include PgSearch

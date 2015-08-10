@@ -57,6 +57,41 @@
                   </li>
                   <li class="divider"></li>
                 <% end %>
+                <% if can? :create, Ticket %>
+                <li>
+                    <%= link_to list_my_tickets_path do %>
+                      <i class="fa fa-cloud-download"></i> &nbsp; <%= t(:my_requests, :scope => [:application]) %>
+                    <% end %>
+                </li>
+                <li class="divider"></li>
+                <% end %>
+                <% if can? :update, Ticket %>
+                <li class="dropdown-submenu">
+                  <%= link_to list_opened_tickets_path(:page => 0) do %>
+                    <i class="glyphicon glyphicon-send"></i> &nbsp; <%= t(:view_requests, :scope => [:application]) %>
+                  <% end %>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <%= link_to list_opened_tickets_path(:page => 0) do %>
+                        <i class="glyphicon glyphicon-question-sign"></i> &nbsp; <%= t(:open_requests, :scope => [:ticket]) %>
+                      <% end %>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <%= link_to list_available_tickets_path(:page => 0) do %>
+                        <i class="glyphicon glyphicon-ok-circle"></i> &nbsp; <%= t(:accepted_requests, :scope => [:ticket]) %>
+                      <% end %>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <%= link_to list_rejected_tickets_path(:page => 0) do %>
+                        <i class="glyphicon glyphicon-ban-circle"></i> &nbsp; <%= t(:rejected_requests, :scope => [:ticket]) %>
+                      <% end %>
+                    </li>
+                  </ul>
+                </li>
+                <li class="divider"></li>
+                <% end %>
                 <li>
                   <%= link_to edit_user_registration_path do %>
                     <i class="glyphicon glyphicon-edit"></i> &nbsp; <%= t(:change_password, :scope => [:application]) %>

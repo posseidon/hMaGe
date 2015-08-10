@@ -24,3 +24,4 @@
 //= require jquery.mousewheel-3.0.6.pack
 //= require jquery.fancybox.pack
 //= require jquery.fancybox-thumbs
+//= require froala_editor.min.js

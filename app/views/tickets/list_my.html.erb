@@ -1,0 +1,23 @@
+<div class="page-header">
+  <h1>List of <small>Download requests</small></h1>
+</div>
+<table class="table table-responsive table-bordered table-striped table-condensed">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Map Name</th>
+			<th><center>Requested at</center></th>
+			<th><center>Status</center></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @tickets.each do |ticket| %>
+		<tr>
+			<td><%= link_to truncate(ticket.uid, length: 10), ticket_path(ticket.id) %></td>
+			<td><%= link_to ticket.map.name, map_path(ticket.map.id) %></td>
+			<td><center><%= ticket.created_at.strftime("%Y, %B %d - %H:%M ") %></center></td>
+			<td><center><%= status_to_icon(ticket.status) %></center></td>
+		</tr>
+		<% end %>		
+	</tbody>
+</table>

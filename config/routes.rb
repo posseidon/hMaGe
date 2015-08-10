@@ -47,6 +47,15 @@ Hmage::Application.routes.draw do
     end
   end
 
+  resources :tickets do
+    collection do
+      get 'list_my'
+      get 'list_rejected'
+      get 'list_opened'
+      get 'list_available'
+    end
+  end
+
   match '/about', :to => redirect('/index.html')
   match '*unmatched_route', :to => 'application#raise_not_found!'
 

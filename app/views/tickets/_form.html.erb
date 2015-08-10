@@ -1,0 +1,25 @@
+<script>
+  $(function() {
+      $('#ticket_message').editable({inlineMode: false, height: '300'})
+  });
+</script>
+
+<%= form_for ticket, :html => {:class => "form-horizontal", :role => "form"} do |f| %>
+  <%= render "shared/error_messages", :target => ticket %>
+
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :map_id %>
+
+  <div class="form-group">
+      <textarea id="ticket_message" name="ticket[message]"></textarea>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-6">
+      <%= link_to t(:cancel, :scope => [:application]), :back, :class => "btn btn-primary btn-block" %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.submit t(:send_request, :scope => [:ticket]), :class => "btn btn-primary btn-block" %>
+    </div>
+  </div>
+<% end %>

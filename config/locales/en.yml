@@ -25,13 +25,16 @@ en:
     import_towns: "Import towns"
     add_town: "Add town"
     names_not_found: "No record found that matches conditions"
+    my_requests: "My Download Requests"
+    view_requests: "View Requests"
+    user_base_attributes: "User attributes"
   map:
     geographical_location: "Geographical Location"
-    extended_attributes: "Extended Attributes"
+    extended_attributes: "Attributes"
     file_information: "File Information"
     set_location: "Set Location"
     set_attributes: "Set Extended Attributes"
-    additional_attributes: "Additional Attributes"
+    additional_attributes: "Extended Attributes"
     download: "Download Original Map"
     tools: "Tools"
     draw_polygon: "Draw a Polygon"
@@ -43,6 +46,7 @@ en:
     remove_feature: "Remove selected feature"
     set_grid_name: "Selected Feature's GRID identifier"
     set_grid_btn: "Set"
+    map_image: "Map image"
   name:
     placeholder_search: "Current or original name of settlement"
     placeholder_current: "Current name of settlement"
@@ -53,6 +57,18 @@ en:
     set_attributes: "Set Town attributes"
     search_town_title: "Search by Town"
     search_result: "Search Result"
+  ticket:
+    download_request_page_header: "Download request for"
+    open_requests: "Open Requests"
+    rejected_requests: "Rejected Requests"
+    accepted_requests: "Accepted Requests"
+    send_request: "Send download request"
+    allow_request: "Allow request"
+    reject_request: "Reject request"
+    save_request: "Save request"
+    status_reject: "Reject request"
+    status_accept: "Accept request"
+    status: "Status"
   views:
     pagination:
       first: "&laquo; First"
@@ -124,6 +140,10 @@ en:
         current: "Official Name"
         description: "Short Description"
         latlon: "Position"
+      ticket:
+        uid: "Unique Identifier"
+        status: "Request status"
+        message: "Message"
     errors:
       template:
         header:

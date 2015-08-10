@@ -1,0 +1,11 @@
+<% if current_user.role == 'viewer' or current_user.role == 'editor' %>
+	<%= render :partial => 'ticket', :locals => {:ticket => @ticket} %>
+<% elsif current_user.role == 'librarian' %>
+	<%= render :partial => 'ticket_form', :locals => {:ticket => @ticket} %>
+<% else %>
+	<div class="jumbotron">
+	  <h1>Hello, world!</h1>
+	  <p>Not Implemented yet ...</p>
+	  <p><a class="btn btn-primary btn-lg" href="/" role="button">Learn more</a></p>
+	</div>
+<% end %>

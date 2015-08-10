@@ -25,6 +25,9 @@ hu:
     import_towns: "Települések importálása"
     add_town: "Település hozzáadás"
     names_not_found: "Nincs találat a keresési paraméter alapján."
+    my_requests: "Letöltési Kérelmek"
+    view_requests: "Kérelmek listája"
+    user_base_attributes: "Felhasználói adatok"
   map:
     geographical_location: "Földrajzi Elhelyezkedés"
     extended_attributes: "Leíró Adatok"
@@ -43,6 +46,7 @@ hu:
     remove_feature: "Törlés"
     set_grid_name: "Kijelölt objektumhoz tartozó grid"
     set_grid_btn: "Mentés"
+    map_image: "Térkép képe"
   name:
     placeholder_search: "Település történelmi vagy jelenlegi neve"
     placeholder_current: "Jelenlegi település neve"
@@ -53,6 +57,18 @@ hu:
     set_attributes: "Név adatok módosítása"
     search_town_title: "Keresendő települések"
     search_result: "Keresesi eredmény"
+  ticket:
+    download_request_page_header: "Letöltés kérelem az"
+    open_requests: "Nyitott Kérelmek"
+    rejected_requests: "Elutasított Kérelmek"
+    accepted_requests: "Elfogadott Kérelmek"
+    send_request: "Kérelem elküldése"
+    allow_request: "Kérelem engedélyezés"
+    reject_request: "Kérelem elutasítása"
+    save_request: "Kérelem elmentése"
+    status_reject: "Kérelem elutasítása"
+    status_accept: "Kérelem elfogadása"
+    status: "Kérelem státusza"
   views:
     pagination:
       first: "&laquo; Első"
@@ -124,6 +140,10 @@ hu:
         current: "Hivatalos Név"
         description: "Rövid leírás"
         latlon: "Pozíció"
+      ticket:
+        uid: "Azonosító"
+        status: "Kérelem állapota"
+        message: "Üzenet"
     errors:
       template:
         header:
