@@ -5,6 +5,7 @@ class MapsController < ApplicationController
     @map = Map.find(params[:id])
     @grids = (params[:grids].nil?) ? [].to_json : params[:grids]
     @polygons = @map.wkt_polygons.to_json
+    @active_download_tickets = Ticket.can_user_request_download_ticket(current_user.id, params[:id])
   end
 
   def edit

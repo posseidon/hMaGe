@@ -7,7 +7,11 @@
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
 		<div class="page-header">
-		  <h1><%= t(:download_request_page_header, :scope => [:ticket]) %> <small class="text-primary"><%= @map.name %></small></h1>
+      <% if @request_type.eql? 'DOWNLOAD' %>
+        <h1><%= t(:download_request_page_header, :scope => [:ticket]) %> <small class="text-primary"><%= @map.name %></small></h1>
+      <% else %>
+        <h1><%= t(:update_request_page_header, :scope => [:ticket]) %> <small class="text-primary"><%= @map.name %></small></h1>
+      <% end %>
 		</div>
 
         <div class="panel panel-default">
@@ -51,6 +55,6 @@
           </div>
         </div>
 		<h3><%= Ticket.human_attribute_name("message") %></h3>
-		<%= render :partial => 'form', :locals => {:ticket => @ticket} %>
+		<%= render :partial => 'form', :locals => {:ticket => @ticket, :request_type => @request_type, :map_id => @map.id} %>
 	</div>
 </div>

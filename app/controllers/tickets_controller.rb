@@ -1,18 +1,15 @@
 class TicketsController < ApplicationController
-	STATUS = %w[OPEN AVAILABLE REJECTED]
-
 	def new
 		@map = Map.find(params[:map_id])
 		@ticket = Ticket.new(map_id: @map.id, user_id: current_user.id)
+		@request_type = params[:request_type]
 	end
 
 	def create
-		@ticket = Ticket.new(params[:ticket])
-		@ticket.status = STATUS[0]
-		@ticket.uid = Digest::SHA1.hexdigest DateTime.new.to_s
-		@ticket.save!
-		redirect_to map_path(@ticket.map_id), :notice => "Download request sent."
+		Ticket.create_request(params)
+		redirect_to map_path(params[:ticket][:map_id]), :notice => "#{params[:ticket][:request_type]} Request sent."
 	rescue Exception => ex
+		@ticket = Ticket.new(map_id: params[:ticket][:map_id], user_id: current_user.id)
 		render action: "new"
 	end
 
@@ -21,15 +18,19 @@ class TicketsController < ApplicationController
 	end
 
 	def list_rejected
-		@tickets = Ticket.rejected(params[:page])
+		@tickets = Ticket.tickets('REJECTED', current_user.role, params[:page])
 	end
 
 	def list_opened
-		@tickets = Ticket.opened(params[:page])
+		@tickets = Ticket.tickets('OPEN', current_user.role, params[:page])
 	end
 
-	def list_available
-		@tickets = Ticket.available(params[:page])
+	def list_accepted
+		@tickets = Ticket.tickets('ACCEPTED', current_user.role, params[:page])
+	end
+
+	def list_expired
+		#@tickets = Ticket.expired()
 	end
 
 	def show

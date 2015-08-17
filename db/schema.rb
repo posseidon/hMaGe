@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150808152417) do
+ActiveRecord::Schema.define(:version => 20150817113702) do
 
   create_table "grids", :force => true do |t|
     t.integer "map_id"
@@ -80,9 +80,10 @@ ActiveRecord::Schema.define(:version => 20150808152417) do
     t.integer  "user_id"
     t.integer  "map_id"
     t.string   "status"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.text     "message"
+    t.string   "request_type", :default => "DOWNLOAD", :null => false
   end
 
   add_index "tickets", ["uid"], :name => "index_tickets_on_uid"

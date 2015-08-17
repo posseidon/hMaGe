@@ -78,7 +78,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                      <%= link_to list_available_tickets_path(:page => 0) do %>
+                      <%= link_to list_accepted_tickets_path(:page => 0) do %>
                         <i class="glyphicon glyphicon-ok-circle"></i> &nbsp; <%= t(:accepted_requests, :scope => [:ticket]) %>
                       <% end %>
                     </li>
@@ -88,6 +88,14 @@
                         <i class="glyphicon glyphicon-ban-circle"></i> &nbsp; <%= t(:rejected_requests, :scope => [:ticket]) %>
                       <% end %>
                     </li>
+                    <% if current_user.role == 'librarian' %>
+                      <li class="divider"></li>
+                      <li>
+                      <%= link_to list_expired_tickets_path(:page => 0) do %>
+                        <i class="glyphicon glyphicon-time"></i> &nbsp; <%= t(:expired_requests, :scope => [:ticket]) %>
+                      <% end %>
+                      </li>
+                    <% end %>
                   </ul>
                 </li>
                 <li class="divider"></li>

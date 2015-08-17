@@ -52,7 +52,8 @@ Hmage::Application.routes.draw do
       get 'list_my'
       get 'list_rejected'
       get 'list_opened'
-      get 'list_available'
+      get 'list_accepted'
+      get 'list_expired'
     end
   end
 

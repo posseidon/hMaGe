@@ -7,8 +7,9 @@
 <%= form_for ticket, :html => {:class => "form-horizontal", :role => "form"} do |f| %>
   <%= render "shared/error_messages", :target => ticket %>
 
-  <%= f.hidden_field :user_id %>
-  <%= f.hidden_field :map_id %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :map_id, :value => ticket.map_id %>
+  <%= f.hidden_field :request_type, :value => request_type %>
 
   <div class="form-group">
       <textarea id="ticket_message" name="ticket[message]"></textarea>

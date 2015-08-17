@@ -47,6 +47,9 @@ hu:
     set_grid_name: "Kijelölt objektumhoz tartozó grid"
     set_grid_btn: "Mentés"
     map_image: "Térkép képe"
+    send_download_request: "Letöltés engedélyezése"
+    send_update_request: "Térkép hiba bejelentés"
+    active_pending_request: "Aktív letöltési link"
   name:
     placeholder_search: "Település történelmi vagy jelenlegi neve"
     placeholder_current: "Jelenlegi település neve"
@@ -59,9 +62,11 @@ hu:
     search_result: "Keresesi eredmény"
   ticket:
     download_request_page_header: "Letöltés kérelem az"
+    update_request_page_header: "Módosítás kérelem az"
     open_requests: "Nyitott Kérelmek"
     rejected_requests: "Elutasított Kérelmek"
     accepted_requests: "Elfogadott Kérelmek"
+    expired_requests: "Lejárt Kérelmek"
     send_request: "Kérelem elküldése"
     allow_request: "Kérelem engedélyezés"
     reject_request: "Kérelem elutasítása"

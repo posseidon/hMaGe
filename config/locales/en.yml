@@ -47,6 +47,9 @@ en:
     set_grid_name: "Selected Feature's GRID identifier"
     set_grid_btn: "Set"
     map_image: "Map image"
+    send_download_request: "Send Download Request"
+    send_update_request: "Send Update Notification"
+    active_pending_request: "Active Download Request!"
   name:
     placeholder_search: "Current or original name of settlement"
     placeholder_current: "Current name of settlement"
@@ -59,9 +62,11 @@ en:
     search_result: "Search Result"
   ticket:
     download_request_page_header: "Download request for"
+    update_request_page_header: "Update request for"
     open_requests: "Open Requests"
     rejected_requests: "Rejected Requests"
     accepted_requests: "Accepted Requests"
+    expired_requests: "Expired Requests"
     send_request: "Send download request"
     allow_request: "Allow request"
     reject_request: "Reject request"
