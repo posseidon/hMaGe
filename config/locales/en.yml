@@ -29,6 +29,9 @@ en:
     view_requests: "View Requests"
     user_base_attributes: "User attributes"
   map:
+    map_information: "Information related to"
+    info: "Map"
+    map_descriptive_info: "Descriptive information"
     geographical_location: "Geographical Location"
     extended_attributes: "Attributes"
     file_information: "File Information"

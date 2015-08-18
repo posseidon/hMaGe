@@ -29,6 +29,9 @@ hu:
     view_requests: "Kérelmek listája"
     user_base_attributes: "Felhasználói adatok"
   map:
+    map_information: "Térképre vonatkozó"
+    info: "Információ"
+    map_descriptive_info: "Térképre vonatkozó leíró adatok"
     geographical_location: "Földrajzi Elhelyezkedés"
     extended_attributes: "Leíró Adatok"
     file_information: "Fájl információ"

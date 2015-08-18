@@ -98,6 +98,14 @@
         <!-- END SIDEBAR USER TITLE -->
         <!-- SIDEBAR MENU -->
         <div class="profile-usermenu">
+          <ul id="mapType" class="nav">
+            <li class="bg-warning">
+              <a>
+                <i class="glyphicon glyphicon-font"></i>
+                <span class="text-primary"><%= @mapgroup.name %></span>
+              </a>
+            </li>            
+          </ul>
           <ul id="mapInfoPanel" class="nav">
             <li id="infoLI">
               <a>
@@ -119,7 +127,7 @@
               <i class="fa fa-file-image-o"></i>
               Preview </a>
             </li>
-            <li id="requestLI">
+            <li id="requestLI" class="bg-success">
               <% unless @active_download_tickets.size > 0 %>
                 <%= link_to new_ticket_path(map_id: @map.id, request_type: 'DOWNLOAD') do %>
                   <i class="fa fa-download"></i>
@@ -132,7 +140,7 @@
                 <% end %>
               <% end %>
             </li>
-            <li id="updateLI">
+            <li id="updateLI" class="bg-info">
               <%= link_to new_ticket_path(map_id: @map.id, request_type: 'UPDATE') do %>
                 <span class="glyphicon glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                 <%= t(:send_update_request, :scope => [:map]) %>
@@ -152,24 +160,34 @@
 
           <!-- DESCRIPTION AND REMARKS -->
           <div id="textdata" class="hidden">
-              <h3><%= Map.human_attribute_name("description") %></h3>
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <%= @map.description.html_safe %>
-                </div>
-              </div>
+            <div class="page-header">
+              <h1><%= t(:map_descriptive_info, :scope => [:map]) %></h1>
+            </div>
 
-              <h3><%= Map.human_attribute_name("remarks") %></h3>
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <%= @map.remarks.html_safe %>
-                </div>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#description" aria-controls="decsription" role="tab" data-toggle="tab">
+                <%= Map.human_attribute_name("description") %>
+              </a></li>
+              <li role="presentation"><a href="#remarks" aria-controls="remarks" role="tab" data-toggle="tab">
+                <%= Map.human_attribute_name("remarks") %>
+              </a></li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="description">
+                <%= @map.description.html_safe %>
               </div>
+              <div role="tabpanel" class="tab-pane" id="remarks">
+                <%= @map.remarks.html_safe %>
+              </div>
+            </div>
           </div>
 
           <!-- ATTRIBUTES AND EXTENDED ATTRIBUTES -->
           <div id="information" class="hidden">
-            <br><br><br><br><br>
+            <div class="page-header">
+              <h1><%= t(:map_information, :scope => [:map]) %> <small><%= @map.name %> <%= t(:info, :scope => [:map]) %></small></h1>
+            </div>
+
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active"><a href="#fileInformation" aria-controls="fileInfo" role="tab" data-toggle="tab">
