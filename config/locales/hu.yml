@@ -36,6 +36,7 @@ hu:
     file_information: "Fájl információ"
     description_info: "Leíró adatok"
     remarks_info: "Megjegyzés"
+    status_info: "Letölthető és Feldolgozott"
     set_location: "Elhelyezkedés meghatározása"
     set_attributes: "Leíró adatok megadása"
     additional_attributes: "Kiegészítő attribútumok"

@@ -36,6 +36,7 @@ en:
     file_information: "File Information"
     description_info: "Description"
     remarks_info: "Remarks"
+    status_info: "Downloadable and Processed"
     set_location: "Set Location"
     set_attributes: "Set Extended Attributes"
     additional_attributes: "Extended Attributes"

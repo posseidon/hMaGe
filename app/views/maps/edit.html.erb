@@ -7,6 +7,7 @@
         responsive:  true,
         loadingIcon: true
       });
+      $('.map-wysiwyg').editable({inlineMode: false, height: '300'});
   });
 </script>
 <div class="row">
@@ -64,131 +65,189 @@
         This is an <strong>.alert</strong>. Use this to show important messages to the user.
       </div>
     <% end %>
+
     <%= form_for @map, :html => {:class => "form-horizontal", :role => "form"} do |f| %>
-      <div class="form-group">
-        <%= f.label :name, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :name, :class => "form-control", :placeholder => "Name your map", :type => "text" %>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <!-- EXTENDED ATTRIBUTES -->
+      <div class="panel panel-primary">
+        <div class="panel-heading" role="tab" id="extended-attributes-heading">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#extended-attributes-body" aria-expanded="true" aria-controls="collapseOne">
+              <%= t(:extended_attributes, :scope => [:map]) %>
+            </a>
+          </h4>
+        </div>
+        <div id="extended-attributes-body" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <br>
+          <div class="form-group">
+            <%= f.label :name, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :name, :class => "form-control", :placeholder => "Name your map", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :kind, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :kind, :class => "form-control", :placeholder => "Kind of map", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :size, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :size, :class => "form-control", :placeholder => "Size of your map", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :resolution, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :resolution, :class => "form-control", :placeholder => "Resolution of your map", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :publisher, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :publisher, :class => "form-control", :placeholder => "Publisher of your map", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :year, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :year, :class => "form-control", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :projection, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :projection, :class => "form-control", :placeholder => "EPGS:23700", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :creator, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :creator, :class => "form-control", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :participante, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :participante, :class => "form-control", :type => "text" %>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :kind, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :kind, :class => "form-control", :placeholder => "Kind of map", :type => "text" %>
+      <!-- ATTRIBUTES -->
+      <div class="panel panel-info">
+        <div class="panel-heading" role="tab" id="simple-attributes-heading">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#simple-attributes-body" aria-expanded="true" aria-controls="collapseOne">
+              <%= t(:additional_attributes, :scope => [:map]) %>
+            </a>
+          </h4>
+        </div>
+        <div id="simple-attributes-body" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <br>
+          <div class="form-group">
+            <%= f.label :section, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :section, :class => "form-control", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :theme, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :theme, :class => "form-control", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :gridding, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :gridding, :class => "form-control", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :language, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :language, :class => "form-control", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :physical_size, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :physical_size, :class => "form-control", :type => "text" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :source, :class => "col-lg-2 control-label" %>
+            <div class="col-sm-7">
+              <%= f.text_field :source, :class => "form-control", :type => "text" %>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :size, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :size, :class => "form-control", :placeholder => "Size of your map", :type => "text" %>
+      <!-- DESCRIPTION -->
+      <div class="panel panel-danger">
+        <div class="panel-heading" role="tab" id="map-description-title">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#map-description-body" aria-expanded="false" aria-controls="collapseTwo">
+              <%= t(:description_info, :scope => [:map]) %>
+            </a>
+          </h4>
+        </div>
+        <div id="map-description-body" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            <textarea id="map-description-textarea" name="map[description]" class="map-wysiwyg"><%= @map.description %></textarea>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :resolution, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :resolution, :class => "form-control", :placeholder => "Resolution of your map", :type => "text" %>
+      <!-- REMARKS -->
+      <div class="panel panel-warning">
+        <div class="panel-heading" role="tab" id="map-remarks-title">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#map-remarks-body" aria-expanded="false" aria-controls="collapseTwo">
+              <%= t(:remarks_info, :scope => [:map]) %>
+            </a>
+          </h4>
+        </div>
+        <div id="map-remarks-body" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            <textarea id="map-remarks-textarea" name="map[remarks]" class="map-wysiwyg"><%= @map.remarks %></textarea>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :publisher, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :publisher, :class => "form-control", :placeholder => "Publisher of your map", :type => "text" %>
+      <!-- DOWNLOADABLE AND PROCESSED -->
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="map-additional-title">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#map-additional-body" aria-expanded="false" aria-controls="collapseTwo">
+              <%= t(:status_info, :scope => [:map]) %>
+            </a>
+          </h4>
         </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :year, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :year, :class => "form-control", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :section, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :section, :class => "form-control", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :theme, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :theme, :class => "form-control", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :gridding, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :gridding, :class => "form-control", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :projection, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :projection, :class => "form-control", :placeholder => "EPGS:23700", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :creator, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :creator, :class => "form-control", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :participante, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :participante, :class => "form-control", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :language, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :language, :class => "form-control", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :physical_size, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :physical_size, :class => "form-control", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :source, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= f.text_field :source, :class => "form-control", :type => "text" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :description, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= cktext_area :map, :description, :cols => 40, :ckeditor => {:toolbar => 'mini'} %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :remarks, :class => "col-lg-2 control-label" %>
-        <div class="col-sm-7">
-          <%= cktext_area :map, :remarks, :cols => 40, :ckeditor => {:toolbar => 'mini'} %>
+        <div id="map-additional-body" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            <br>
+            <div class="form-group">
+              <div class="col-sm-6">
+                <%= f.check_box :downloadable %> <%= f.label :downloadable %>
+              </div>
+              <div class="col-sm-6">
+                <%= f.check_box :processed %> <%= f.label :processed %>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
+      <br>
       <div class="form-group">
-        <div class="col-lg-2">&nbsp;</div>
-        <div class="col-sm-7">
-          <%= f.check_box :downloadable %> <%= f.label :downloadable %>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-lg-2">&nbsp;</div>
-        <div class="col-sm-7">
-          <%= f.check_box :processed %> <%= f.label :processed %>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-3">
+        <div class="col-sm-6">
           <%= link_to t(:cancel, :scope => [:application]), map_path, :class => "btn btn-primary btn-block" %>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <%= f.submit t(:save, :scope => [:application]), :class => "btn btn-primary btn-block" %>
         </div>
       </div>
     <% end %>
   </div>
+</div>
 </div>
