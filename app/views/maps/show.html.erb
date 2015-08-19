@@ -142,12 +142,12 @@
                 <% end %>
               <% end %>
             </li>
-            <li id="updateLI" class="bg-info">
+            <li id="updateLI" class="bg-info" data-toggle="modal" data-target="#newUpdateRequestDialog">
               <% unless @active_update_tickets.size > 0 %>
-                <%= link_to new_ticket_path(map_id: @map.id, request_type: 'UPDATE') do %>
+                <a>
                   <span class="glyphicon glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                   <%= t(:send_update_request, :scope => [:map]) %>
-                <% end %>              
+                </a>              
               <% else %>
                 <%= link_to ticket_path(@active_update_tickets.first.id) do %>
                   <i class="glyphicon glyphicon-time"></i>
@@ -355,17 +355,28 @@
     </div>
   </div>
 
-<!-- Button trigger modal -->
-
-<!-- Modal -->
-<div class="modal fade" id="newDownloadRequestDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- NEW DOWNLOAD REQUEST Modal -->
+<div class="modal fade" id="newDownloadRequestDialog" tabindex="-1" role="dialog" aria-labelledby="myDownloadRequestLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><%= t(:download_request_page_header, :scope => [:ticket]) %> <small class="text-primary"><%= @map.name %></small></h4>
+        <h4 class="modal-title" id="myDownloadRequestLabel"><%= t(:download_request_page_header, :scope => [:ticket]) %> <small class="text-primary"><%= @map.name %></small></h4>
       </div>
       <%= render :partial => 'tickets/form', :locals => {:ticket => @download_ticket, :request_type => @download_ticket.request_type, :map_id => @map.id} %>
+    </div>
+  </div>
+</div>
+
+<!-- NEW UPDATE REQUEST Modal -->
+<div class="modal fade" id="newUpdateRequestDialog" tabindex="-1" role="dialog" aria-labelledby="myUpdateRequestLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myUpdateRequestLabel"><%= t(:update_request_page_header, :scope => [:ticket]) %> <small class="text-primary"><%= @map.name %></small></h4>
+      </div>
+      <%= render :partial => 'tickets/form', :locals => {:ticket => @update_ticket, :request_type => @update_ticket.request_type, :map_id => @map.id} %>
     </div>
   </div>
 </div>

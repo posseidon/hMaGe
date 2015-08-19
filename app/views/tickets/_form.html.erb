@@ -1,6 +1,6 @@
 <script>
   $(function() {
-      $('#ticket_message').editable({inlineMode: false, height: '300'})
+      $('.ticket-message').editable({inlineMode: false, height: '300'})
   });
 </script>
 
@@ -13,7 +13,7 @@
 
 <div class="modal-body">
   <div class="form-group">
-      <textarea id="ticket_message" name="ticket[message]"></textarea>
+      <textarea name="ticket[message]" class="ticket-message"></textarea>
   </div>
 </div>
 <div class="modal-footer">
