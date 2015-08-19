@@ -45,11 +45,18 @@
 
     $("#mapInfoPanel li").click(function(){
       // HIDE ALL MAP INFO DIVS AND LIST ITEM INACTIVE
-      var infoDivs = ['image', 'textdata', 'information', 'gridmap'];
-      var listItems = ['infoLI', 'descriptionLI', 'gridsLI', 'previewLI'];
-      for(var i = 0; i < infoDivs.length; i++){
-        $('#' + infoDivs[i]).addClass('hidden');
-        $('#' + listItems[i]).removeClass('active');
+      var infoDivs = ['image', 'information', 'gridmap', '', ''];
+      var listItems = ['infoLI', 'gridsLI', 'previewLI', 'requestLI', 'updateLI'];
+      if(this.id.localeCompare('requestLI') != 0 && this.id.localeCompare('updateLI') != 0){
+        for(var i = 0; i < infoDivs.length; i++){
+          $('#' + infoDivs[i]).addClass('hidden');
+          console.log("HIDE" + infoDivs[i]);
+          $('#' + listItems[i]).removeClass('active');
+        }
+      }else{
+        for(var i = 0; i < infoDivs.length; i++){
+          $('#' + listItems[i]).removeClass('active');
+        }
       }
 
       // SET ACTIVE LIST ITEM
@@ -91,7 +98,7 @@
           <div class="profile-usertitle-name">
             <%= @map.name %>
           </div>
-          <div class="profile-usertitle-job">
+          <div class="profile-usertitle-job map-author">
             <%= @map.creator %>
           </div>
         </div>
@@ -112,11 +119,6 @@
               <i class="fa fa-info"></i>
               Information </a>
             </li>
-            <li id="descriptionLI">
-              <a>
-              <i class="fa fa-file-text-o"></i>
-              Description and Remarks </a>
-            </li>
             <li id="gridsLI" class="active">
               <a>
               <i class="fa fa-map-marker"></i>
@@ -127,12 +129,12 @@
               <i class="fa fa-file-image-o"></i>
               Preview </a>
             </li>
-            <li id="requestLI" class="bg-success">
+            <li id="requestLI" class="bg-success" data-toggle="modal" data-target="#newDownloadRequestDialog">
               <% unless @active_download_tickets.size > 0 %>
-                <%= link_to new_ticket_path(map_id: @map.id, request_type: 'DOWNLOAD') do %>
+                <a>
                   <i class="fa fa-download"></i>
-                  <%= t(:send_download_request, :scope => [:map]) %>
-                <% end %>
+                  <%= t(:send_download_request, :scope => [:map]) %>                  
+                </a>
               <% else %>
                 <%= link_to ticket_path(@active_download_tickets.first.id) do %>
                   <i class="glyphicon glyphicon-fire"></i>
@@ -141,10 +143,17 @@
               <% end %>
             </li>
             <li id="updateLI" class="bg-info">
-              <%= link_to new_ticket_path(map_id: @map.id, request_type: 'UPDATE') do %>
-                <span class="glyphicon glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <%= t(:send_update_request, :scope => [:map]) %>
-              <% end %>              
+              <% unless @active_update_tickets.size > 0 %>
+                <%= link_to new_ticket_path(map_id: @map.id, request_type: 'UPDATE') do %>
+                  <span class="glyphicon glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                  <%= t(:send_update_request, :scope => [:map]) %>
+                <% end %>              
+              <% else %>
+                <%= link_to ticket_path(@active_update_tickets.first.id) do %>
+                  <i class="glyphicon glyphicon-time"></i>
+                  <%= t(:active_update_request, :scope => [:map]) %>
+                <% end %>              
+              <% end %>
             </li>
           </ul>
         </div>
@@ -153,43 +162,14 @@
     </div>
     <div class="col-md-9">
       <div class="profile-content">
-          <!-- MAP IMAGE -->
-          <div id="image" class="hidden">
-            <img id="<%= @map.id %>" src="<%= @map.image.url(:large) %>" class="img-responsive" />
-          </div>
-
-          <!-- DESCRIPTION AND REMARKS -->
-          <div id="textdata" class="hidden">
-            <div class="page-header">
-              <h1><%= t(:map_descriptive_info, :scope => [:map]) %></h1>
-            </div>
-
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active"><a href="#description" aria-controls="decsription" role="tab" data-toggle="tab">
-                <%= Map.human_attribute_name("description") %>
-              </a></li>
-              <li role="presentation"><a href="#remarks" aria-controls="remarks" role="tab" data-toggle="tab">
-                <%= Map.human_attribute_name("remarks") %>
-              </a></li>
-            </ul>
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="description">
-                <%= @map.description.html_safe %>
-              </div>
-              <div role="tabpanel" class="tab-pane" id="remarks">
-                <%= @map.remarks.html_safe %>
-              </div>
-            </div>
-          </div>
-
           <!-- ATTRIBUTES AND EXTENDED ATTRIBUTES -->
           <div id="information" class="hidden">
-            <div class="page-header">
-              <h1><%= t(:map_information, :scope => [:map]) %> <small><%= @map.name %> <%= t(:info, :scope => [:map]) %></small></h1>
+            <div class="page-header head-line">
+              <h1><%= t(:map_information, :scope => [:map]) %> <small><%= @map.name %></small></h1>
             </div>
-
+            <br><br>
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs map-tab-label" role="tablist">
               <li role="presentation" class="active"><a href="#fileInformation" aria-controls="fileInfo" role="tab" data-toggle="tab">
                 <%= t(:file_information, :scope => [:map]) %>
               </a></li>
@@ -199,6 +179,12 @@
               <li role="presentation"><a href="#mapExtAttributes" aria-controls="mapExtAttr" role="tab" data-toggle="tab">
                 <%= t(:additional_attributes, :scope => [:map]) %>
               </a></li>
+              <li role="presentation"><a href="#mapDescription" aria-controls="mapDescription" role="tab" data-toggle="tab">
+                <%= t(:description_info, :scope => [:map]) %>
+              </a></li>
+              <li role="presentation"><a href="#mapRemarks" aria-controls="mapRemarks" role="tab" data-toggle="tab">
+                <%= t(:remarks_info, :scope => [:map]) %>
+              </a></li>              
             </ul>
 
             <!-- Tab panes -->
@@ -208,22 +194,22 @@
                 <table class="table table-striped table-responsive">
                 <tbody>
                     <tr>
-                      <td class="text-info"><%= Map.human_attribute_name("original_file_size") %></td>
-                      <td><%= number_to_human_size(@map.image.size) %></td>
+                      <td class="text-info small-head-line"><%= Map.human_attribute_name("original_file_size") %></td>
+                      <td class="quipped"><%= number_to_human_size(@map.image.size) %></td>
                     </tr>
                     <tr>
-                      <td class="text-info"><%= Map.human_attribute_name("original_filename") %></td>
-                      <td>
+                      <td class="text-info small-head-line"><%= Map.human_attribute_name("original_filename") %></td>
+                      <td  class="quipped">
                         <%= @map.image.original_filename %>
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-info"><%= Map.human_attribute_name("status") %></td>
-                      <td><i class="<%= status_to_icon(@map.processed) %>"></i> <%= status_to_text(@map.processed) %></td>
+                      <td class="text-info small-head-line"><%= Map.human_attribute_name("status") %></td>
+                      <td  class="quipped"><i class="<%= status_to_icon(@map.processed) %>"></i> <%= status_to_text(@map.processed) %></td>
                     </tr>
                     <tr>
-                      <td class="text-info"><%= Map.human_attribute_name("created") %></td>
-                      <td><%= @map.created_at.strftime("%Y-%B-%e") %></td>
+                      <td class="text-info small-head-line"><%= Map.human_attribute_name("created") %></td>
+                      <td  class="quipped"><%= @map.created_at.strftime("%Y-%B-%e") %></td>
                     </tr>
                 </tbody>
                 </table>
@@ -244,36 +230,36 @@
                 <table class="table table-striped table-responsive">
                 <tbody>
                     <tr>
-                      <td class="text-success"><%= Map.human_attribute_name("kind") %></td>
-                      <td>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("kind") %></td>
+                      <td class="quipped">
                       <%= @map.kind %>
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-success"><%= Map.human_attribute_name("size") %></td>
-                      <td><%= @map.size %></td>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("size") %></td>
+                      <td class="quipped"><%= @map.size %></td>
                     </tr>
                     <tr>
-                      <td class="text-success"><%= Map.human_attribute_name("resolution") %></td>
-                      <td>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("resolution") %></td>
+                      <td class="quipped">
                           <%= @map.resolution %>
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-success"><%= Map.human_attribute_name("year") %></td>
-                      <td><%= @map.year %></td>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("year") %></td>
+                      <td class="quipped"><%= @map.year %></td>
                     </tr>
                     <tr>
-                      <td class="text-success"><%= Map.human_attribute_name("theme") %></td>
-                      <td><%= @map.theme %></td>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("theme") %></td>
+                      <td class="quipped"><%= @map.theme %></td>
                     </tr>
                     <tr>
-                      <td class="text-success"><%= Map.human_attribute_name("creator") %></td>
-                      <td><%= @map.creator %></td>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("creator") %></td>
+                      <td class="quipped"><%= @map.creator %></td>
                     </tr>
                     <tr>
-                      <td class="text-success"><%= Map.human_attribute_name("participante") %></td>
-                      <td><%= @map.participante %></td>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("participante") %></td>
+                      <td class="quipped"><%= @map.participante %></td>
                     </tr>
                 </tbody>
                 </table>
@@ -295,46 +281,58 @@
                 <table class="table table-striped table-responsive">
                   <tbody>
                     <tr>
-                      <td class="text-warning"><%= Map.human_attribute_name("section") %></td>
-                      <td>
+                      <td class="text-warning small-head-line"><%= Map.human_attribute_name("section") %></td>
+                      <td class="quipped">
                       <%= @map.section %>
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-warning"><%= Map.human_attribute_name("projection") %></td>
-                      <td>
+                      <td class="text-warning small-head-line"><%= Map.human_attribute_name("projection") %></td>
+                      <td class="quipped">
                       <%= @map.projection %>
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-warning"><%= Map.human_attribute_name("gridding") %></td>
-                      <td>
+                      <td class="text-warning small-head-line"><%= Map.human_attribute_name("gridding") %></td>
+                      <td class="quipped">
                       <%= @map.gridding %>
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-warning"><%= Map.human_attribute_name("physical_size") %></td>
-                      <td>
+                      <td class="text-warning small-head-line"><%= Map.human_attribute_name("physical_size") %></td>
+                      <td class="quipped">
                       <%= @map.physical_size %>
                       </td>
                     </tr>
                   <tr>
-                    <td class="text-warning"><%= Map.human_attribute_name("source") %></td>
-                    <td><%= @map.source %></td>
+                    <td class="text-warning small-head-line"><%= Map.human_attribute_name("source") %></td>
+                    <td class="quipped"><%= @map.source %></td>
                   </tr>
                   <tr>
-                    <td class="text-warning"><%= Map.human_attribute_name("language") %></td>
-                    <td><%= @map.language %></td>
+                    <td class="text-warning small-head-line"><%= Map.human_attribute_name("language") %></td>
+                    <td class="quipped"><%= @map.language %></td>
                   </tr>
                   </tbody>
                 </table>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="mapDescription">
+                <p class="map-text">
+                  <%= @map.description.html_safe %>
+                </p>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="mapRemarks">
+                <p class="map-text">
+                  <%= @map.remarks.html_safe %>
+                </p>
               </div>
             </div>
           </div>
           <!-- GRID MAP -->
           <div id="gridmap">
-            <h3><%= t(:geographical_location, :scope => [:map]) %></h3>
-            <hr>
+            <div class="page-header head-line">
+              <h1><%= t(:geographical_location, :scope => [:map]) %></h1>
+            </div>
+
             <div id="map" class="minimap"></div>
             <% if can? :manage, Map %>
               <div class="media">
@@ -349,7 +347,25 @@
               </div>
             <% end %>          
           </div>
-
+          <!-- MAP IMAGE -->
+          <div id="image" class="hidden">
+            <img id="<%= @map.id %>" src="<%= @map.image.url(:large) %>" class="img-responsive" />
+          </div>
       </div>
     </div>
   </div>
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="newDownloadRequestDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= t(:download_request_page_header, :scope => [:ticket]) %> <small class="text-primary"><%= @map.name %></small></h4>
+      </div>
+      <%= render :partial => 'tickets/form', :locals => {:ticket => @download_ticket, :request_type => @download_ticket.request_type, :map_id => @map.id} %>
+    </div>
+  </div>
+</div>

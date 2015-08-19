@@ -30,11 +30,12 @@ hu:
     user_base_attributes: "Felhasználói adatok"
   map:
     map_information: "Térképre vonatkozó"
-    info: "Információ"
     map_descriptive_info: "Térképre vonatkozó leíró adatok"
     geographical_location: "Földrajzi Elhelyezkedés"
     extended_attributes: "Leíró Adatok"
     file_information: "Fájl információ"
+    description_info: "Leíró adatok"
+    remarks_info: "Megjegyzés"
     set_location: "Elhelyezkedés meghatározása"
     set_attributes: "Leíró adatok megadása"
     additional_attributes: "Kiegészítő attribútumok"
@@ -53,6 +54,7 @@ hu:
     send_download_request: "Letöltés engedélyezése"
     send_update_request: "Térkép hiba bejelentés"
     active_pending_request: "Aktív letöltési link"
+    active_update_request: "Aktív hiba bejelentés"
   name:
     placeholder_search: "Település történelmi vagy jelenlegi neve"
     placeholder_current: "Jelenlegi település neve"

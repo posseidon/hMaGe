@@ -6,7 +6,10 @@ class MapsController < ApplicationController
     @grids = (params[:grids].nil?) ? [].to_json : params[:grids]
     @polygons = @map.wkt_polygons.to_json
     @active_download_tickets = Ticket.can_user_request_download_ticket(current_user.id, params[:id])
+    @active_update_tickets = Ticket.can_user_request_update_ticket(current_user.id, params[:id])
     @mapgroup = MapGroup.find(@map.id)
+    @download_ticket = Ticket.new(map_id: @map.id, user_id: current_user.id, request_type: 'DOWNLOAD')
+    @update_ticket = Ticket.new(map_id: @map.id, user_id: current_user.id, request_type: 'UPDATE')
   end
 
   def edit

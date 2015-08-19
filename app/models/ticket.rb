@@ -39,6 +39,10 @@ class Ticket < ActiveRecord::Base
     # DO NOT ALLOW DOWNLOAD REQUEST IF
     # A. NOT APPROVED
     # B. HAVE BEEN APPROVED
-    Ticket.where("user_id = #{user_id} and map_id = #{map_id} and status in ('OPEN', 'ACCEPTED')")
+    Ticket.where("request_type = 'DOWNLOAD' and user_id = #{user_id} and map_id = #{map_id} and status in ('OPEN', 'ACCEPTED')")
+  end
+
+  def Ticket.can_user_request_update_ticket(user_id, map_id)
+    Ticket.where("request_type = 'UPDATE' and user_id = #{user_id} and map_id = #{map_id} and status in ('OPEN')")
   end
 end

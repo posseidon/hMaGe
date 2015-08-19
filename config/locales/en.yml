@@ -30,11 +30,12 @@ en:
     user_base_attributes: "User attributes"
   map:
     map_information: "Information related to"
-    info: "Map"
     map_descriptive_info: "Descriptive information"
     geographical_location: "Geographical Location"
     extended_attributes: "Attributes"
     file_information: "File Information"
+    description_info: "Description"
+    remarks_info: "Remarks"
     set_location: "Set Location"
     set_attributes: "Set Extended Attributes"
     additional_attributes: "Extended Attributes"
@@ -53,6 +54,7 @@ en:
     send_download_request: "Send Download Request"
     send_update_request: "Send Update Notification"
     active_pending_request: "Active Download Request!"
+    active_update_request: "Active Update Request!"
   name:
     placeholder_search: "Current or original name of settlement"
     placeholder_current: "Current name of settlement"
