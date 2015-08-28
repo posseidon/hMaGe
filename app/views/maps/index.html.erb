@@ -6,73 +6,94 @@
   });
 </script>
 
-<div class="row">
-    <br>
-    <nav class="navbar navbar-default" role="navigation">
+<div id="editMapFormDiv" class="row">
+  <!-- LEFT MENU -->
+  <div class="col-md-3">
+    <div class="profile-sidebar">
+      <!-- SIDEBAR USERPIC -->
+      <div class="profile-userpic">
+        <!--<center><a data-toggle="modal" class="btn btn-circle-lg btn-info"><i class="fa fa-info"></i> </a></center>-->
+      </div>
+      <!-- END SIDEBAR USERPIC -->
+      <!-- SIDEBAR USER TITLE -->
+      <div class="profile-usertitle">
+        <div class="profile-usertitle-name">
+          <%= t(:search_by_map, :scope => [:map]) %>
+        </div>
+      </div>
+      <!-- END SIDEBAR USER TITLE -->
+      <!-- SIDEBAR MENU -->
+      <div class="profile-usermenu">
+        <ul id="mapInfoPanel" class="nav">
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('polygon');">
+              <i class="glyphicon glyphicon-edit"></i>
+              <%= t(:draw_polygon, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('box');">
+              <i class="glyphicon glyphicon-stop"></i>
+              <%= t(:draw_rectangle, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('nav');">
+              <i class="glyphicon glyphicon-screenshot"></i>
+              <%= t(:move_map, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('edit');">
+              <i class="glyphicon glyphicon-wrench"></i>
+              <%= t(:edit_feature, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('select');">
+              <i class="glyphicon glyphicon-hand-up"></i>
+              <%= t(:select_feature, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="removeFeature();">
+              <i class="glyphicon glyphicon-minus-sign"></i>
+              <%= t(:remove_feature, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a>
+              <%= form_tag related_maps_path, :class => "navbar-form"  do %>
+                <%= hidden_field_tag 'geometry' %>
+                <%= button_tag(type: "submit", :onclick => "return setMapData();", class: "btn btn-info") do %>
+                    <i class="fa fa-search"></i>
+                    <%= t(:search_by_map, :scope => [:application]) %>
+                <% end %>
+              <% end %>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
+  <!-- CONTENT -->    
+  <div class="col-md-9">
         <!-- Search by Town Names Form -->
-          <%= form_tag overlap_maps_path, :class => "navbar-form", :role => "search"  do %>
-          <div class="input-group">
-            <%= hidden_field_tag 'point_geometry' %>
-            <span class="input-group-addon">
-              <i class="fa fa-bullseye"></i>
-            </span>
+        <%= form_tag overlap_maps_path, :class => "navbar-form", :role => "search"  do %>
+        <div class="input-group">
+          <%= hidden_field_tag 'point_geometry' %>
+          <input class="typeahead form-control" id="q" name="q" placeholder="<%= t(:placeholder_search, :scope => [:name]) %>" type="text" data-provide="typeahead" autofocus />
 
-            <input class="typeahead form-control" id="q" name="q" placeholder="<%= t(:placeholder_search, :scope => [:name]) %>" type="text" data-provide="typeahead"/>
-
-            <div class="input-group-btn">
-              <%= button_tag(type: "submit", class: "btn btn-success") do %>
-                <%= t(:search, :scope => [:application]) %>
-              <% end %>
-            </div>
+          <div class="input-group-btn">
+            <%= button_tag(type: "submit", class: "btn btn-success") do %>
+              <%= t(:search, :scope => [:application]) %>
+            <% end %>
           </div>
-          <% end %>
-    </nav>
+        </div>
+        <% end %>
+
+        <div id="map" class="smallmap border-radius"></div>
+  </div>
 </div>
 
-<div class="row">
-    <div class="col-md-1">
-          <br/>
-          &nbsp;&nbsp;&nbsp;
-          <button id="polygon" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:draw_polygon, :scope => [:map]) %>" onclick="toggleControl('polygon');">
-            <i class="fa fa-pencil icon"></i>
-          </button>
-          <br/><br/>
-          &nbsp;&nbsp;&nbsp;
-          <button id="box" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:draw_rectangle, :scope => [:map]) %>" onclick="toggleControl('box');">
-            <i class="fa fa-square-o icon"></i>
-          </button>
-          <br/><br/>
-          &nbsp;&nbsp;&nbsp;
-          <button id="nav" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:move_map, :scope => [:map]) %>" onclick="toggleControl('nav');">
-            <i class="fa fa-arrows-alt icon"></i>
-          </button>
-          <br/><br/>
-          &nbsp;&nbsp;&nbsp;
-          <button id="edit" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:edit_feature, :scope => [:map]) %>" onclick="toggleControl('edit');">
-            <i class="fa fa-wrench icon"></i>
-          </button>
-          <br/><br/>
-          &nbsp;&nbsp;&nbsp;
-          <button id="select" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:select_feature, :scope => [:map]) %>" onclick="toggleControl('select');">
-            <i class="fa fa-hand-o-up icon"></i>
-          </button>
-          <br/><br/>
-          &nbsp;&nbsp;&nbsp;
-          <button id="remove" type="button" class="btn btn-default btn-circle btn-lg" data-toggle="popover" data-trigger="focus" data-content="<%= t(:remove_feature, :scope => [:map]) %>" onclick="removeFeature();">
-            <i class="fa fa-cut icon"></i>
-          </button>
-          <br/><br/>
-          <%= form_tag related_maps_path, :class => "navbar-form"  do %>
-            <%= hidden_field_tag 'geometry' %>
-              <%= button_tag(type: "submit", :onclick => "return setMapData();", class: "btn btn-info btn-circle btn-lg") do %>
-                  <i class="fa fa-search"></i>
-              <% end %>
-          <% end %>
-    </div>
-    <div class="col-md-11">
-      <!-- MAP -->
-      <div id="map" class="smallmap border-radius"></div>
-      <!-- END MAP -->      
-    </div>
-</div>

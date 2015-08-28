@@ -17,177 +17,149 @@
   <script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
-  <style type='text/css'>
-    padding: 5px 10px;
-    text-align: center;
-  </style>
 </head>
-<body>
-  <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">G.R.I.D</a>
-      </div>
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <% if user_signed_in? %>
+<body class="background-dark ">
+  <div class="navbar navbar-default navbar-fixed-bottom swag-line swag-line-bottom">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">G.R.I.D</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <!-- USER AND ACCOUNT MANAGEMENT -->
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+          <small class="text-muted"><%= current_user.role %></small>
+          <div><%= current_user.name %>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <span class="caret up"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <!-- USER ADMINISTRATION -->
+          <% if can? :manage, User %>
             <li>
-              <%= link_to maps_path do %>
-                <i class="fa fa-home icon"></i> &nbsp; <%= t(:home, :scope => [:application]) %>
+              <%= link_to list_admin_users_path do %>
+                <%= t(:manage_users, :scope => [:application]) %>
               <% end %>
             </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <%= user_role_to_icon %>
-                <%= current_user.name %>
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu" role="menu">
-                <% if can? :manage, User %>
-                  <li>
-                    <%= link_to list_admin_users_path do %>
-                      <i class="glyphicon glyphicon-check"></i> &nbsp; <%= t(:manage_users, :scope => [:application]) %>
-                    <% end %>
-                  </li>
-                  <li class="divider"></li>
-                <% end %>
-                <% if can? :create, Ticket %>
-                <li>
-                    <%= link_to list_my_tickets_path do %>
-                      <i class="fa fa-cloud-download"></i> &nbsp; <%= t(:my_requests, :scope => [:application]) %>
-                    <% end %>
-                </li>
-                <li class="divider"></li>
-                <% end %>
-                <% if can? :update, Ticket %>
-                <li class="dropdown-submenu">
-                  <%= link_to list_opened_tickets_path(:page => 0) do %>
-                    <i class="glyphicon glyphicon-send"></i> &nbsp; <%= t(:view_requests, :scope => [:application]) %>
-                  <% end %>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <%= link_to list_opened_tickets_path(:page => 0) do %>
-                        <i class="glyphicon glyphicon-question-sign"></i> &nbsp; <%= t(:open_requests, :scope => [:ticket]) %>
-                      <% end %>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                      <%= link_to list_accepted_tickets_path(:page => 0) do %>
-                        <i class="glyphicon glyphicon-ok-circle"></i> &nbsp; <%= t(:accepted_requests, :scope => [:ticket]) %>
-                      <% end %>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                      <%= link_to list_rejected_tickets_path(:page => 0) do %>
-                        <i class="glyphicon glyphicon-ban-circle"></i> &nbsp; <%= t(:rejected_requests, :scope => [:ticket]) %>
-                      <% end %>
-                    </li>
-                    <% if current_user.role == 'librarian' %>
-                      <li class="divider"></li>
-                      <li>
-                      <%= link_to list_expired_tickets_path(:page => 0) do %>
-                        <i class="glyphicon glyphicon-time"></i> &nbsp; <%= t(:expired_requests, :scope => [:ticket]) %>
-                      <% end %>
-                      </li>
-                    <% end %>
-                  </ul>
-                </li>
-                <li class="divider"></li>
-                <% end %>
-                <li>
-                  <%= link_to edit_user_registration_path do %>
-                    <i class="glyphicon glyphicon-edit"></i> &nbsp; <%= t(:change_password, :scope => [:application]) %>
-                  <% end %>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to destroy_user_session_path, :method => 'delete' do %>
-                    <i class="glyphicon glyphicon-log-out"></i> &nbsp; <%= t(:signout, :scope => [:application]) %>
-                  <% end %>
-                </li>
-              </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-flag-o icon"></i> &nbsp;
-                  <%= t(:menu_towns, :scope => [:application]) %>
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li>
-                    <%= link_to names_path do %>
-                      <i class="fa fa-search"></i> &nbsp; <%= t(:search_by_towns, :scope => [:application]) %>
-                    <% end %>
-                  </li>
-                  <% if can? :manage, Name %>
-                    <li class="divider"></li>
-                    <li>
-                      <%= link_to list_names_path do %>
-                        <i class="glyphicon glyphicon-th-list"></i> &nbsp; <%= t(:manage_towns, :scope => [:application]) %>
-                      <% end %>
-                    </li>
-                    <li>
-                      <%= link_to new_name_path do %>
-                        <i class="fa fa-plus-square"></i> &nbsp; <%= t(:add_town, :scope => [:application]) %>
-                      <% end %>
-                    </li>
-                    <li>
-                      <%= link_to importer_names_path do %>
-                        <i class="glyphicon glyphicon-cloud-upload"></i> &nbsp; <%= t(:import_towns, :scope => [:application]) %>
-                      <% end %>
-                    </li>
-                  <% end %>
-                </ul>
-            </li>
-          <% else %>
-            <li>
-              <%= link_to new_user_session_path do %>
-                <i class="fa fa-sign-in icon"></i> &nbsp; <%= t(:signin, :scope => [:application]) %>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to names_path do %>
-                <i class="fa fa-location-arrow icon"></i> &nbsp; <%= t(:search_by_towns, :scope => [:application]) %>
-              <% end %>
-            </li>
+            <li class="divider"></li>
           <% end %>
+          <!-- ACCOUNT MANAGEMENT -->
           <li>
-            <a href="/about.html">
-              <i class="fa fa-exclamation-circle icon"></i> &nbsp; <%= t(:about, :scope => [:application]) %>
-            </a>
+            <%= link_to edit_user_registration_path do %>
+              <%= t(:change_password, :scope => [:application]) %>
+            <% end %>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <%= link_to destroy_user_session_path, :method => 'delete' do %>
+              <%= t(:signout, :scope => [:application]) %>
+            <% end %>
           </li>
         </ul>
-        <div class="col-sm-6 col-md-5 pull-right">
-          <%= form_tag search_maps_path, :class => "navbar-form", :role => "search"  do %>
-          <div class="input-group">
-            <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t(:search_placeholder, :scope => [:application]), :type => "text" %>
-            <div class="input-group-btn">
-              <%= button_tag(type: "submit", class: "btn btn-default") do %>
-                <%= t(:search, :scope => [:application]) %>
+      </li>
+      <!-- TICKET MANAGEMENT -->
+      <% if can? :create, Ticket or can? :update, Ticket %>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+          <small class="text-muted">management</small>
+          <div>Tickets&nbsp;&nbsp;</div>
+          <span class="caret up"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <% unless current_user.role == 'librarian' %>
+          <li>
+              <%= link_to list_my_tickets_path do %>
+                <i class="fa fa-cloud-download"></i> &nbsp; <%= t(:my_requests, :scope => [:application]) %>
               <% end %>
-            </div>
-          </div>
+          </li>
+          <li class="divider"></li>
           <% end %>
-        </div>
-      </div>
+          <li>
+            <%= link_to list_opened_tickets_path(:page => 0) do %>
+              <i class="glyphicon glyphicon-question-sign"></i> &nbsp; <%= t(:open_requests, :scope => [:ticket]) %>
+            <% end %>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <%= link_to list_accepted_tickets_path(:page => 0) do %>
+              <i class="glyphicon glyphicon-ok-circle"></i> &nbsp; <%= t(:accepted_requests, :scope => [:ticket]) %>
+            <% end %>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <%= link_to list_rejected_tickets_path(:page => 0) do %>
+              <i class="glyphicon glyphicon-ban-circle"></i> &nbsp; <%= t(:rejected_requests, :scope => [:ticket]) %>
+            <% end %>
+          </li>
+          <% if current_user.role == 'librarian' %>
+            <li class="divider"></li>
+            <li>
+            <%= link_to list_expired_tickets_path(:page => 0) do %>
+              <i class="glyphicon glyphicon-time"></i> &nbsp; <%= t(:expired_requests, :scope => [:ticket]) %>
+            <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </li>      
+      <% end %>
+      <!-- TOWN MANAGEMENT -->
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+          <small class="text-muted">management</small>
+          <div><%= t(:menu_towns, :scope => [:application]) %>&nbsp;&nbsp;</div>
+          <span class="caret up"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+            <%= link_to names_path do %>
+              <%= t(:search_by_towns, :scope => [:application]) %>
+            <% end %>
+          </li>
+          <% if can? :manage, Name %>
+            <li class="divider"></li>
+            <li>
+              <%= link_to list_names_path do %>
+                <%= t(:manage_towns, :scope => [:application]) %>
+              <% end %>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <%= link_to new_name_path do %>
+                <%= t(:add_town, :scope => [:application]) %>
+              <% end %>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <%= link_to importer_names_path do %>
+                <%= t(:import_towns, :scope => [:application]) %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+      <li>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </li>
+    </ul>    
+    
+    <%= form_tag search_maps_path, :class => "navbar-form", :role => "search"  do %>
+    <div class="input-group">
+      <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t(:search_placeholder, :scope => [:application]), :type => 'text', :autofocus => true %>
+      <span class="input-group-btn">
+        <%= button_tag(type: "submit", class: "btn btn-default") do %>
+          <%= t(:search, :scope => [:application]) %>
+        <% end %>
+      </span>
     </div>
+    <% end %>
+
   </div>
   <div class="container">
-    <br>
+    <%= yield %>
     <% flash.each do |name, msg| %>
       <%= content_tag :div, :class => "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable" do %>
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <%= msg %>
       <% end %>
     <% end %>
-
-    <%= yield %>
   </div>
   <script type="text/javascript">
   $(document).ready(function(){

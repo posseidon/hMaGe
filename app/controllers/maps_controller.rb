@@ -14,7 +14,7 @@ class MapsController < ApplicationController
 
   def edit
     @map = Map.find(params[:id])
-
+    @mapgroup = MapGroup.find(@map.id)
     authorize! :edit, @map
   end
 

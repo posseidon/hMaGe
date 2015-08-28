@@ -1,6 +1,11 @@
 <script>
   $(function() {
-      $('#ticket_message').editable({inlineMode: false, height: '300'})
+      $('.ticket-message').editable({
+        inlineMode: false, 
+        height: '300',
+        toolbarFixed: false,
+        paragraphy: false
+      });
   });
 </script>
 

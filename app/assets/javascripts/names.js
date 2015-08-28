@@ -1,13 +1,17 @@
-
 var markersLayer;
 var latitude = 0;
 var longitude = 0;
+var icon;
 var wkt = new OpenLayers.Format.WKT();
 
-var size = new OpenLayers.Size(48, 48);
-calculateOffset = function(size) {
-            return new OpenLayers.Pixel(-(size.w/2), -size.h); };
-var icon = new OpenLayers.Icon( '/pagoda-2.png', size, null, calculateOffset);
+function initializeIcon(){
+  var size = new OpenLayers.Size(48, 48);
+  calculateOffset = function(size) {
+              return new OpenLayers.Pixel(-(size.w/2), -size.h); };
+  icon = new OpenLayers.Icon( '/pagoda-2.png', size, null, calculateOffset);  
+}
+
+initializeIcon();
 
 function getLatLng(address) {
   var geocoder = new google.maps.Geocoder();
@@ -26,7 +30,7 @@ function getLatLng(address) {
 
 function zoomToCenter(lat, lon){
   // Remove All the Markers
-  markersLayer.clearMarkers();
+  //markersLayer.clearMarkers();
 
   var point = new OpenLayers.Geometry.Point(lon, lat).transform(map.displayProjection, map.getProjectionObject());
 

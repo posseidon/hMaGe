@@ -1,253 +1,244 @@
 <script type="text/javascript">
   $(document).ready(function(){
-      $("#<%= @map.id %>").elevateZoom({
-        zoomType: "lens",
-        lensShape: "round",
-        scrollZoom : true,
-        responsive:  true,
-        loadingIcon: true
-      });
-      $('.map-wysiwyg').editable({inlineMode: false, height: '300'});
+    $("#<%= @map.id %>").elevateZoom({
+      zoomType: "lens",
+      lensShape: "round",
+      scrollZoom : true,
+      responsive:  true,
+      loadingIcon: true
+    });
+    $('.map-text').editable({
+      inlineMode: false, 
+      height: '300',
+      toolbarFixed: false,
+      paragraphy: false
+    });
+
+    $("#mapInfoPanel li").click(function(){
+      // HIDE ALL MAP INFO DIVS AND LIST ITEM INACTIVE
+      var infoDivs = ['attributes', 'description', 'remarks', 'image'];
+      var listItems = ['textualLI', 'descriptionLI', 'remarksLI', 'previewLI'];
+
+      if(this.id.localeCompare('downloadableLI') != 0 && this.id.localeCompare('processedLI') != 0){
+        for(var i = 0; i < infoDivs.length; i++){
+          $('#' + infoDivs[i]).addClass('hidden');
+          $('#' + listItems[i]).removeClass('active');
+        }        
+
+        // SHOW DIV BY LIST ITEM
+        switch(this.id){
+          case 'textualLI':
+            $('#attributes').removeClass('hidden');
+            break;
+          case 'descriptionLI':
+            $('#description').removeClass('hidden');
+            break;
+          case 'remarksLI':
+            $('#remarks').removeClass('hidden');
+            break;
+          case 'previewLI':
+            $('#image').removeClass('hidden');
+            break;
+          default:
+            break;
+        }
+      }
+
+      // SET ACTIVE LIST ITEM
+      $(this).addClass('active');
+
+    });
+
   });
 </script>
-<div class="row">
-  <h1><%=  Map.model_name.human %> <%= t(:extended_attributes, :scope => [:map]) %></h1>
-  <hr>
-  <!-- left column -->
+
+<%= form_for @map, :html => {:class => "form-horizontal", :role => "form"} do |f| %>
+<div class="row profile">
   <div class="col-md-3">
-    <div class="text-center">
-      <a href="<%= @map.image.url(:large) %>" data-toggle="lightbox" data-title="<%= @map.image.original_filename %>">
-        <img id="<%= @map.id %>" src="<%= @map.image.url(:medium) %>" data-zoom-image="<%= @map.image.url(:large) %>" class="img-responsive img-rounded" />
-      </a>
-    </div>
-    <br>
-    <div id="table">
-      <table class="table table-striped table-responsive">
-      <tbody>
-          <tr>
-            <td><%= Map.human_attribute_name("name") %></td>
-            <td>
-            <%= link_to @map.name, map_path(@map.id) %>
-            </td>
-          </tr>
-          <tr>
-            <td><%= Map.human_attribute_name("size") %></td>
-            <td><%= number_to_human_size(@map.image.size) %></td>
-          </tr>
-          <tr>
-            <td><%= Map.human_attribute_name("original_filename") %></td>
-            <td>
-              <a href="<%= @map.image.url(:large) %>" data-toggle="lightbox" data-title="<%= @map.image.original_filename %>">
-                <%= @map.image.original_filename %>
-              </a>
-            </td>
-          </tr>
-          <tr><td><%= Map.human_attribute_name("status") %></td><td><%= status_to_text(@map.processed) %></td></tr>
-          <tr><td><%= Map.human_attribute_name("created") %></td><td><%= @map.created_at.strftime("%Y-%B-%e") %></td></tr>
-          <tr>
-            <td colspan="2">
-              <%= link_to location_map_path(@map.id) do %>
-                <button type="button" class="btn btn-primary btn-block"><%= t(:set_location, :scope => [:map]) %></button>
-              <% end %>
-            </td>
-          </tr>
-      </tbody>
-      </table>
+    <div class="profile-sidebar">
+      <!-- SIDEBAR USERPIC -->
+      <div class="profile-userpic">
+        <!--<center><a data-toggle="modal" class="btn btn-circle-lg btn-info"><i class="fa fa-info"></i> </a></center>-->
+      </div>
+      <!-- END SIDEBAR USERPIC -->
+      <!-- SIDEBAR USER TITLE -->
+      <div class="profile-usertitle">
+        <div class="profile-usertitle-name">
+          <%= @map.name %>
+        </div>
+        <div class="profile-usertitle-job map-author">
+          <%= @mapgroup.name %>
+        </div>
+      </div>
+      <!-- END SIDEBAR USER TITLE -->
+      <!-- SIDEBAR MENU -->
+      <div class="profile-usermenu">
+        <ul id="mapInfoPanel" class="nav">
+          <li id="textualLI" class="active">
+            <a>
+              <i class="glyphicon glyphicon-th-list"></i>
+              <%= t(:set_attributes, :scope => [:application]) %>
+            </a>
+          </li>
+          <li id="descriptionLI">
+            <a>
+              <i class="glyphicon glyphicon-font"></i>
+              <%= t(:set_description, :scope => [:application]) %>
+            </a>
+          </li>
+          <li id="remarksLI">
+            <a>
+              <i class="glyphicon glyphicon-bold"></i>
+              <%= t(:set_remarks, :scope => [:applicaton]) %>
+            </a>
+          </li>
+          <li id="previewLI">
+            <a>
+            <i class="fa fa-file-image-o"></i>
+            Preview </a>
+          </li>
+          <li id="downloadableLI">
+            <a>
+              <i><%= f.check_box :downloadable %></i>
+              <%= Map.human_attribute_name("downloadable") %>
+            </a>
+          </li>
+          <li id="processedLI">
+            <a>
+              <i><%= f.check_box :processed %></i>
+              <%= Map.human_attribute_name("processed") %>
+            </a>
+          </li>
+          <li>
+            <%= link_to '#', :onclick => '$(".form-horizontal").submit()' do %>
+              <i class="glyphicon glyphicon-floppy-disk"></i>
+              <%= t(:save_modifications, :scope => [:application]) %>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to map_path(@map.id) do %>
+              <i class="glyphicon glyphicon-remove-circle"></i>
+              <%= t(:cancel, :scope => [:application]) %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
-  <!-- edit form column -->
-  <div class="col-md-9 personal-info">
-    <% if @map.errors.any? %>
-      <div class="alert alert-info alert-dismissable">
-        <a class="panel-close close" data-dismiss="alert">×</a>
-        <i class="fa fa-coffee"></i>
-        This is an <strong>.alert</strong>. Use this to show important messages to the user.
-      </div>
-    <% end %>
-
-    <%= form_for @map, :html => {:class => "form-horizontal", :role => "form"} do |f| %>
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      <!-- EXTENDED ATTRIBUTES -->
-      <div class="panel panel-primary">
-        <div class="panel-heading" role="tab" id="extended-attributes-heading">
-          <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#extended-attributes-body" aria-expanded="true" aria-controls="collapseOne">
-              <%= t(:extended_attributes, :scope => [:map]) %>
-            </a>
-          </h4>
-        </div>
-        <div id="extended-attributes-body" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-          <br>
-          <div class="form-group">
-            <%= f.label :name, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :name, :class => "form-control", :placeholder => "Name your map", :type => "text" %>
+  <!-- FORM CONTENT -->
+  <div class="col-md-9">
+    <div class="profile-content">
+      <div id="attributes">
+          <!-- ATTRIBUTES -->
+          <div class="col-md-6">
+            <div class="panel panel-primary">
+              <div class="panel-heading"><%= t(:extended_attributes, :scope => [:map]) %></div>
+              <div class="panel-body">
+                <table class="table table-responsive">
+                <tbody>
+                    <tr>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("kind") %></td>
+                      <td class="">
+                        <%= f.text_field :kind, :class => "form-control", :placeholder => "Kind of map", :type => "text" %>                
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("size") %></td>
+                      <td class="">
+                        <%= f.text_field :size, :class => "form-control", :placeholder => "Size of your map", :type => "text" %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("resolution") %></td>
+                      <td class="">
+                          <%= f.text_field :resolution, :class => "form-control", :placeholder => "Resolution of your map", :type => "text" %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("year") %></td>
+                      <td class="">
+                        <%= f.text_field :year, :class => "form-control", :type => "text" %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("theme") %></td>
+                      <td class="">
+                        <%= f.text_field :theme, :class => "form-control", :type => "text" %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("creator") %></td>
+                      <td class="">
+                        <%= f.text_field :creator, :class => "form-control", :type => "text" %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-success small-head-line"><%= Map.human_attribute_name("participante") %></td>
+                      <td class="">
+                        <%= f.text_field :participante, :class => "form-control", :type => "text" %>
+                      </td>
+                    </tr>
+                </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <%= f.label :kind, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :kind, :class => "form-control", :placeholder => "Kind of map", :type => "text" %>
+          <!-- EXTENDED ATTRIBUTES -->
+          <div class="col-md-6">
+            <div class="panel panel-primary">
+              <div class="panel-heading"><%= t(:additional_attributes, :scope => [:map]) %></div>
+              <div class="panel-body">
+                <table class="table table-responsive">
+                  <tbody>
+                    <tr>
+                      <td class="text-warning small-head-line"><%= Map.human_attribute_name("section") %></td>
+                      <td class="">
+                      <%= f.text_field :section, :class => "form-control", :type => "text" %>              
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-warning small-head-line"><%= Map.human_attribute_name("projection") %></td>
+                      <td class="">
+                      <%= f.text_field :projection, :class => "form-control", :placeholder => "EPGS:23700", :type => "text" %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-warning small-head-line"><%= Map.human_attribute_name("gridding") %></td>
+                      <td class="">
+                      <%= f.text_field :gridding, :class => "form-control", :type => "text" %>              
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-warning small-head-line"><%= Map.human_attribute_name("source") %></td>
+                      <td class="">
+                        <%= f.text_field :source, :class => "form-control", :type => "text" %>              
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-warning small-head-line"><%= Map.human_attribute_name("language") %></td>
+                      <td class="">
+                        <%= f.text_field :language, :class => "form-control", :type => "text" %>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <%= f.label :size, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :size, :class => "form-control", :placeholder => "Size of your map", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :resolution, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :resolution, :class => "form-control", :placeholder => "Resolution of your map", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :publisher, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :publisher, :class => "form-control", :placeholder => "Publisher of your map", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :year, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :year, :class => "form-control", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :projection, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :projection, :class => "form-control", :placeholder => "EPGS:23700", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :creator, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :creator, :class => "form-control", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :participante, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :participante, :class => "form-control", :type => "text" %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ATTRIBUTES -->
-      <div class="panel panel-info">
-        <div class="panel-heading" role="tab" id="simple-attributes-heading">
-          <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#simple-attributes-body" aria-expanded="true" aria-controls="collapseOne">
-              <%= t(:additional_attributes, :scope => [:map]) %>
-            </a>
-          </h4>
-        </div>
-        <div id="simple-attributes-body" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <br>
-          <div class="form-group">
-            <%= f.label :section, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :section, :class => "form-control", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :theme, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :theme, :class => "form-control", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :gridding, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :gridding, :class => "form-control", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :language, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :language, :class => "form-control", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :physical_size, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :physical_size, :class => "form-control", :type => "text" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <%= f.label :source, :class => "col-lg-2 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :source, :class => "form-control", :type => "text" %>
-            </div>
-          </div>
-        </div>
       </div>
       <!-- DESCRIPTION -->
-      <div class="panel panel-danger">
-        <div class="panel-heading" role="tab" id="map-description-title">
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#map-description-body" aria-expanded="false" aria-controls="collapseTwo">
-              <%= t(:description_info, :scope => [:map]) %>
-            </a>
-          </h4>
-        </div>
-        <div id="map-description-body" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            <textarea id="map-description-textarea" name="map[description]" class="map-wysiwyg"><%= @map.description %></textarea>
-          </div>
-        </div>
+      <div id="description" class="hidden">
+        <textarea id="map-description-textarea" name="map[description]" class="map-text"><%= @map.description %></textarea>
       </div>
       <!-- REMARKS -->
-      <div class="panel panel-warning">
-        <div class="panel-heading" role="tab" id="map-remarks-title">
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#map-remarks-body" aria-expanded="false" aria-controls="collapseTwo">
-              <%= t(:remarks_info, :scope => [:map]) %>
-            </a>
-          </h4>
-        </div>
-        <div id="map-remarks-body" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            <textarea id="map-remarks-textarea" name="map[remarks]" class="map-wysiwyg"><%= @map.remarks %></textarea>
-          </div>
-        </div>
+      <div id="remarks" class="hidden">
+        <textarea id="map-remarks-textarea" name="map[remarks]" class="map-text"><%= @map.remarks %></textarea>
       </div>
-      <!-- DOWNLOADABLE AND PROCESSED -->
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="map-additional-title">
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#map-additional-body" aria-expanded="false" aria-controls="collapseTwo">
-              <%= t(:status_info, :scope => [:map]) %>
-            </a>
-          </h4>
-        </div>
-        <div id="map-additional-body" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            <br>
-            <div class="form-group">
-              <div class="col-sm-6">
-                <%= f.check_box :downloadable %> <%= f.label :downloadable %>
-              </div>
-              <div class="col-sm-6">
-                <%= f.check_box :processed %> <%= f.label :processed %>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div id="image" class="hidden">
+        <img id="<%= @map.id %>" src="<%= @map.image.url(:large) %>" class="img-responsive" />
       </div>
-
-      <br>
-      <div class="form-group">
-        <div class="col-sm-6">
-          <%= link_to t(:cancel, :scope => [:application]), map_path, :class => "btn btn-primary btn-block" %>
-        </div>
-        <div class="col-sm-6">
-          <%= f.submit t(:save, :scope => [:application]), :class => "btn btn-primary btn-block" %>
-        </div>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
-</div>
+<% end %>

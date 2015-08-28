@@ -1,10 +1,11 @@
-var map, vectorLayer;
+var map, vectorLayer, markersLayer;
 var drawControls;
 var polygon, box;
 var edit, nav, remove;
 var select;
 var selectedFeature;
 var viewMode = false;
+var currentFeatureLabel = '';
 
 function init() {
     // allow testing of specific renderers via "?renderer=Canvas", etc
@@ -54,6 +55,8 @@ function init() {
                 }
             });
 
+    markersLayer = new OpenLayers.Layer.Markers("Markers");
+
     map = new OpenLayers.Map('map', {
         projection: 'EPSG:3857',
         displayProjection: new OpenLayers.Projection("EPSG:4326"),
@@ -80,7 +83,7 @@ function init() {
         zoom: 5
     });
 
-    map.addLayers([vectorLayer]);
+    map.addLayers([vectorLayer, markersLayer]);
     map.addControl(new OpenLayers.Control.LayerSwitcher());
 
     addDrawControls(map, vectorLayer);
@@ -115,7 +118,10 @@ function addDrawControls(map, vectorLayer){
 
 function selectFeature(feature){
     selectedFeature = feature;
+    selectedFeature.attributes = {grid: currentFeatureLabel};
     var str = formats['out']['wkt'].write(selectedFeature, false);
+    vectorLayer.redraw();
+
     console.log(selectedFeature.label);
 }
 

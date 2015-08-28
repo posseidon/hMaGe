@@ -1,6 +1,11 @@
 <script>
   $(function() {
-      $('.ticket-message').editable({inlineMode: false, height: '300'})
+      $('.ticket-message').editable({
+        inlineMode: false, 
+        height: '300',
+        toolbarFixed: false,
+        paragraphy: false
+      });
   });
 </script>
 
@@ -12,9 +17,7 @@
   <%= f.hidden_field :request_type, :value => request_type %>
 
 <div class="modal-body">
-  <div class="form-group">
-      <textarea name="ticket[message]" class="ticket-message"></textarea>
-  </div>
+      <%= f.text_area :message, :value => ticket.message, :class => 'ticket-message' %>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-default" data-dismiss="modal"><%= t(:cancel, :scope => [:application]) %></button>

@@ -6,19 +6,30 @@
   $(document).ready(function(){
       var lastClicked;
       var clickedGrid;
+
+      ////////////////////////////////////////////////////////////////////////////////
+      /**
+       * SET DEFAULT GRID SIZE 2X2
+       */
       var grid = clickableGrid(2,2,function(el,row,col,i){
         el.className='clicked';
-        if (lastClicked) lastClicked.className='';
+        if (lastClicked){
+          lastClicked.className='';
+        }
         lastClicked = el;
         clickedGrid = el.innerHTML;
+        currentFeatureLabel = clickedGrid;
       });
-
-
+      // ADD GRIDS TO MAP IMAGE
       $('#grid-source').append(grid);
 
+      /**
+       * GRID ON IMAGE AND FEATURE ON MAP.
+       */
       $("#gridNameForm").submit(false);
       $("#gridNameForm").submit(function(event){
           var gridName = $("#gridNameTxt").val();
+          
           if(gridName != clickedGrid){
             alert("Invalid Grid Name");
           }else{
@@ -29,8 +40,35 @@
           }
       });
 
+      var gridSliderValue = $('#gridsizeSelect').change(function(ev){
+        $("#grid").remove();
+        $(".wkt_grids").remove();
+
+        var gridSize = $(this).val();
+        var newGrid = clickableGrid(gridSize,gridSize,function(el,row,col,i){
+          el.className='clicked';
+          if (lastClicked){
+            lastClicked.className='';
+          }
+          lastClicked = el;
+          clickedGrid = el.innerHTML;
+          currentFeatureLabel = clickedGrid;
+        });
+
+        for(i = 1; i <= gridSize*gridSize; i++ ){
+          $("#editMapFormDiv").append('<input class="wkt_grids" id="grids_A' + i + '" name="grids[A' + i + ']" type="hidden" value="" />');
+        }
+        $("#grid-source").html("");
+        $("#grid-source").append(newGrid);
+      });
+      ////////////////////////////////////////////////////////////////////////////////
+
       init();
 
+      ////////////////////////////////////////////////////////////////////////////////
+      /**
+       * ADD EXISTING FEATURES ON MAP
+       */
       for(idx in polygons){
         polygon = polygons[idx];
         var feature = wkt.read(polygon.bbox);
@@ -40,11 +78,16 @@
         feature.geometry.transform(map.displayProjection, map.getProjectionObject());
         vectorLayer.addFeatures([feature]);
       }
-
+      // ZOOM TO FEATURES EXTENT
       if(polygons.length > 0){
         map.zoomToExtent(vectorLayer.getDataExtent());
       }
+      ////////////////////////////////////////////////////////////////////////////////
 
+      ////////////////////////////////////////////////////////////////////////////////
+      /**
+       * MAGNIFIER SETTINGS
+       */
       var image = $("#<%= @map.id %>");
       var magnifier = $("#magnifier");
       var magnifier_status = $("#magnifier_status");
@@ -71,30 +114,7 @@
               magnifier_label.html("<%= t(:magnifier_off, :scope => [:application]) %>");
           }
       });
-
-      $('#slider').slider({
-          formater: function(value) {
-            return 'Current value: '+ value;
-          },
-          handle: 'square',
-          min: 1,
-          max: 6,
-          step: 1
-      });
-
-      var gridSliderValue = $('#slider').slider().on('slide', function(ev){
-        $("#grid").remove();
-
-        var gridSize = $(this).val();
-        console.log(gridSize);
-        var newGrid = clickableGrid(gridSize,gridSize,function(el,row,col,i){
-          el.className='clicked';
-          if (lastClicked) lastClicked.className='';
-          lastClicked = el;
-          clickedGrid = el.innerHTML;
-        });
-        $("#grid-source").append(newGrid);
-      });
+      ////////////////////////////////////////////////////////////////////////////////
 
       console.log("END");
 
@@ -107,154 +127,119 @@ function setData(){
     var wkt = formats['out']['wkt'].write(feature, false);
     $("#grids_" + feature.attributes.grid).val(wkt);
   }
+  $(".form-horizontal").submit();
 }
 
 
 </script>
 
-<div class="row">
-  <br>
-  <div class="col-md-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          <%= truncate(@map.name, length: 30) %> |
-          1 &nbsp;&nbsp;<input id="slider" type="text" value="" data-slider-value="2" data-slider-orientation="horizontal">&nbsp;&nbsp; 8
-        </h3>
+<div id="editMapFormDiv" class="row">
+<%= form_tag set_grids_map_path, :class => "form-horizontal", :role => "form" do %>
+  <!-- LEFT MENU -->
+  <div class="col-md-3">
+    <div class="profile-sidebar">
+      <!-- SIDEBAR USERPIC -->
+      <div class="profile-userpic">
+        <!--<center><a data-toggle="modal" class="btn btn-circle-lg btn-info"><i class="fa fa-info"></i> </a></center>-->
       </div>
-      <div class="img-overlay">
-        <img id="<%= @map.id %>" src="<%= @map.image.url(:medium) %>" data-zoom-image="<%= @map.image.url(:large) %>" class="img-responsive img-rounded" />
-        <div id="grid-source" class="grid-overlay"></div>
+      <!-- END SIDEBAR USERPIC -->
+      <!-- SIDEBAR USER TITLE -->
+      <div class="profile-usertitle">
+        <div class="profile-usertitle-name">
+          <%= t(:tools, :scope => [:map]) %>
+        </div>
       </div>
-      <div class="panel-footer">
-        <i id="magnifier" class="glyphicon glyphicon-zoom-in" style="font-size:20px;"></i> &nbsp;
-        <span class="text-primary">
-          <b><%= t(:magnifier, :scope => [:application]) %></b>
-          <abbr id="magnifier_label"><%= t(:magnifier_off, :scope => [:application]) %></abbr>
-        </span>
-        &nbsp; <i id="magnifier_status" class="fa fa-square-o icon pull-right" style="font-size:20px"></i>
-      </div>
-    </div>
+      <!-- END SIDEBAR USER TITLE -->
+      <!-- SIDEBAR MENU -->
+      <div class="profile-usermenu">
+        <ul id="mapInfoPanel" class="nav">
+          <li>
+            <a>
+              <i class="glyphicon glyphicon-th"></i>
+              <%= t(:grid_size, :scope => [:map]) %>:
+              <select id="gridsizeSelect">
+                <option>1</option>
+                <option selected="selected">2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+              </select>
+            </a>
+          </li>
+          <li id="magnifier">
+            <a>
+              <i class="glyphicon glyphicon-zoom-in"></i>
+              <%= t(:magnifier, :scope => [:application]) %>
+              <abbr id="magnifier_label"><%= t(:magnifier_off, :scope => [:application]) %></abbr>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('polygon');">
+              <i class="glyphicon glyphicon-edit"></i>
+              <%= t(:draw_polygon, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('box');">
+              <i class="glyphicon glyphicon-stop"></i>
+              <%= t(:draw_rectangle, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('nav');">
+              <i class="glyphicon glyphicon-screenshot"></i>
+              <%= t(:move_map, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('edit');">
+              <i class="glyphicon glyphicon-wrench"></i>
+              <%= t(:edit_feature, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="toggleControl('select');">
+              <i class="glyphicon glyphicon-hand-up"></i>
+              <%= t(:select_feature, :scope => [:map]) %>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="removeFeature();">
+              <i class="glyphicon glyphicon-minus-sign"></i>
+              <%= t(:remove_feature, :scope => [:map]) %>
+            </a>
+          </li>
 
-    <br>
-    <div id="grid_loc">
-      <div class="col-sm-6">
-        <%= link_to t(:cancel, :scope => [:application]), map_path, :class => "btn btn-primary btn-block" %>
-      </div>
-      <div class="col-sm-6">
-        <%= form_tag set_grids_map_path, :class => "form-horizontal", :role => "form" do %>
-          <%= hidden_field_tag 'grids[A1]', '' %>
-          <%= hidden_field_tag 'grids[A2]', '' %>
-          <%= hidden_field_tag 'grids[A3]' %>
-          <%= hidden_field_tag 'grids[A4]' %>
-          <%= submit_tag t(:save, :scope => [:application]), :onclick => "return setData();", :class => "btn btn-primary btn-block" %>
-        <% end %>
+          <li>
+            <%= link_to '#', :onclick => 'return setData();' do %>
+              <i class="glyphicon glyphicon-floppy-disk"></i>
+              <%= t(:save_modifications, :scope => [:application]) %>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to map_path(@map.id) do %>
+              <i class="glyphicon glyphicon-remove-circle"></i>
+              <%= t(:cancel, :scope => [:application]) %>
+            <% end %>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <!-- EDITING TOOLS -->
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="javascript:void(0);"><%= t(:tools, :scope => [:map]) %></a>
-        </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li id="polygon">
-              <a href="javascript:void(0)" onclick="toggleControl('polygon');">
-                <i class="glyphicon glyphicon-edit"></i>
-                <%= t(:draw_polygon, :scope => [:map]) %>
-              </a>
-            </li>
-            <li id="box">
-              <a href="javascript:void(0)" onclick="toggleControl('box');">
-                <i class="glyphicon glyphicon-stop"></i>
-                <%= t(:draw_rectangle, :scope => [:map]) %>
-              </a>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <%= t(:controls, :scope => [:map]) %>
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu" role="menu">
-                <li id="nav">
-                  <a href="javascript:void(0)" onclick="toggleControl('nav');">
-                    <i class="glyphicon glyphicon-screenshot"></i>
-                    <%= t(:move_map, :scope => [:map]) %>
-                  </a>
-                </li>
-
-                <li id="edit">
-                  <a href="javascript:void(0)" onclick="toggleControl('edit');">
-                    <i class="glyphicon glyphicon-wrench"></i>
-                    <%= t(:edit_feature, :scope => [:map]) %>
-                  </a>
-                </li>
-                <li id="select">
-                  <a href="javascript:void(0)" onclick="toggleControl('select');">
-                    <i class="glyphicon glyphicon-hand-up"></i>
-                    <%= t(:select_feature, :scope => [:map]) %>
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <a href="javascript:void(0)" onclick="removeFeature();">
-                    <i class="glyphicon glyphicon-minus-sign"></i>
-                    <%= t(:remove_feature, :scope => [:map]) %>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-
-    <!-- END EDITING TOOLS -->
-
-    <!-- MAP -->
-    <div id="map" class="smallmap"></div>
-    <!-- END MAP -->
-
-
-    <!-- INPUT BAR -->
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="javascript:void(0)"><%= t(:set_grid_name, :scope => [:map]) %></a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <form id="gridNameForm" class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-              <input id="gridNameTxt" type="text" class="form-control" placeholder="A1">
-            </div>
-            <button id="setGridName" type="submit" class="btn btn-default">
-              <%= t(:set_grid_btn, :scope => [:map]) %>
-            </button>
-          </form>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-    <!-- END INPUT BAR -->
+  <!-- CONTENT -->    
+  <div class="col-md-9">
+    <div class="img-overlay">
+      <img id="<%= @map.id %>" src="<%= @map.image.url(:large) %>" data-zoom-image="<%= @map.image.url(:large) %>" class="img-responsive img-rounded" />
+      <div id="grid-source" class="grid-overlay"></div>
+    </div>
   </div>
+  <div id="map" class="smallmap"></div>
+  <%= hidden_field_tag 'grids[A1]', '', class: 'wkt_grids' %>
+  <%= hidden_field_tag 'grids[A2]', '', class: 'wkt_grids' %>
+  <%= hidden_field_tag 'grids[A3]', '', class: 'wkt_grids' %>
+  <%= hidden_field_tag 'grids[A4]', '', class: 'wkt_grids' %>
+<% end %>
 </div>
+
