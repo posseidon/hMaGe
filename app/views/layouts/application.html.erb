@@ -19,6 +19,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="background-dark ">
+  <br><br>
   <div class="navbar navbar-default navbar-fixed-bottom swag-line swag-line-bottom">
     <div class="navbar-header">
       <a class="navbar-brand" href="/">G.R.I.D</a>
@@ -27,32 +28,52 @@
       <!-- USER AND ACCOUNT MANAGEMENT -->
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-          <small class="text-muted"><%= current_user.role %></small>
-          <div><%= current_user.name %>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <small class="text-muted">
+            <% if user_signed_in? %>
+              <%= current_user.role %>
+            <% else %>
+              <%= t(:guest_user, :scope => [:application]) %>
+            <% end %>
+          </small>
+          <div>
+            <% if user_signed_in? %>
+              <%= current_user.name %>
+            <% else %>
+              ..................
+            <% end %>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
           <span class="caret up"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
-          <!-- USER ADMINISTRATION -->
-          <% if can? :manage, User %>
+          <% if user_signed_in? %>
+            <!-- USER ADMINISTRATION -->
+            <% if can? :manage, User %>
+              <li>
+                <%= link_to list_admin_users_path do %>
+                  <%= t(:manage_users, :scope => [:application]) %>
+                <% end %>
+              </li>
+              <li class="divider"></li>
+            <% end %>
+            <!-- ACCOUNT MANAGEMENT -->
             <li>
-              <%= link_to list_admin_users_path do %>
-                <%= t(:manage_users, :scope => [:application]) %>
+              <%= link_to edit_user_registration_path do %>
+                <%= t(:change_password, :scope => [:application]) %>
               <% end %>
             </li>
             <li class="divider"></li>
+            <!-- SIGN OUT -->
+            <li>
+              <%= link_to destroy_user_session_path, :method => 'delete' do %>
+                <%= t(:signout, :scope => [:application]) %>
+              <% end %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to t(:signin, :scope => [:application]) ,new_user_session_path %>
+            </li>
           <% end %>
-          <!-- ACCOUNT MANAGEMENT -->
-          <li>
-            <%= link_to edit_user_registration_path do %>
-              <%= t(:change_password, :scope => [:application]) %>
-            <% end %>
-          </li>
-          <li class="divider"></li>
-          <li>
-            <%= link_to destroy_user_session_path, :method => 'delete' do %>
-              <%= t(:signout, :scope => [:application]) %>
-            <% end %>
-          </li>
         </ul>
       </li>
       <!-- TICKET MANAGEMENT -->

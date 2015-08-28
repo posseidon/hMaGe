@@ -28,6 +28,7 @@ en:
     my_requests: "Download"
     view_requests: "View Requests"
     user_base_attributes: "User attributes"
+    guest_user: "Guest"
   map:
     map_information: "Information related to"
     map_descriptive_info: "Descriptive information"

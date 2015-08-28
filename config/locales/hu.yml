@@ -28,6 +28,7 @@ hu:
     my_requests: "Letöltési"
     view_requests: "Kérelmek listája"
     user_base_attributes: "Felhasználói adatok"
+    guest_user: "Vendég"
   map:
     map_information: "Térképre vonatkozó"
     map_descriptive_info: "Térképre vonatkozó leíró adatok"
