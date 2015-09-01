@@ -7,7 +7,7 @@ module TicketsHelper
 		elsif status == 'AVAILABLE'
 			"<span class='glyphicon glyphicon-ok-circle' aria-hidden='true'></span>".html_safe
 		else
-			"<span class='glyphicon glyphicon-question-sign' aria-hidden='true'></span>".html_safe
+			"<span class='glyphicon glyphicon-star' aria-hidden='true'></span>".html_safe
 		end
 	end
 end

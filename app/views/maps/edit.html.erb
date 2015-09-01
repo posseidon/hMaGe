@@ -77,25 +77,26 @@
           <li id="textualLI" class="active">
             <a>
               <i class="glyphicon glyphicon-th-list"></i>
-              <%= t(:set_attributes, :scope => [:application]) %>
+              <%= t(:set_attributes, :scope => [:map]) %>
             </a>
           </li>
           <li id="descriptionLI">
             <a>
               <i class="glyphicon glyphicon-font"></i>
-              <%= t(:set_description, :scope => [:application]) %>
+              <%= t(:set_description, :scope => [:map]) %>
             </a>
           </li>
           <li id="remarksLI">
             <a>
               <i class="glyphicon glyphicon-bold"></i>
-              <%= t(:set_remarks, :scope => [:applicaton]) %>
+              <%= t(:set_remarks, :scope => [:map]) %>
             </a>
           </li>
           <li id="previewLI">
             <a>
-            <i class="fa fa-file-image-o"></i>
-            Preview </a>
+              <i class="fa fa-file-image-o"></i>
+              <%= t(:preview, :scope => [:map]) %>
+            </a>
           </li>
           <li id="downloadableLI">
             <a>
@@ -112,7 +113,7 @@
           <li>
             <%= link_to '#', :onclick => '$(".form-horizontal").submit()' do %>
               <i class="glyphicon glyphicon-floppy-disk"></i>
-              <%= t(:save_modifications, :scope => [:application]) %>
+              <%= t(:save_modifications, :scope => [:map]) %>
             <% end %>
           </li>
           <li>

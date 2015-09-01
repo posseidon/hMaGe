@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row profile">
   <!-- Search by Name -->
   <div class="col-md-4">
     <br>
@@ -42,7 +42,7 @@
         <span class="input-group-addon">
           <i class="fa fa-lock"></i>
         </span>
-        <%= text_field_tag :role, nil, :class => "form-control", :placeholder => User.human_attribute_name('role'), :type => "text" %>
+        <%= select_tag "role", options_for_select([ "viewer", "editor", "librarian", "admin"], "viewer"), :class => "form-control" %>
         <div class="input-group-btn">
           <%= button_tag(type: "submit", class: "btn btn-success") do %>
             <%= t(:search, :scope => [:application]) %>

@@ -13,24 +13,56 @@ class TicketsController < ApplicationController
 		render action: "new"
 	end
 
-	def list_my
-		@tickets = current_user.tickets.order(:status)
+	def downloads
+		@tickets = current_user.tickets.where(:request_type => 'DOWNLOAD').order(:updated_at).page(params[:page])
 	end
 
-	def list_rejected
+	def updates
+		@tickets = current_user.tickets.where(:request_type => 'UPDATE').order(:updated_at).page(params[:page])
+	end
+
+	def rejected
 		@tickets = Ticket.tickets('REJECTED', current_user.role, params[:page])
 	end
 
-	def list_opened
+	#
+	#
+	#
+	def my_rejected
+		
+	end
+
+	def opened
 		@tickets = Ticket.tickets('OPEN', current_user.role, params[:page])
 	end
 
-	def list_accepted
+	#
+	#
+	#
+	def my_opened
+		@tickets = Ticket.my_tickets('OPEN', 'DOWNLOAD', current_user, params[:page])
+	end
+
+	def accepted
 		@tickets = Ticket.tickets('ACCEPTED', current_user.role, params[:page])
 	end
 
-	def list_expired
+	#
+	#
+	#
+	def my_accepted
+		
+	end
+
+	def expired
 		#@tickets = Ticket.expired()
+	end
+
+	#
+	#
+	#
+	def my_expired
+		
 	end
 
 	def show

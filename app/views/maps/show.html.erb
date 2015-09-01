@@ -110,23 +110,27 @@
         <ul id="mapInfoPanel" class="nav">
           <li id="infoLI">
             <a>
-            <i class="fa fa-info"></i>
-            Information </a>
+              <i class="fa fa-info"></i>
+              <%= t(:information, :scope => [:map]) %>
+            </a>
           </li>
           <li id="textualLI">
             <a>
-            <i class="fa fa-bold"></i>
-            Descriptions </a>
+              <i class="fa fa-bold"></i>
+              <%= t(:description, :scope => [:map]) %>
+            </a>
           </li>
           <li id="gridsLI" class="active">
             <a>
-            <i class="fa fa-map-marker"></i>
-            Grids </a>
+              <i class="fa fa-map-marker"></i>
+              <%= t(:grids, :scope => [:map]) %>
+            </a>
           </li>
           <li id="previewLI">
             <a>
-            <i class="fa fa-file-image-o"></i>
-            Preview </a>
+              <i class="fa fa-file-image-o"></i>
+              <%= t(:preview, :scope => [:map]) %>
+            </a>
           </li>
           <% if can? :manage, Map %>
           <li id="editMapLI">

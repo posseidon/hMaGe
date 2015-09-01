@@ -49,11 +49,12 @@ Hmage::Application.routes.draw do
 
   resources :tickets do
     collection do
-      get 'list_my'
-      get 'list_rejected'
-      get 'list_opened'
-      get 'list_accepted'
-      get 'list_expired'
+      get 'downloads'
+      get 'updates'
+      get 'rejected'
+      get 'opened'
+      get 'accepted'
+      get 'expired'
     end
   end
 

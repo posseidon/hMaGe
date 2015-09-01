@@ -25,10 +25,12 @@ en:
     import_towns: "Import towns"
     add_town: "Add town"
     names_not_found: "No record found that matches conditions"
-    my_requests: "Download"
+    my_requests_download: "Downloads"
+    my_requests_update: "Updates"
     view_requests: "View Requests"
     user_base_attributes: "User attributes"
     guest_user: "Guest"
+    list: "List of"
   map:
     map_information: "Information related to"
     map_descriptive_info: "Descriptive information"
@@ -61,6 +63,10 @@ en:
     active_pending_request: "Active Download Request!"
     active_update_request: "Active Update Request!"
     save_modifications: "Save modifications"
+    information: "Information"
+    description: "Description"
+    grids: "Grids"
+    preview: "Preview"
   name:
     placeholder_search: "Current or original name of settlement"
     placeholder_current: "Current name of settlement"
@@ -85,6 +91,8 @@ en:
     status_reject: "Reject request"
     status_accept: "Accept request"
     status: "Status"
+    download_request: "Download request"
+    update_request: "Update request"
   views:
     pagination:
       first: "&laquo; First"

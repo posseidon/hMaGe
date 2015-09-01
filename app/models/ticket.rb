@@ -19,6 +19,10 @@ class Ticket < ActiveRecord::Base
     self.where("status = '#{status}' and request_type = '#{request_type}'").page(page)
   end
 
+  def Ticket.my_tickets(status, on_request, by_user, page=0)
+    self.where("status = '#{status}' and request_type = '#{on_request}' and user_id = #{by_user.id}").page(page)
+  end
+
   def Ticket.expired(page)
     self.where("status = 'ACCEPTED' and request_type = 'DOWNLOAD' and CURRENT_TIMESTAMP > (updated_at + cast('1 day' as interval)*2").page(page)
   end

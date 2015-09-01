@@ -1,0 +1,19 @@
+<div class="row profile">
+	<div class="col-md-12">
+		<div class="panel panel-info">
+		  <div class="panel-heading">
+  			<h1><%= t(:list, :scope => [:application]) %> <small><%= t(:download_request, :scope => [:ticket]) %></small></h1>
+		  </div>
+		  <div class="panel-body">
+		  	<div id="tickets-table">
+		  		<%= render :partial => 'tickets_table', :locals => {:tickets => @tickets} %>
+		  	</div>
+		  </div>
+		  <div class="panel-footer">
+		  	<%= status_to_icon('ACCEPTED') %> ACCEPTED &nbsp;&nbsp; - &nbsp;&nbsp;
+		  	<%= status_to_icon('OPEN') %> OPEN &nbsp;&nbsp; - &nbsp;&nbsp;
+		  	<%= status_to_icon('REJECTED') %> REJECTED
+		  </div>
+		</div>
+	</div>
+</div>

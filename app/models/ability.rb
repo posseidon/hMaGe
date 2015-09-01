@@ -7,7 +7,7 @@ class Ability
     can :manage, User if user.role == 'admin'
 
     can :manage, Map  if user.role == 'editor'
-    can :read,   Map  if user.role == 'viewer'
+    can :read,   Map  if user.role == 'viewer' or user.role == 'librarian'
 
     can :manage, Name if user.role == 'editor'
     can :read,   Name if user.role == 'viewer' or user.role == 'guest'

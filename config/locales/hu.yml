@@ -25,10 +25,12 @@ hu:
     import_towns: "Települések importálása"
     add_town: "Település hozzáadás"
     names_not_found: "Nincs találat a keresési paraméter alapján."
-    my_requests: "Letöltési"
+    my_requests_download: "Letöltési"
+    my_requests_update: "Módosítási"
     view_requests: "Kérelmek listája"
     user_base_attributes: "Felhasználói adatok"
     guest_user: "Vendég"
+    list: "Lista"
   map:
     map_information: "Térképre vonatkozó"
     map_descriptive_info: "Térképre vonatkozó leíró adatok"
@@ -38,7 +40,7 @@ hu:
     description_info: "Leíró adatok"
     remarks_info: "Megjegyzés"
     status_info: "Letölthető és Feldolgozott"
-    set_location: "Elhelyezkedés meghatározása"
+    set_location: "Grid-ek meghatározása"
     set_attributes: "Leíró adatok szerkesztése"
     additional_attributes: "Kiegészítő attribútumok"
     set_description: "Leírás szerkesztése"
@@ -61,6 +63,10 @@ hu:
     active_pending_request: "Aktív letöltési link"
     active_update_request: "Aktív hiba bejelentés"
     save_modifications: "Változatások mentése"
+    information: "Térkép információ"
+    description: "Térkép leírás"
+    grids: "Gridek"
+    preview: "Előnézet"
   name:
     placeholder_search: "Település történelmi vagy jelenlegi neve"
     placeholder_current: "Jelenlegi település neve"
@@ -85,6 +91,8 @@ hu:
     status_reject: "Kérelem elutasítása"
     status_accept: "Kérelem elfogadása"
     status: "Kérelem státusza"
+    download_request: "Letöltési kérelmek"
+    update_request: "Módosítási kérelmek"
   views:
     pagination:
       first: "&laquo; Első"
